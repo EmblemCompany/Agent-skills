@@ -1,49 +1,51 @@
 # EmblemAI Agent Skills
 
-Official collection of skills for AI agents, maintained by EmblemAI.
-
-*Last updated: 2026-03-04 by Motoko (GitHub App test)*
+Official skill collection for AI agents, maintained by [EmblemAI](https://emblemvault.dev). Compatible with Claude Code, Cursor, Codex, and other agents following the [Agent Skills](https://agentskills.io/) specification.
 
 ## Available Skills
 
-### Cross-Platform Skills
-- **emblem-ai-agent-wallet** - Connect to EmblemVault and manage crypto wallets via Emblem AI - Agent Hustle. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Works on OpenClaw, Claude Code, Cursor, and other agents.
+| Skill | Description | Install |
+|-------|-------------|---------|
+| [emblem-ai-agent-wallet](skills/emblem-ai-agent-wallet/) | Crypto wallet management via Agent Hustle — 250+ trading tools across 7 blockchains | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai-agent-wallet` |
 
-## Installation
-
-Install individual skills using the `skills` CLI:
+## Quick Install
 
 ```bash
-# Install to all compatible agents
+# Install a specific skill
 npx skills add EmblemCompany/Agent-skills --skill emblem-ai-agent-wallet
 
-# Install to specific agents only
-npx skills add EmblemCompany/Agent-skills --skill emblem-ai-agent-wallet --agent openclaw --agent claude-code
+# Install all skills
+npx skills add EmblemCompany/Agent-skills
 
-# Install all skills from this repo
-npx skills add EmblemCompany/Agent-skills --skill '*'
+# List available skills
+npx skills add EmblemCompany/Agent-skills --list
 ```
 
 ## Skill Structure
 
-Skills follow the [Agent Skills specification](https://agentskills.io/):
+Each skill follows the [Agent Skills specification](https://agentskills.io/):
 
 ```
-skills/
-├── emblem-ai-agent-wallet/     # Cross-platform skill (root level)
-│   ├── SKILL.md                # Required: skill instructions + metadata
-│   ├── README.md               # Optional: documentation
-│   ├── scripts/                # Optional: executable helpers
-│   └── references/             # Optional: detailed docs
-└── <platform>/                 # Optional: platform-specific variants
-    └── <skill-name>/           # Platform-specific implementation
+skills/<skill-name>/
+├── SKILL.md              # Required — skill instructions + metadata (<500 lines)
+├── references/           # Optional — detailed documentation by topic
+├── scripts/              # Optional — executable helpers
+├── assets/               # Optional — config templates, schemas
+└── examples/             # Optional — sample outputs
 ```
 
-**Platform directories** (`openclaw/`, `claude.ai/`, etc.) are used only for platform-specific implementations. Cross-platform skills live at the root level.
+## Adding Skills
 
-## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on adding new skills.
 
-Skills follow the [Agent Skills](https://agentskills.io/) format.
+## Validation
+
+```bash
+# Validate all skills locally
+bash validate-all.sh
+```
+
+Validation also runs automatically on every PR via GitHub Actions.
 
 ## License
 

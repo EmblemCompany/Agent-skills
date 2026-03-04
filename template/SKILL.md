@@ -1,0 +1,49 @@
+---
+name: skill-name-here
+description: >
+  Brief description of what this skill does and when to use it.
+  Use when the user wants to [specific trigger].
+license: MIT
+user-invocable: true
+compatibility: >
+  List requirements here. Example: Requires Node.js >= 18.0.0 and internet access.
+  Works on Claude Code, Cursor, Codex, and other agents following the Agent Skills spec.
+metadata:
+  author: EmblemAI
+  version: "1.0.0"
+  homepage: https://emblemvault.dev
+---
+
+# Skill Name
+
+Brief overview of the skill.
+
+---
+
+## Quick Start
+
+### Step 1: Install
+```bash
+# Installation command
+```
+
+### Step 2: Use
+Example usage and trigger phrases.
+
+---
+
+## Detailed Documentation
+
+### Topic A
+See [references/topic-a.md](references/topic-a.md) for details.
+
+### Topic B
+See [references/topic-b.md](references/topic-b.md) for details.
+
+---
+
+## Quick Reference
+
+```bash
+# Common commands
+```
