@@ -2,6 +2,8 @@
 
 Official collection of skills for AI agents, maintained by EmblemAI.
 
+*Last updated: 2026-03-04 by Motoko (GitHub App test)*
+
 ## Available Skills
 
 ### OpenClaw Skills
