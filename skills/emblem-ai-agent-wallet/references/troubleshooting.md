@@ -68,20 +68,6 @@
 3. Try during off-peak hours
 4. Use simpler queries
 
-### Memory Usage
-
-**Typical memory usage:**
-- CLI startup: 50-100MB
-- Simple query: 100-200MB
-- Complex query: 200-500MB
-- Multiple concurrent queries: 500MB-1GB+
-
-**If experiencing memory issues:**
-1. Close other applications
-2. Increase system swap space
-3. Use `--reset` to clear conversation history
-4. Restart the CLI periodically
-
 ## Debugging
 
 ### Enable Debug Mode
@@ -176,32 +162,6 @@ emblemai --reset
 rm ~/.emblemai/history/*.json
 ```
 
-## Platform-Specific Issues
-
-### macOS
-
-| Issue | Solution |
-|-------|----------|
-| Gatekeeper warnings | Allow in System Preferences > Security & Privacy |
-- Keychain access issues | Reset keychain or grant permissions |
-| Homebrew installation | Use `brew install node` for Node.js |
-
-### Linux
-
-| Issue | Solution |
-|-------|----------|
-| Permission issues | Use `sudo` or configure user permissions |
-| Missing dependencies | Install: `sudo apt-get install build-essential` |
-| SELinux/AppArmor | Adjust policies or run in permissive mode |
-
-### Windows
-
-| Issue | Solution |
-|-------|----------|
-| PowerShell execution policy | Set: `Set-ExecutionPolicy RemoteSigned` |
-| Path not found | Add npm global bin to PATH |
-| Line ending issues | Use WSL2 or Git Bash for better compatibility |
-
 ## Getting Help
 
 ### Community Support
@@ -227,10 +187,3 @@ npm list -g @emblemvault/agentwallet
 ls -la ~/.emblemai/
 ```
 
-### Feature Requests
-
-For feature requests:
-1. Check existing issues on GitHub
-2. Search Discord for similar requests
-3. Create detailed issue with use case
-4. Include examples of desired behavior

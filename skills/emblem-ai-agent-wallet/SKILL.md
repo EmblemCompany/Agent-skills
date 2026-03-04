@@ -1,13 +1,16 @@
 ---
 name: emblem-ai-agent-wallet
 description: Connect to EmblemVault and manage crypto wallets via Emblem AI - Agent Hustle. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Use when the user wants to trade crypto, check balances, swap tokens, or interact with blockchain wallets.
+user-invocable: true
 compatibility: Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access. Works on OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills specification.
+license: MIT
 metadata:
   author: EmblemAI
   version: "3.0.8"
   homepage: https://emblemvault.dev
   openclaw:
     emoji: "🛡️"
+    primaryEnv: EMBLEM_PASSWORD
     requires:
       bins: ["node", "npm", "emblemai"]
       env: ["EMBLEM_PASSWORD"]

@@ -74,20 +74,6 @@
 - **Holder analysis**: Track wallet concentration and distribution
 - **Exit strategy**: Automated profit-taking strategies
 
-## Predictions and Betting
-
-### PolyMarket Integration
-- **Market browsing**: View available prediction markets
-- **Position management**: Open and close prediction positions
-- **Portfolio tracking**: Track prediction market performance
-- **Market analysis**: Analyze market probabilities and trends
-
-### Prediction Features
-- **Cross-market arbitrage**: Identify mispriced probabilities
-- **Risk management**: Position sizing and risk controls
-- **Automated trading**: Algorithmic prediction market strategies
-- **Result tracking**: Monitor market resolutions and payouts
-
 ## Tool Categories
 
 ### Portfolio Management
@@ -101,12 +87,6 @@
 - **Stop-loss automation**: Dynamic stop-loss adjustments
 - **Portfolio rebalancing**: Automated portfolio rebalancing
 - **Correlation analysis**: Asset correlation tracking
-
-### Automation
-- **DCA (Dollar Cost Averaging)**: Scheduled recurring purchases
-- **Grid trading**: Automated grid trading strategies
-- **Arbitrage bots**: Cross-exchange arbitrage automation
-- **Liquidity provision**: Automated LP management
 
 ## Plugin System
 
@@ -164,11 +144,3 @@ def query_hustle(query):
 balances = query_hustle("What are my balances?")
 ```
 
-### Cron Jobs
-```bash
-# Daily portfolio report
-0 9 * * * emblemai --agent -m "Generate daily portfolio report" > ~/portfolio-report.txt
-
-# Price alerts
-*/30 * * * * emblemai --agent -m "Alert if ETH drops below $3500"
-```

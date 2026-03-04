@@ -4,6 +4,7 @@
 
 import subprocess
 import json
+import shutil
 import sys
 import os
 
@@ -104,10 +105,4 @@ def main():
     print("- Use environment variables or secure credential storage")
 
 if __name__ == "__main__":
-    # Check for shutil
-    try:
-        import shutil
-        main()
-    except ImportError:
-        print("❌ Error: shutil module not available")
-        sys.exit(1)
+    main()
