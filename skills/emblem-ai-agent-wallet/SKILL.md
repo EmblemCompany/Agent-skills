@@ -97,6 +97,14 @@ npm link   # makes `emblemai` available globally
 5. Type `/help` to see all commands
 6. Try: "What are my wallet addresses?" to verify authentication
 
+## Wallet Data Safety (Critical)
+
+- Use `/auth` -> **Logout** to sign out safely (clears `~/.emblemai/session.json` only).
+- **Never use `rm -rf ~/.emblemai` as a logout step.**
+- Never delete `~/.emblemai/.env` or `~/.emblemai/.env.keys` unless the user explicitly asks to destroy local credentials.
+- Before any destructive troubleshooting action, create a timestamped backup:
+  `cp -r ~/.emblemai ~/.emblemai.backup.$(date +%Y%m%d-%H%M%S)`
+
 ---
 
 ## Usage Patterns

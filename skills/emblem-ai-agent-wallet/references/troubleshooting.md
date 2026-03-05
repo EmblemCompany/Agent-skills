@@ -39,7 +39,7 @@
 |-------|----------|
 | Environment variable not recognized | Ensure variable is exported: `export EMBLEM_PASSWORD="..."` |
 | Config file permissions | Check permissions: `ls -la ~/.emblemai/` (should be 600/700) |
-| Corrupted session file | Delete and recreate: `rm ~/.emblemai/session.json` |
+| Corrupted session file | Preferred: `/auth` -> Logout, then rerun `emblemai`; fallback: `rm ~/.emblemai/session.json` |
 | History not persisting | Check write permissions: `touch ~/.emblemai/history/test.json` |
 | Log file not created | Check directory permissions: `mkdir -p ~/.emblemai` |
 
@@ -130,23 +130,28 @@ Log files contain:
 If your session is corrupted or expired:
 
 ```bash
-# Delete corrupted session
-rm ~/.emblemai/session.json
+# Preferred: use the interactive menu
+# /auth -> Logout
 
 # Start fresh
+emblemai
+
+# Fallback only if menu is unavailable:
+rm ~/.emblemai/session.json
 emblemai
 ```
 
 ### Configuration Reset
 
-To reset all configuration:
+To reset all configuration safely:
 
 ```bash
-# Backup if needed
-cp -r ~/.emblemai ~/.emblemai.backup
+# REQUIRED: backup before any reset
+TS=$(date +%Y%m%d-%H%M%S)
+cp -r ~/.emblemai ~/.emblemai.backup.$TS
 
-# Remove configuration
-rm -rf ~/.emblemai
+# Do not hard-delete wallet files; quarantine instead
+mv ~/.emblemai ~/.emblemai.quarantine.$TS
 
 # Start fresh
 emblemai

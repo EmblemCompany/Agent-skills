@@ -3,6 +3,7 @@
 ## Interactive Commands
 
 All commands are prefixed with `/`. Type them in the input bar and press Enter.
+`/help` is the in-app quick reference; this file is the canonical command reference and should stay in sync with CLI source.
 
 ### General
 
@@ -11,6 +12,14 @@ All commands are prefixed with `/`. Type them in the input bar and press Enter.
 | `/help` | Show all available commands |
 | `/settings` | Show current configuration (vault ID, model, streaming, debug, tools) |
 | `/exit` | Exit the CLI (also: `/quit`) |
+
+### Plugins
+
+| Command | Description |
+|---------|-------------|
+| `/plugins` | List all plugins with status |
+| `/plugin <name> on\|off` | Enable or disable a plugin by name |
+| `/secrets` | Manage encrypted plugin secrets |
 
 ### Chat and History
 
@@ -69,7 +78,7 @@ The `/auth` menu provides:
 | 6. Solana Address | Show your Solana address |
 | 7. BTC Addresses | Show your Bitcoin addresses (P2PKH, P2WPKH, P2TR) |
 | 8. Backup Agent Auth | Export credentials to a backup file |
-| 9. Logout | Clear session and exit (requires re-authentication on next run) |
+| 9. Logout | Clear session (`session.json`) and exit; keeps encrypted credentials and wallet data intact |
 
 ### Payment (PAYG Billing)
 
@@ -116,6 +125,7 @@ Log file defaults to `~/.emblemai-stream.log`. Override with `--log-file <path>`
 | `--agent` | `-a` | Run in agent mode (single-shot, password auth only) |
 | `--restore-auth <path>` | | Restore credentials from backup file and exit |
 | `--reset` | | Clear conversation history and exit |
+| `--payg on [TOKEN]\|off` | | Configure PAYG billing at startup |
 | `--debug` | | Start with debug mode enabled |
 | `--stream` | | Start with streaming enabled (default: on) |
 | `--log` | | Enable stream logging |
@@ -129,5 +139,8 @@ Log file defaults to `~/.emblemai-stream.log`. Override with `--log-file <path>`
 | Variable | Description |
 |----------|-------------|
 | `EMBLEM_PASSWORD` | Authentication password |
+| `HUSTLE_API_URL` | Override Hustle API URL |
+| `EMBLEM_AUTH_URL` | Override auth service URL |
+| `EMBLEM_API_URL` | Override API service URL |
 
 CLI arguments override environment variables when both are provided.
