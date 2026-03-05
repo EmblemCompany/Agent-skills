@@ -24,6 +24,11 @@
    bash validate-all.sh
    ```
 
+   Strict validation (agentskills.io-only frontmatter):
+   ```bash
+   bash validate-all.sh --strict
+   ```
+
 5. Open a PR against `main`.
 
 ## Skill Structure
