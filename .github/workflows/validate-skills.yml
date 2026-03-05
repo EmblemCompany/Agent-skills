@@ -1,0 +1,21 @@
+name: Validate Skills
+
+on:
+  pull_request:
+    paths:
+      - 'skills/**'
+      - 'validate-all.sh'
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'validate-all.sh'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate all skills
+        run: bash validate-all.sh
