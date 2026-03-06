@@ -48,22 +48,22 @@ def check_balances():
     return None
 
 def swap_tokens(from_token, to_token, amount, chain="Solana"):
-    """Execute a token swap."""
-    query = f"Swap {amount} of {from_token} to {to_token} on {chain} with 1% slippage"
-    print(f"🔄 Executing swap: {query}")
+    """Get a token swap quote."""
+    query = f"Get a quote to swap {amount} of {from_token} to {to_token} on {chain} with 1% slippage (do not execute)"
+    print(f"🔄 Requesting swap quote: {query}")
     
     # Note: In safe mode, this will require user confirmation
     # For automated scripts, user must confirm in the CLI
     response = run_emblemai_command(query)
     if response:
-        print("✅ Swap command executed")
+        print("✅ Swap quote retrieved")
         print("Response:")
         print(response)
         return response
     return None
 
 def main():
-    print("🔄 EmblemAI Token Swap Script")
+    print("🔄 EmblemAI Token Swap Quote Script")
     print("==============================")
     
     # Check if emblemai is available
@@ -75,12 +75,12 @@ def main():
     # Example 1: Check balances
     balances = check_balances()
     
-    # Example 2: Execute a swap (requires user confirmation in safe mode)
+    # Example 2: Generate a swap quote
     print("\n" + "="*50)
-    print("Example swap command (requires confirmation):")
+    print("Example swap quote command:")
     print("="*50)
     
-    # This is just an example - actual execution requires user confirmation
+    # This is just an example; execution still requires explicit user confirmation
     # Uncomment and modify for actual use
     """
     swap_response = swap_tokens(
@@ -92,12 +92,12 @@ def main():
     """
     
     print("\n📝 Example swap command you can run manually:")
-    print("  emblemai --agent -m 'Swap $20 of SOL to USDC on Solana with 1% slippage'")
+    print("  emblemai --agent -m 'Get a quote to swap $20 of SOL to USDC on Solana with 1% slippage (do not execute)'")
     
     print("\n🔧 Configuration tips:")
-    print("1. Set environment variable: export EMBLEM_PASSWORD='your-password'")
+    print("1. Complete browser auth first by running: emblemai")
     print("2. Run in script: python3 scripts/swap-tokens.py")
-    print("3. For production, handle credentials securely")
+    print("3. For production, handle credentials with local secure storage")
     
     print("\n⚠️  Important:")
     print("- Safe mode requires manual confirmation for swaps")

@@ -30,22 +30,16 @@ In agent mode, if no password is provided, a secure random password is auto-gene
 
 ## Credential Discovery
 
-Before making requests, locate the password using this priority:
+Before making requests, use credentials in this priority:
 
 | Method | How to use | Priority |
 |--------|-----------|----------|
-| CLI argument | `emblemai -p "your-password"` | 1 (highest, stored encrypted) |
-| Environment variable | `export EMBLEM_PASSWORD="your-password"` | 2 (not stored) |
-| Encrypted credential | dotenvx-encrypted `~/.emblemai/.env` | 3 |
-| Auto-generate (agent mode) | Automatic on first run | 4 |
-| Interactive prompt | Fallback when browser auth fails | 5 (lowest) |
+| Existing browser session | `emblemai` with valid `~/.emblemai/session.json` | 1 (highest) |
+| Encrypted credential | dotenvx-encrypted `~/.emblemai/.env` managed by CLI | 2 |
+| Auto-generate (agent mode) | Automatic on first run | 3 |
+| Local secure prompt | Fallback when browser auth fails | 4 (lowest) |
 
-If no credentials are found, ask the user:
-> "I need your EmblemVault password to connect to Hustle AI. This password must be at least 16 characters.
->
-> **Note:** If this is your first time, entering a new password will create a new wallet. If you've used this before, use the same password to access your existing wallet.
->
-> Would you like to provide a password?"
+If no credentials are found, direct the user to complete auth locally in the CLI (`emblemai` or `/auth`) and do not request secrets in chat responses.
 
 - Password must be 16+ characters
 - No recovery if lost (treat it like a private key)
@@ -67,7 +61,7 @@ If no credentials are found, ask the user:
 
 ### Backup
 
-From the `/auth` menu (option 8), select **Backup Agent Auth** to export your credentials to a JSON file. This file contains your EmblemVault password — keep it secure.
+From the `/auth` menu (option 8), select **Backup Agent Auth** to export credentials to a JSON file. This file contains sensitive credential material that can unlock wallet access — store it securely and offline when possible.
 
 ### Restore
 

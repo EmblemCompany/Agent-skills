@@ -37,7 +37,7 @@
 
 | Issue | Solution |
 |-------|----------|
-| Environment variable not recognized | Ensure variable is exported: `export EMBLEM_PASSWORD="..."` |
+| Environment variable not recognized | Configure credentials in your local shell/session tooling and retry; never paste secrets into chat responses |
 | Config file permissions | Check permissions: `ls -la ~/.emblemai/` (should be 600/700) |
 | Corrupted session file | Preferred: `/auth` -> Logout, then rerun `emblemai`; fallback: `rm ~/.emblemai/session.json` |
 | History not persisting | Check write permissions: `touch ~/.emblemai/history/test.json` |
@@ -191,4 +191,3 @@ npm list -g @emblemvault/agentwallet
 # Configuration (sanitized)
 ls -la ~/.emblemai/
 ```
-
