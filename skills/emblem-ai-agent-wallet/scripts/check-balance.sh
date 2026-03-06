@@ -26,14 +26,10 @@ elif [ -f "$HOME/.emblemai/.env" ]; then
     echo "Using encrypted credentials from ~/.emblemai/.env"
     emblemai --agent -m "Show my balances across all chains in a clear table format"
 else
-    echo "⚠️  No credentials found. Please provide password when prompted."
+    echo "⚠️  No credentials found. Run 'emblemai' once to complete browser auth."
     echo ""
     echo "Example query you can run manually:"
     echo "  emblemai --agent -m 'Show my balances across all chains'"
-    echo ""
-    echo "Or set environment variable:"
-    echo "  export EMBLEM_PASSWORD='your-password-here'"
-    echo "  bash scripts/check-balance.sh"
 fi
 
 echo ""
@@ -43,4 +39,4 @@ echo ""
 echo "Additional commands you can try:"
 echo "  emblemai --agent -m 'What are my wallet addresses?'"
 echo "  emblemai --agent -m 'Show my portfolio performance'"
-echo "  emblemai --agent -m 'What tokens are trending on Solana?'"
+echo "  emblemai --agent -m 'Summarize current market conditions on Solana'"

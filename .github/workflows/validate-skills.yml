@@ -2,18 +2,15 @@ name: Validate Skills
 
 on:
   pull_request:
-    paths:
+    paths: &validate_paths
       - 'skills/**'
+      - '.github/workflows/validate-skills.yml'
       - 'validate-all.sh'
       - 'validate-skill.sh'
-      - 'utils/validation/**'
+      - 'utils/validation/validate-skills.sh'
   push:
     branches: [main]
-    paths:
-      - 'skills/**'
-      - 'validate-all.sh'
-      - 'validate-skill.sh'
-      - 'utils/validation/**'
+    paths: *validate_paths
 
 jobs:
   validate:
@@ -21,5 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Verify validation scripts exist
+        run: |
+          test -f validate-all.sh
+          test -f validate-skill.sh
+          test -f utils/validation/validate-skills.sh
+
       - name: Validate all skills
-        run: bash validate-all.sh
+        run: bash ./validate-all.sh
