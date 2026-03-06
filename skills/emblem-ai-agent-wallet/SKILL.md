@@ -113,9 +113,11 @@ Run `emblemai -p "password"` or `emblemai --agent`. In agent mode without `-p`, 
 These are direct CLI operations. Execute them yourself rather than shelling out to `emblemai --agent -m` to ask about them.
 
 ### Logout
-The `/auth` interactive menu (option 9) handles logout. From the agent, pipe the selection:
+The `/auth` interactive menu (option 9) handles logout:
 ```bash
-echo "9" | emblemai
+emblemai
+# then type: /auth
+# then choose: 9  (Logout)
 ```
 Or remove the session file directly (safe — preserves encrypted credentials):
 ```bash
@@ -124,27 +126,33 @@ rm -f ~/.emblemai/session.json
 
 ### Switch Wallet / Re-login with MetaMask or Another Provider
 1. Remove the current session: `rm -f ~/.emblemai/session.json`
-2. Launch browser auth: `emblemai --browser`
+2. Launch browser auth: `emblemai`
 3. The auth modal opens — user selects their wallet (MetaMask, Phantom, etc.) or OAuth provider
 4. New session is saved automatically
 
 ### Force Browser Auth (Even If Session Exists)
+If you need to force a fresh browser sign-in, clear the saved session and relaunch interactive mode:
 ```bash
-emblemai --browser
+rm -f ~/.emblemai/session.json
+emblemai
 ```
-The `--browser` (or `--web`) flag forces browser auth mode regardless of existing sessions.
 
 ### Check Current Wallet / Session
 Use interactive CLI commands — no LLM call needed:
 ```bash
 # Show all wallet addresses (EVM, Solana, BTC, Hedera)
-echo "/wallet" | emblemai
+emblemai
+# then type: /wallet
 
 # Show vault ID, addresses, creation date
-echo "2" | emblemai   # /auth menu -> option 2 (Get Vault Info)
+emblemai
+# then type: /auth
+# then choose: 2  (Get Vault Info)
 
 # Show session details (identifier, expiry, auth type)
-echo "3" | emblemai   # /auth menu -> option 3 (Session Info)
+emblemai
+# then type: /auth
+# then choose: 3  (Session Info)
 ```
 
 ## Credential Handling Rules (Critical)
