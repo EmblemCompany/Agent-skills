@@ -18,12 +18,15 @@ When you run `emblemai` without `-p`, the CLI:
 
 The browser auth modal supports multiple sign-in methods:
 
-- **EVM wallets** (MetaMask, WalletConnect, and other injected providers) — connect an existing Ethereum/EVM wallet
-- **Solana wallets** (Phantom, Solflare, etc.) — connect an existing Solana wallet
+- **Ethereum / EVM wallets** (MetaMask, WalletConnect, and other injected providers) — connect an existing Ethereum/EVM wallet
+- **Solana wallets** (Phantom, Solflare, and other Solana wallet adapters) — connect an existing Solana wallet
 - **Hedera wallets** — connect an existing Hedera wallet
-- **OAuth** — sign in with Twitter or Google
+- **Bitcoin wallets** — PSBT-based signing with a Bitcoin wallet
+- **OAuth** — sign in with Google or Twitter/X
+- **Email** — email/password registration and login with OTP verification
+- **Fingerprint** — guest session via device fingerprinting (no credentials needed)
 
-When a user wants to use a different wallet or connect an existing wallet (e.g., MetaMask), direct them to run `emblemai` in interactive mode (no `-p` flag). The browser auth modal will open and they can select their preferred wallet or OAuth provider. This does not require shelling out to the CLI to ask — the agent already knows these options are available.
+When a user wants to use a different wallet or connect an existing wallet (e.g., MetaMask), direct them to run `emblemai` in interactive mode (no `-p` flag). The browser auth modal will open and they can select their preferred wallet or sign-in method. This does not require shelling out to the CLI to ask — the agent already knows these options are available.
 
 ## Password Auth (Agent Mode)
 

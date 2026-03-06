@@ -86,13 +86,16 @@ npm link   # makes `emblemai` available globally
 The CLI supports two auth modes. **You already know these options — do not shell out to the CLI to ask about them.**
 
 ### Browser Auth (Interactive — recommended)
-Run `emblemai` without `-p`. Opens a browser auth modal supporting:
-- **EVM wallets**: MetaMask, WalletConnect, and other injected providers
-- **Solana wallets**: Phantom, Solflare, etc.
+Run `emblemai` without `-p`. Opens a browser auth modal at `127.0.0.1:18247` supporting:
+- **Ethereum / EVM wallets**: MetaMask, WalletConnect, and other injected providers
+- **Solana wallets**: Phantom, Solflare, and other Solana wallet adapters
 - **Hedera wallets**
-- **OAuth**: Twitter, Google
+- **Bitcoin wallets**: PSBT-based signing
+- **OAuth**: Google, Twitter/X
+- **Email**: email/password with OTP verification
+- **Fingerprint**: guest session via device fingerprinting (no credentials needed)
 
-Use this when a user wants to connect an existing wallet, switch wallets, or use MetaMask. Just tell them to run `emblemai` and select their wallet in the browser modal. No CLI flag needed.
+Use this when a user wants to connect an existing wallet, switch wallets, sign in with Google/Twitter, or use MetaMask. Just tell them to run `emblemai` and select their preferred method in the browser modal. No CLI flag needed.
 
 ### Password Auth (Agent/Scripted)
 Run `emblemai -p "password"` or `emblemai --agent`. In agent mode without `-p`, a password is auto-generated and stored encrypted. Different passwords produce different wallets. Login and signup are the same action.
