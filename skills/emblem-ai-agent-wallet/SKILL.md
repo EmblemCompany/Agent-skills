@@ -134,11 +134,18 @@ emblemai --browser
 ```
 The `--browser` (or `--web`) flag forces browser auth mode regardless of existing sessions.
 
-### Check Current Session
+### Check Current Wallet / Session
+Use interactive CLI commands — no LLM call needed:
 ```bash
-emblemai --agent -m "What are my wallet addresses?"
+# Show all wallet addresses (EVM, Solana, BTC, Hedera)
+echo "/wallet" | emblemai
+
+# Show vault ID, addresses, creation date
+echo "2" | emblemai   # /auth menu -> option 2 (Get Vault Info)
+
+# Show session details (identifier, expiry, auth type)
+echo "3" | emblemai   # /auth menu -> option 3 (Session Info)
 ```
-This confirms which wallet is currently authenticated.
 
 ## Credential Handling Rules (Critical)
 
