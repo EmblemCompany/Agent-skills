@@ -1,30 +1,14 @@
 ---
 name: emblem-ai-agent-wallet
 description: Connect to EmblemVault and manage crypto wallets via Emblem AI - Agent Hustle. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Use when the user wants to check balances, review portfolio data, prepare wallet actions, and explicitly confirm blockchain operations.
-user-invocable: true
 compatibility: Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access. Works on OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills specification.
 license: MIT
 metadata:
   author: EmblemAI
-  version: "3.0.8"
+  version: "3.1.0"
   homepage: https://emblemvault.dev
-  openclaw:
-    emoji: "shield"
-    primaryEnv: EMBLEM_PASSWORD
-    requires:
-      bins: ["node", "npm", "emblemai"]
-      env: ["EMBLEM_PASSWORD"]
-    config_paths:
-      - "~/.emblemai/.env"
-      - "~/.emblemai/.env.keys"
-      - "~/.emblemai/session.json"
-      - "~/.emblemai/history/"
-    install:
-      - id: "npm"
-        kind: "npm"
-        package: "@emblemvault/agentwallet"
-        bins: ["emblemai"]
-        label: "Install Agent Wallet CLI"
+  user-invocable: "true"
+  openclaw: '{"emoji":"🛡️","primaryEnv":"EMBLEM_PASSWORD","requires":{"bins":["node","npm","emblemai"],"env":["EMBLEM_PASSWORD"]},"config_paths":["~/.emblemai/.env","~/.emblemai/.env.keys","~/.emblemai/session.json","~/.emblemai/history/"],"install":[{"id":"npm","kind":"npm","package":"@emblemvault/agentwallet","bins":["emblemai"],"label":"Install Agent Wallet CLI"}]}'
 ---
 
 # Emblem Agent Wallet
