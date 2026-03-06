@@ -102,11 +102,43 @@ Run `emblemai -p "password"` or `emblemai --agent`. In agent mode without `-p`, 
 
 ## Wallet Data Safety (Critical)
 
-- Use `/auth` -> **Logout** to sign out safely (clears `~/.emblemai/session.json` only).
+- Use `/auth` -> **Logout** (option 9) to sign out safely (clears `~/.emblemai/session.json` only).
 - **Never use `rm -rf ~/.emblemai` as a logout step.**
 - Never delete `~/.emblemai/.env` or `~/.emblemai/.env.keys` unless the user explicitly asks to destroy local credentials.
 - Before any destructive troubleshooting action, create a timestamped backup:
   `cp -r ~/.emblemai ~/.emblemai.backup.$(date +%Y%m%d-%H%M%S)`
+
+## Common Auth Workflows (Use CLI Commands — Do Not Prompt the LLM)
+
+These are direct CLI operations. Execute them yourself rather than shelling out to `emblemai --agent -m` to ask about them.
+
+### Logout
+The `/auth` interactive menu (option 9) handles logout. From the agent, pipe the selection:
+```bash
+echo "9" | emblemai
+```
+Or remove the session file directly (safe — preserves encrypted credentials):
+```bash
+rm -f ~/.emblemai/session.json
+```
+
+### Switch Wallet / Re-login with MetaMask or Another Provider
+1. Remove the current session: `rm -f ~/.emblemai/session.json`
+2. Launch browser auth: `emblemai --browser`
+3. The auth modal opens — user selects their wallet (MetaMask, Phantom, etc.) or OAuth provider
+4. New session is saved automatically
+
+### Force Browser Auth (Even If Session Exists)
+```bash
+emblemai --browser
+```
+The `--browser` (or `--web`) flag forces browser auth mode regardless of existing sessions.
+
+### Check Current Session
+```bash
+emblemai --agent -m "What are my wallet addresses?"
+```
+This confirms which wallet is currently authenticated.
 
 ## Credential Handling Rules (Critical)
 
