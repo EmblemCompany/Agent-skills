@@ -27,7 +27,7 @@ Each skill follows the [Agent Skills specification](https://agentskills.io/):
 
 ```
 skills/<skill-name>/
-├── SKILL.md              # Required — skill instructions + metadata (<500 lines)
+├── SKILL.md              # Required — skill instructions + metadata (recommended <500 lines)
 ├── references/           # Optional — detailed documentation by topic
 ├── scripts/              # Optional — executable helpers
 ├── assets/               # Optional — config templates, schemas
@@ -43,6 +43,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on adding new skills.
 ```bash
 # Validate all skills locally
 bash validate-all.sh
+
+# Validate one skill locally
+bash validate-skill.sh emblem-ai-agent-wallet
 ```
 
 Validation also runs automatically on every PR via GitHub Actions.

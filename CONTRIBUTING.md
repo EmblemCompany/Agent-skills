@@ -11,7 +11,7 @@
    - Set `name` to match your directory name (lowercase, hyphens only)
    - Write a keyword-rich `description` (what it does + when to use it)
    - Add `license`, `compatibility`, and `metadata` fields
-   - Keep SKILL.md under 500 lines
+   - Keep SKILL.md under 500 lines (recommended)
 
 3. Add supporting files:
    - `references/` — detailed documentation split by topic
@@ -22,6 +22,11 @@
 4. Validate:
    ```bash
    bash validate-all.sh
+   ```
+
+   Validate a single skill:
+   ```bash
+   bash validate-skill.sh your-skill-name
    ```
 
    Strict validation (agentskills.io-only frontmatter):
@@ -35,7 +40,7 @@
 
 ```
 skills/your-skill-name/
-├── SKILL.md              # Required — entry point (<500 lines)
+├── SKILL.md              # Required — entry point (recommended <500 lines)
 ├── references/           # Optional — detailed docs
 │   └── *.md
 ├── scripts/              # Optional — executable code
@@ -69,7 +74,7 @@ skills/your-skill-name/
 Every PR triggers `validate-all.sh` via GitHub Actions. It checks:
 - SKILL.md exists with valid frontmatter
 - `name` matches directory name
-- Line count under 500
+- Line count recommendation (<500) with warning output
 - Trailing newlines present
 - Required fields present
 

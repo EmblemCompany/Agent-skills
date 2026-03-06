@@ -5,11 +5,15 @@ on:
     paths:
       - 'skills/**'
       - 'validate-all.sh'
+      - 'validate-skill.sh'
+      - 'utils/validation/**'
   push:
     branches: [main]
     paths:
       - 'skills/**'
       - 'validate-all.sh'
+      - 'validate-skill.sh'
+      - 'utils/validation/**'
 
 jobs:
   validate:
