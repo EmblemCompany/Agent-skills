@@ -14,6 +14,17 @@ When you run `emblemai` without `-p`, the CLI:
 6. If the browser can't open, the URL is printed for manual copy-paste
 7. If authentication times out (5 minutes), falls back to a password prompt
 
+### Supported Browser Auth Methods
+
+The browser auth modal supports multiple sign-in methods:
+
+- **EVM wallets** (MetaMask, WalletConnect, and other injected providers) — connect an existing Ethereum/EVM wallet
+- **Solana wallets** (Phantom, Solflare, etc.) — connect an existing Solana wallet
+- **Hedera wallets** — connect an existing Hedera wallet
+- **OAuth** — sign in with Twitter or Google
+
+When a user wants to use a different wallet or connect an existing wallet (e.g., MetaMask), direct them to run `emblemai` in interactive mode (no `-p` flag). The browser auth modal will open and they can select their preferred wallet or OAuth provider. This does not require shelling out to the CLI to ask — the agent already knows these options are available.
+
 ## Password Auth (Agent Mode)
 
 **Login and signup are the same action.** The first use of a password creates a vault; subsequent uses return the same vault. Different passwords produce different wallets.

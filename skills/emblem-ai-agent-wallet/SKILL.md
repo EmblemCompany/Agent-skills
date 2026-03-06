@@ -81,6 +81,22 @@ npm link   # makes `emblemai` available globally
 5. Type `/help` to see all commands
 6. Try: "What are my wallet addresses?" to verify authentication
 
+## Authentication Methods
+
+The CLI supports two auth modes. **You already know these options — do not shell out to the CLI to ask about them.**
+
+### Browser Auth (Interactive — recommended)
+Run `emblemai` without `-p`. Opens a browser auth modal supporting:
+- **EVM wallets**: MetaMask, WalletConnect, and other injected providers
+- **Solana wallets**: Phantom, Solflare, etc.
+- **Hedera wallets**
+- **OAuth**: Twitter, Google
+
+Use this when a user wants to connect an existing wallet, switch wallets, or use MetaMask. Just tell them to run `emblemai` and select their wallet in the browser modal. No CLI flag needed.
+
+### Password Auth (Agent/Scripted)
+Run `emblemai -p "password"` or `emblemai --agent`. In agent mode without `-p`, a password is auto-generated and stored encrypted. Different passwords produce different wallets. Login and signup are the same action.
+
 ## Wallet Data Safety (Critical)
 
 - Use `/auth` -> **Logout** to sign out safely (clears `~/.emblemai/session.json` only).
