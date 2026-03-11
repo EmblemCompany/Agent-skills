@@ -19,11 +19,8 @@ echo "📊 Querying EmblemAI for balances..."
 echo ""
 
 # Run in agent mode to get balances
-if [ -n "$EMBLEM_PASSWORD" ]; then
-    echo "Using password from EMBLEM_PASSWORD environment variable"
-    emblemai --agent -m "Show my balances across all chains in a clear table format"
-elif [ -f "$HOME/.emblemai/.env" ]; then
-    echo "Using encrypted credentials from ~/.emblemai/.env"
+if [ -f "$HOME/.emblemai/session.json" ] || [ -d "$HOME/.emblemai" ]; then
+    echo "Using existing local Emblem CLI state"
     emblemai --agent -m "Show my balances across all chains in a clear table format"
 else
     echo "⚠️  No credentials found. Run 'emblemai' once to complete browser auth."
