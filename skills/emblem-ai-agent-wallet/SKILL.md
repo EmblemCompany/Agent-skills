@@ -100,6 +100,10 @@ Use this when a user wants to connect an existing wallet, switch wallets, sign i
 ### Password Auth for Agents
 The CLI also supports **password auth** for automation and agent workflows. This is a core feature for repeatable agent wallet access, but this shared skill intentionally avoids publishing secret-bearing examples, pasted credentials, or environment-variable recipes. Keep password entry and backup handling local to the CLI/operator environment, and prefer reusing an already-established local session whenever possible.
 
+## Multi-Agent Setup Note
+
+If multiple agents share one machine and one global CLI install, give each agent its own local state directory with `--emblemai-dir <path>` (or `EMBLEMAI_DIR`) so sessions, credentials, history, plugin secrets, favorites, and logs do not collide.
+
 ## Wallet Data Safety (Critical)
 
 - Use `/auth` -> **Logout** (option 9) to sign out safely (clears `~/.emblemai/session.json` only).

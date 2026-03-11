@@ -51,6 +51,8 @@ Before making requests, use local auth/session state in this priority:
 
 If no local session is available, direct the user/operator to complete auth locally in the CLI (`emblemai` or `/auth`) and do not request secrets in chat responses.
 
+For multi-agent/shared-host deployments, give each agent its own `--emblemai-dir <path>` (or `EMBLEMAI_DIR`) so local auth/session state stays isolated per agent.
+
 ## Execution Notes
 
 **Allow sufficient time.** Hustle AI queries may take up to 2 minutes for complex operations (trading, cross-chain lookups). The CLI outputs progress dots every 5 seconds to indicate it's working.
