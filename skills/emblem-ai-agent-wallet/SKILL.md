@@ -1,6 +1,7 @@
 ---
 name: emblem-ai-agent-wallet
 description: Connect to EmblemVault and manage crypto wallets via Emblem AI - Agent Hustle. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Use when the user wants to check balances, review portfolio data, prepare wallet actions, and explicitly confirm blockchain operations.
+allowed-tools: Read, Bash
 compatibility: Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access. Works on OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills specification.
 license: MIT
 metadata:
@@ -13,7 +14,7 @@ metadata:
 
 # Emblem Agent Wallet
 
-Connect to **Agent Hustle** - EmblemVault's autonomous crypto AI with 250+ trading tools across 7 blockchains. Browser auth, streaming responses, plugin system, and zero-config agent mode.
+Connect to **Agent Hustle** - EmblemVault's autonomous crypto AI across 7 blockchains. Browser auth, streaming responses, plugin system, x402 support, PAYG controls, and zero-config agent mode.
 
 **Requires the CLI**: `npm install -g @emblemvault/agentwallet`
 
@@ -77,9 +78,8 @@ npm link   # makes `emblemai` available globally
 1. Install: `npm install -g @emblemvault/agentwallet`
 2. Run: `emblemai`
 3. Authenticate in the browser (preferred) and keep credential entry local to the CLI
-4. Check `/plugins` to see which plugins loaded
-5. Type `/help` to see all commands
-6. Try: "What are my wallet addresses?" to verify authentication
+4. Type `/help` to see all commands
+5. Try: "What are my wallet addresses?" to verify authentication
 
 ## Authentication Methods
 

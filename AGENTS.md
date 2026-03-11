@@ -5,6 +5,10 @@ This repository contains skills for AI agents that extend their capabilities wit
 ## Skills Directory
 
 ### Cross-Platform Skills
+- **emblem-ai** (`skills/emblem-ai/`)
+  - EmblemAI developer tools for multi-chain wallet auth, AI crypto tooling, React packages, plugins, and reflexive.
+  - Use when the user wants implementation guidance for Emblem AI integrations across SDKs and references.
+  - **Compatible with:** OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills spec.
 - **emblem-ai-agent-wallet** (`skills/emblem-ai-agent-wallet/`)
   - Connect to EmblemVault and manage crypto wallets via Emblem AI - Agent Hustle.
   - Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin.
@@ -38,6 +42,7 @@ When creating new skills:
 - Use platform-specific metadata and tooling
 
 ### Current Support
+- **Cross-platform:** emblem-ai ✅
 - **Cross-platform:** emblem-ai-agent-wallet ✅
 - **OpenClaw-specific:** (future variants)
 - **Claude Code-specific:** (future variants)

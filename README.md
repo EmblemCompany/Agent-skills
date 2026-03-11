@@ -6,12 +6,14 @@ Official skill collection for AI agents, maintained by [EmblemAI](https://emblem
 
 | Skill | Description | Install |
 |-------|-------------|---------|
-| [emblem-ai-agent-wallet](skills/emblem-ai-agent-wallet/) | Crypto wallet management via Agent Hustle — 250+ trading tools across 7 blockchains | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai-agent-wallet` |
+| [emblem-ai](skills/emblem-ai/) | EmblemAI developer tools for wallet auth, AI crypto tooling, React SDKs, and app introspection | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai` |
+| [emblem-ai-agent-wallet](skills/emblem-ai-agent-wallet/) | Crypto wallet management via Agent Hustle across 7 blockchains with browser auth, PAYG, and x402 | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai-agent-wallet` |
 
 ## Quick Install
 
 ```bash
 # Install a specific skill
+npx skills add EmblemCompany/Agent-skills --skill emblem-ai
 npx skills add EmblemCompany/Agent-skills --skill emblem-ai-agent-wallet
 
 # Install all skills
