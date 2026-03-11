@@ -77,7 +77,7 @@ The `/auth` menu provides:
 | 5. EVM Address | Show your Ethereum/EVM address |
 | 6. Solana Address | Show your Solana address |
 | 7. BTC Addresses | Show your Bitcoin addresses (P2PKH, P2WPKH, P2TR) |
-| 8. Backup Agent Auth | Export credentials to a backup file |
+| 8. Backup Agent Auth | Export auth material locally (treat as highly sensitive) |
 | 9. Logout | Clear session (`session.json`) and exit; keeps encrypted credentials and wallet data intact |
 
 ### Payment (PAYG Billing)
