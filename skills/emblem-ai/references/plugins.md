@@ -1,6 +1,6 @@
 # Custom Plugins
 
-Extend Hustle AI with your own tools and logic.
+Extend EmblemAI with your own tools and logic.
 
 ## Plugin Structure
 
@@ -62,7 +62,7 @@ const weatherPlugin = {
 
 ### Registering Plugins
 
-**With hustle-incognito:**
+**With hustle-incognito (legacy package name):**
 
 ```typescript
 import { HustleIncognito } from 'hustle-incognito';
@@ -70,13 +70,13 @@ import { HustleIncognito } from 'hustle-incognito';
 const client = new HustleIncognito({ apiKey: '...' });
 client.use(weatherPlugin);
 
-// Now the AI can use get_weather
+// Now EmblemAI can use get_weather
 const response = await client.chat([
   { role: 'user', content: 'What is the weather in Tokyo?' }
 ]);
 ```
 
-**With hustle-react:**
+**With hustle-react (legacy package name):**
 
 ```tsx
 import { useHustle } from '@emblemvault/hustle-react';
@@ -115,17 +115,17 @@ interface Tool {
 
 ## Executor Functions
 
-Executors receive the AI's parameters and return results:
+Executors receive EmblemAI's parameters and return results:
 
 ```typescript
 executors: {
   tool_name: async (params) => {
-    // params contains all arguments from the AI
+    // params contains all arguments from EmblemAI
 
     // Do your logic
     const result = await someOperation(params);
 
-    // Return data for the AI
+    // Return data for EmblemAI
     return {
       success: true,
       data: result
@@ -143,7 +143,7 @@ executors: {
       const result = await dangerousOperation(params);
       return { success: true, data: result };
     } catch (error) {
-      // Return error info to AI
+      // Return error info to EmblemAI
       return {
         success: false,
         error: error.message,
@@ -270,13 +270,13 @@ client.use(pluginB);  // pluginB.get_data is ignored (duplicate)
 
 ## Unregistering Plugins
 
-**hustle-incognito:**
+**hustle-incognito (legacy package name):**
 
 ```typescript
 client.unuse('weather');  // Remove by name
 ```
 
-**hustle-react:**
+**hustle-react (legacy package name):**
 
 ```tsx
 const { unregisterPlugin } = useHustle();

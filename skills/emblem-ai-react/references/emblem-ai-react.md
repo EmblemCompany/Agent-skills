@@ -1,6 +1,8 @@
-# @emblemvault/hustle-react
+# EmblemAI React Chat (`@emblemvault/hustle-react`)
 
-React provider, hooks, and UI components for Agent Hustle chat.
+React provider, hooks, and UI components for EmblemAI chat.
+
+The package and exported symbol names still use legacy `hustle` branding in the current integration surface.
 
 ## Installation
 
@@ -31,7 +33,7 @@ function App() {
 
 API-key mode is also supported by passing `apiKey` + `vaultId` to `HustleProvider`.
 
-## Hook: `useHustle()`
+## Hook: `useHustle()` (legacy hook name)
 
 ```tsx
 const {

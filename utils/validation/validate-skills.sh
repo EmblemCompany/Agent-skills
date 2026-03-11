@@ -6,6 +6,9 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
 SKILLS_DIR="skills"
 ERRORS=0
 STRICT_MODE=0
@@ -16,6 +19,262 @@ STRICT_ALLOWED_FIELDS=("name" "description" "license" "allowed-tools" "metadata"
 
 # Cross-platform superset used by default for broader compatibility.
 PERMISSIVE_ALLOWED_FIELDS=("name" "description" "license" "allowed-tools" "metadata" "compatibility" "user-invocable")
+
+URL_CHECK_JOBS="${URL_CHECK_JOBS:-8}"
+URL_CONNECT_TIMEOUT="${URL_CONNECT_TIMEOUT:-2}"
+URL_MAX_TIME="${URL_MAX_TIME:-5}"
+
+is_validation_exempt_file() {
+    local file_path="$1"
+
+    case "$file_path" in
+        "$REPO_ROOT"/template/*)
+            return 0
+            ;;
+    esac
+
+    return 1
+}
+
+markdown_slugify() {
+    printf '%s' "$1" \
+        | tr '[:upper:]' '[:lower:]' \
+    | sed -E "s/<[^>]+>//g; s/&amp;/ and /g; s/&/ and /g; s#[/\\]# #g; s/[^a-z0-9 _-]/ /g; s/[[:space:]]+/-/g; s/-+/-/g; s/^-+//; s/-+$//"
+}
+
+markdown_anchor_exists() {
+    local target_file="$1"
+    local fragment="$2"
+    local heading
+    local slug
+
+    while IFS= read -r heading; do
+        slug=$(markdown_slugify "$heading")
+        if [ "$slug" = "$fragment" ]; then
+            return 0
+        fi
+    done <<EOF
+$(sed -nE 's/^#{1,6}[[:space:]]+(.+)$/\1/p' "$target_file")
+EOF
+
+    return 1
+}
+
+resolve_link_target_path() {
+    local source_file="$1"
+    local target_path="$2"
+    local source_dir
+
+    source_dir="$(dirname "$source_file")"
+
+    if [[ "$target_path" = /* ]]; then
+        printf '%s\n' "$REPO_ROOT$target_path"
+    else
+        printf '%s\n' "$source_dir/$target_path"
+    fi
+}
+
+validate_markdown_link_target() {
+    local source_file="$1"
+    local line_no="$2"
+    local target="$3"
+    local path_part="$target"
+    local fragment=""
+    local resolved_path
+
+    case "$target" in
+        http://*|https://*|mailto:*|tel:)
+            return
+            ;;
+    esac
+
+    if [[ "$target" = *#* ]]; then
+        path_part="${target%%#*}"
+        fragment="${target#*#}"
+    fi
+
+    if [ -z "$path_part" ]; then
+        resolved_path="$source_file"
+    else
+        resolved_path="$(resolve_link_target_path "$source_file" "$path_part")"
+    fi
+
+    if [ ! -e "$resolved_path" ]; then
+        echo "  FAIL: Broken markdown target '$target' in $source_file:$line_no"
+        ERRORS=$((ERRORS + 1))
+        return
+    fi
+
+    if [ -n "$fragment" ] && [[ "$resolved_path" = *.md ]]; then
+        if ! markdown_anchor_exists "$resolved_path" "$fragment"; then
+            echo "  FAIL: Broken markdown anchor '$target' in $source_file:$line_no"
+            ERRORS=$((ERRORS + 1))
+        fi
+    fi
+}
+
+validate_markdown_links_in_file() {
+    local source_file="$1"
+    local target
+    local line_no
+
+    while IFS=$'\t' read -r line_no target; do
+        validate_markdown_link_target "$source_file" "$line_no" "$target"
+    done < <(
+        perl -ne 'while (/\[[^\]\[]+\]\(([^)]+)\)/g) { print $. . "\t" . $1 . "\n"; }' "$source_file"
+    )
+}
+
+collect_urls_from_file() {
+    local source_file="$1"
+    local output_file="$2"
+    local url
+
+    while IFS= read -r url; do
+        while :; do
+            case "$url" in
+                *\"|*\'|*\`|*\)|*,|*.)
+                    url="${url%?}"
+                    ;;
+                *)
+                    break
+                    ;;
+            esac
+        done
+
+        case "$url" in
+            "")
+                ;;
+            http://localhost*|http://127.0.0.1*|http://proxy:port*|https://proxy:port*)
+                ;;
+            *)
+                printf '%s\n' "$url" >> "$output_file"
+                ;;
+        esac
+    done < <(
+        perl -ne 'while (/(https?:\/\/[^\s"\)]+)/g) { print $1 . "\n"; }' "$source_file"
+    )
+}
+
+validate_unique_urls() {
+    local urls_file="$1"
+    local failures_file
+    local temp_urls_file
+    local url_count
+    local failed_count
+
+    if [ ! -s "$urls_file" ]; then
+        echo "  OK: No external URLs to validate"
+        return
+    fi
+
+    temp_urls_file="$(mktemp)"
+    failures_file="$(mktemp)"
+    trap 'rm -f "$temp_urls_file" "$failures_file"' RETURN
+
+    sort -u "$urls_file" > "$temp_urls_file"
+    url_count=$(wc -l < "$temp_urls_file" | tr -d ' ')
+
+    echo "  INFO: Validating $url_count unique external URL(s) with $URL_CHECK_JOBS parallel job(s), connect-timeout ${URL_CONNECT_TIMEOUT}s, max-time ${URL_MAX_TIME}s"
+
+    tr '\n' '\0' < "$temp_urls_file" | xargs -0 -P "$URL_CHECK_JOBS" -n 1 sh -c '
+        connect_timeout="$1"
+        max_time="$2"
+        url="$3"
+
+        code=$(curl --head --location --silent --show-error --output /dev/null --write-out "%{http_code}" --connect-timeout "$connect_timeout" --max-time "$max_time" "$url" 2>/dev/null || true)
+
+        if [ -z "$code" ] || [ "$code" = "000" ]; then
+            printf "%s\n" "$url"
+            exit 0
+        fi
+
+        case "$url" in
+            https://api.*|https://auth.*|https://mainnet.base.org*|https://api.mainnet-beta.solana.com*|https://agenthustle.ai*|https://*.rpc.*|https://emblemvault.dev*)
+                if [ "$code" -ge 500 ]; then
+                    printf "%s\n" "$url"
+                fi
+                ;;
+            *)
+                if [ "$code" -lt 200 ] || [ "$code" -ge 400 ]; then
+                    case "$code" in
+                        401|403|405)
+                            ;;
+                        *)
+                            printf "%s\n" "$url"
+                            ;;
+                    esac
+                fi
+                ;;
+        esac
+    ' _ "$URL_CONNECT_TIMEOUT" "$URL_MAX_TIME" > "$failures_file"
+
+    failed_count=$(grep -c '.' "$failures_file" 2>/dev/null || true)
+    if [ "$failed_count" -gt 0 ]; then
+        while IFS= read -r failed_url; do
+            echo "  FAIL: Unreachable or invalid URL '$failed_url'"
+            ERRORS=$((ERRORS + 1))
+        done < "$failures_file"
+    else
+        echo "  OK: Validated $url_count unique external URL(s)"
+    fi
+
+    rm -f "$temp_urls_file" "$failures_file"
+    trap - RETURN
+}
+
+build_repository_doc_roots() {
+    if [ -n "$TARGET_SKILL" ]; then
+        printf '%s\n' "$target_skill_dir"
+    else
+        printf '%s\n' "$REPO_ROOT"
+    fi
+}
+
+validate_repository_links_and_urls() {
+    local file_path
+    local search_root
+    local urls_file
+    local root_count=0
+    local file_count=0
+
+    echo ""
+    echo "--- repository-docs ---"
+
+    urls_file="$(mktemp)"
+    trap 'rm -f "$urls_file"' RETURN
+
+    while IFS= read -r search_root; do
+        root_count=$((root_count + 1))
+        echo "  INFO: Scanning markdown docs under $search_root"
+
+        while IFS= read -r -d '' file_path; do
+            echo "  INFO: file_path $file_path"
+            if is_validation_exempt_file "$file_path"; then
+                continue
+            fi
+
+            file_count=$((file_count + 1))
+
+            validate_markdown_links_in_file "$file_path"
+            collect_urls_from_file "$file_path" "$urls_file"
+        done < <(find "$search_root" \
+            -path "$REPO_ROOT/.git" -prune -o \
+            -path "$REPO_ROOT/template" -prune -o \
+            -type f -name '*.md' -print0)
+    done <<EOF
+$(build_repository_doc_roots)
+EOF
+
+    echo "  INFO: Scanned $file_count markdown file(s) across $root_count root(s)"
+
+    validate_unique_urls "$urls_file"
+
+    echo "  OK: Markdown target and URL validation completed"
+
+    rm -f "$urls_file"
+    trap - RETURN
+}
 
 usage() {
     cat <<EOF
@@ -466,6 +725,8 @@ fi
 for skill_dir in "${skill_dirs[@]}"; do
     validate_skill_dir "$skill_dir"
 done
+
+validate_repository_links_and_urls
 
 echo ""
 echo "========================================"

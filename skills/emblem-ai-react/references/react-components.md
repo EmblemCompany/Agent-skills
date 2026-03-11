@@ -1,6 +1,6 @@
 # React Components Reference
 
-Current component map for `@emblemvault/emblem-auth-react` and `@emblemvault/hustle-react`.
+Current component map for `@emblemvault/emblem-auth-react` and the EmblemAI chat package `@emblemvault/hustle-react`.
 
 ## Authentication Components
 
@@ -55,7 +55,7 @@ Props: `className`, `placeholder`, `showSettings`, `settingsPanelOpen`, `onSetti
 />
 ```
 
-`HustleChatWidget` accepts widget `config` plus `HustleChat` props.
+`HustleChatWidget` accepts widget `config` plus `HustleChat` props for the EmblemAI chat UI.
 
 ## Provider Components
 
@@ -72,7 +72,7 @@ Props: `className`, `placeholder`, `showSettings`, `settingsPanelOpen`, `onSetti
 </EmblemAuthProvider>
 ```
 
-### `HustleProvider`
+### `HustleProvider` (legacy provider name)
 
 ```tsx
 <HustleProvider

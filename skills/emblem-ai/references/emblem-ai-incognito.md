@@ -1,6 +1,8 @@
-# hustle-incognito
+# EmblemAI SDK (`hustle-incognito`)
 
-Low-level SDK for Agent Hustle AI chat and tool execution.
+Low-level SDK for EmblemAI chat and tool execution.
+
+The package, class names, and some env var names still use legacy `hustle` branding in the current integration surface.
 
 ## Installation
 
@@ -15,7 +17,7 @@ npm install hustle-incognito
 ```typescript
 import { HustleIncognitoClient } from 'hustle-incognito';
 
-const client = new HustleIncognitoClient({
+const emblemAIClient = new HustleIncognitoClient({
   apiKey: process.env.HUSTLE_API_KEY,
   vaultId: process.env.VAULT_ID,
   hustleApiUrl: 'https://agenthustle.ai' // optional
@@ -29,7 +31,7 @@ import { EmblemAuthSDK } from '@emblemvault/auth-sdk';
 import { HustleIncognitoClient } from 'hustle-incognito';
 
 const auth = new EmblemAuthSDK({ appId: 'your-app-id' });
-const client = new HustleIncognitoClient({
+const emblemAIClient = new HustleIncognitoClient({
   sdk: auth,
   hustleApiUrl: 'https://agenthustle.ai'
 });
@@ -38,7 +40,7 @@ const client = new HustleIncognitoClient({
 ### JWT / custom auth mode
 
 ```typescript
-const client = new HustleIncognitoClient({
+const emblemAIClient = new HustleIncognitoClient({
   jwt: 'token' // or getJwt / getAuthHeaders
 });
 
@@ -54,18 +56,18 @@ const clientWithHeaders = new HustleIncognitoClient({
 ## Chat
 
 ```typescript
-const response = await client.chat([
+const response = await emblemAIClient.chat([
   { role: 'user', content: 'What tokens are trending on Solana?' }
 ]);
 
-for await (const chunk of client.chatStream({
+for await (const chunk of emblemAIClient.chatStream({
   messages: [{ role: 'user', content: 'Analyze ETH price action' }],
   processChunks: true
 })) {
   // text/tool chunks
 }
 
-for await (const raw of client.rawStream({
+for await (const raw of emblemAIClient.rawStream({
   messages: [{ role: 'user', content: 'Show my portfolio' }]
 })) {
   // raw SSE events
@@ -75,18 +77,18 @@ for await (const raw of client.rawStream({
 ## Discovery, models, billing
 
 ```typescript
-await client.getTools();
-await client.discoverTools();
-await client.getModels();
+await emblemAIClient.getTools();
+await emblemAIClient.discoverTools();
+await emblemAIClient.getModels();
 
-const payg = await client.getPaygStatus();
-await client.configurePayg({ enabled: true, payment_token: 'SOL' });
+const payg = await emblemAIClient.getPaygStatus();
+await emblemAIClient.configurePayg({ enabled: true, payment_token: 'SOL' });
 ```
 
 ## Plugins
 
 ```typescript
-await client.use({
+await emblemAIClient.use({
   name: 'my-plugin',
   version: '1.0.0',
   tools: [{
@@ -94,7 +96,9 @@ await client.use({
     description: 'Get floor price',
     parameters: {
       type: 'object',
-      properties: { collection: { type: 'string' } },
+      properties: {
+        collection: { type: 'string' }
+      },
       required: ['collection']
     }
   }],

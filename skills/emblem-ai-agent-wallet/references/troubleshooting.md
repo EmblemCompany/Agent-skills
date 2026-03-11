@@ -47,7 +47,7 @@
 
 | Issue | Solution |
 |-------|----------|
-| Cannot connect to Hustle API | Check firewall/network settings |
+| Cannot connect to EmblemAI API | Check firewall/network settings |
 | SSL certificate errors | Update system certificates or use `--hustle-url` with HTTP (not recommended) |
 | Proxy issues | Configure npm proxy: `npm config set proxy http://proxy:port` |
 | DNS resolution failures | Check DNS settings; try using IP addresses in URLs |

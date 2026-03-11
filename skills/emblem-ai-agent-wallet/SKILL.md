@@ -1,7 +1,6 @@
 ---
 name: emblem-ai-agent-wallet
-description: Connect to EmblemVault and manage crypto wallets via Emblem AI - Agent Hustle. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Use when the user wants to check balances, review portfolio data, prepare wallet actions, and explicitly confirm blockchain operations.
-allowed-tools: Read, Bash
+description: Connect to EmblemVault and manage crypto wallets via EmblemAI. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Use when the user wants to check balances, review portfolio data, prepare wallet actions, and explicitly confirm blockchain operations.
 compatibility: Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access. Works on OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills specification.
 license: MIT
 metadata:
@@ -12,9 +11,9 @@ metadata:
   openclaw: '{"emoji":"🛡️","primaryEnv":"EMBLEM_PASSWORD","requires":{"bins":["node","npm","emblemai"],"env":["EMBLEM_PASSWORD"]},"config_paths":["~/.emblemai/.env","~/.emblemai/.env.keys","~/.emblemai/session.json","~/.emblemai/history/"],"install":[{"id":"npm","kind":"npm","package":"@emblemvault/agentwallet","bins":["emblemai"],"label":"Install Agent Wallet CLI"}]}'
 ---
 
-# Emblem Agent Wallet
+# EmblemAI Agent Wallet
 
-Connect to **Agent Hustle** - EmblemVault's autonomous crypto AI across 7 blockchains. Browser auth, streaming responses, plugin system, x402 support, PAYG controls, and zero-config agent mode.
+Connect to **EmblemAI** - EmblemVault's autonomous crypto AI across 7 blockchains. Browser auth, streaming responses, plugin system, x402 support, PAYG controls, and zero-config agent mode.
 
 **Requires the CLI**: `npm install -g @emblemvault/agentwallet`
 
@@ -30,7 +29,7 @@ npm install -g @emblemvault/agentwallet
 This provides a single command: `emblemai`
 
 ### Step 2: Use It
-When this skill loads, you can ask Agent Hustle anything about crypto:
+When this skill loads, you can ask EmblemAI anything about crypto:
 
 - "What are my wallet addresses?"
 - "Show my balances across all chains"
@@ -40,7 +39,7 @@ When this skill loads, you can ask Agent Hustle anything about crypto:
 
 **To invoke this skill, say things like:**
 - "Use my Emblem wallet to check balances"
-- "Ask Agent Hustle what tokens I have"
+- "Ask EmblemAI what tokens I have"
 - "Connect to EmblemVault"
 - "Check my crypto portfolio"
 
@@ -232,13 +231,22 @@ See [references/troubleshooting.md](references/troubleshooting.md) for:
 - Slow response handling
 - Installation problems
 
+### Prompt Examples
+See [references/emblem-ai-prompt-examples.md](references/emblem-ai-prompt-examples.md) for:
+- Canonical EmblemAI prompt patterns
+- Wallet, market, trading, and transfer prompts
+- Usage examples shared across EmblemAI-related skills
+
+### React App Integration
+If the user wants to build EmblemAI into their own React app instead of using the CLI directly, see [../emblem-ai-react/SKILL.md](../emblem-ai-react/SKILL.md) for the React auth, chat, and component examples.
+
 ---
 
 ## Communication Style
 
 **CRITICAL: Use verbose, natural language.**
 
-Hustle AI interprets terse commands as "$0" transactions. Always explain your intent in full sentences.
+EmblemAI interprets terse commands as "$0" transactions. Always explain your intent in full sentences.
 
 | Bad (terse) | Good (verbose) |
 |-------------|----------------|
@@ -246,7 +254,7 @@ Hustle AI interprets terse commands as "$0" transactions. Always explain your in
 | `"swap sol usdc"` | `"Please get a quote to swap $20 worth of SOL to USDC on Solana"` |
 | `"market"` | `"Please summarize current market conditions on Solana"` |
 
-The more context you provide, the better Hustle understands your intent.
+The more context you provide, the better EmblemAI understands your intent.
 
 ---
 
@@ -318,5 +326,5 @@ See [assets/config-template.env](assets/config-template.env) for environment var
 
 - [npm package](https://www.npmjs.com/package/@emblemvault/agentwallet)
 - [EmblemVault](https://emblemvault.dev)
-- [Hustle AI](https://agenthustle.ai)
+- [EmblemAI](https://agenthustle.ai)
 - [GitHub](https://github.com/EmblemCompany/EmblemAi-AgentWallet)

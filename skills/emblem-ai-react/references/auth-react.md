@@ -81,7 +81,7 @@ Props: `showVaultInfo`, `connectLabel`, `loadingLabel`, `onConnect`, `onDisconne
 
 Props: `showVaultInfo`, `showLogout`, `className`, `style`.
 
-## With Hustle
+## With EmblemAI Chat
 
 ```tsx
 import { EmblemAuthProvider, ConnectButton } from '@emblemvault/emblem-auth-react';

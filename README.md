@@ -7,14 +7,18 @@ Official skill collection for AI agents, maintained by [EmblemAI](https://emblem
 | Skill | Description | Install |
 |-------|-------------|---------|
 | [emblem-ai](skills/emblem-ai/) | EmblemAI developer tools for wallet auth, AI crypto tooling, React SDKs, and app introspection | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai` |
-| [emblem-ai-agent-wallet](skills/emblem-ai-agent-wallet/) | Crypto wallet management via Agent Hustle across 7 blockchains with browser auth, PAYG, and x402 | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai-agent-wallet` |
+| [emblem-ai-react](skills/emblem-ai-react/) | React-focused EmblemAI integration skill for auth, chat components, composition patterns, Migrate.fun hooks, and React examples | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai-react` |
+| [emblem-ai-agent-wallet](skills/emblem-ai-agent-wallet/) | Crypto wallet management via EmblemAI across 7 blockchains with browser auth, PAYG, and x402 | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai-agent-wallet` |
+| [emblem-ai-prompt-examples](skills/emblem-ai-prompt-examples/) | Curated non-developer prompt and usage examples for EmblemAI wallet, market, trading, NFT, Bitcoin, prediction-market, vault, and assistant workflows | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai-prompt-examples` |
 
 ## Quick Install
 
 ```bash
 # Install a specific skill
 npx skills add EmblemCompany/Agent-skills --skill emblem-ai
+npx skills add EmblemCompany/Agent-skills --skill emblem-ai-react
 npx skills add EmblemCompany/Agent-skills --skill emblem-ai-agent-wallet
+npx skills add EmblemCompany/Agent-skills --skill emblem-ai-prompt-examples
 
 # Install all skills
 npx skills add EmblemCompany/Agent-skills
@@ -49,6 +53,8 @@ bash validate-all.sh
 # Validate one skill locally
 bash validate-skill.sh emblem-ai-agent-wallet
 ```
+
+The validation entrypoints automatically sync shared EmblemAI prompt examples, including topic-specific example files, into skill-local reference directories before running checks.
 
 Validation also runs automatically on every PR via GitHub Actions.
 

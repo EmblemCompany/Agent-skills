@@ -60,14 +60,14 @@ If no credentials are found, direct the user to complete auth locally in the CLI
 
 ## Execution Notes
 
-**Allow sufficient time.** Hustle AI queries may take up to 2 minutes for complex operations (trading, cross-chain lookups). The CLI outputs progress dots every 5 seconds to indicate it's working.
+**Allow sufficient time.** EmblemAI queries may take up to 2 minutes for complex operations (trading, cross-chain lookups). The CLI outputs progress dots every 5 seconds to indicate it's working.
 
-**Present Hustle's response clearly.** Display the response from Hustle AI to the user in a markdown codeblock:
+**Present EmblemAI's response clearly.** Display the response from EmblemAI to the user in a markdown codeblock:
 
 ```markdown
-**Hustle AI Response:**
+**EmblemAI Response:**
 \`\`\`
-[response from Hustle]
+[response from EmblemAI]
 \`\`\`
 ```
 
@@ -96,4 +96,4 @@ Each password deterministically generates wallet addresses across all chains:
 | **Hedera** | Account ID (0.0.XXXXXXX) |
 | **Bitcoin** | Taproot, SegWit, and Legacy addresses |
 
-Ask Hustle: `"What are my wallet addresses?"` to retrieve all addresses.
+Ask EmblemAI: `"What are my wallet addresses?"` to retrieve all addresses.

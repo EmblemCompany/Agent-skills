@@ -9,10 +9,18 @@ This repository contains skills for AI agents that extend their capabilities wit
   - EmblemAI developer tools for multi-chain wallet auth, AI crypto tooling, React packages, plugins, and reflexive.
   - Use when the user wants implementation guidance for Emblem AI integrations across SDKs and references.
   - **Compatible with:** OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills spec.
+- **emblem-ai-react** (`skills/emblem-ai-react/`)
+  - React-focused EmblemAI integration skill for auth, chat components, composition patterns, Migrate.fun hooks, and React examples.
+  - Use when the user wants to build or integrate EmblemAI into their own React app.
+  - **Compatible with:** OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills spec.
 - **emblem-ai-agent-wallet** (`skills/emblem-ai-agent-wallet/`)
-  - Connect to EmblemVault and manage crypto wallets via Emblem AI - Agent Hustle.
+  - Connect to EmblemVault and manage crypto wallets via EmblemAI.
   - Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin.
   - Use when the user wants to trade crypto, check balances, swap tokens, or interact with blockchain wallets.
+  - **Compatible with:** OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills spec.
+- **emblem-ai-prompt-examples** (`skills/emblem-ai-prompt-examples/`)
+  - Curated non-developer prompt and usage examples for EmblemAI across wallet, research, trading, NFTs, Bitcoin, prediction markets, vault actions, and assistant workflows.
+  - Use when the user wants prompt examples, phrasing guidance, or sample requests for end-user EmblemAI tasks.
   - **Compatible with:** OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills spec.
 
 ## Usage
@@ -43,6 +51,8 @@ When creating new skills:
 
 ### Current Support
 - **Cross-platform:** emblem-ai ✅
+- **Cross-platform:** emblem-ai-react ✅
 - **Cross-platform:** emblem-ai-agent-wallet ✅
+- **Cross-platform:** emblem-ai-prompt-examples ✅
 - **OpenClaw-specific:** (future variants)
 - **Claude Code-specific:** (future variants)

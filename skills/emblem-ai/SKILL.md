@@ -2,7 +2,6 @@
 name: emblem-ai
 description: Multi-chain wallet authentication, AI-powered crypto assistant, and AI app introspection. Use when the user wants to integrate wallet authentication (Ethereum, Solana, Bitcoin, Hedera), sign transactions, add AI chat capabilities with built-in crypto and web3 tools, display Migrate.fun token migration data, or embed AI-powered monitoring and debugging into Node.js apps. Provides React components, TypeScript SDKs, session-based authentication, and Reflexive for AI introspection. Supports trading, token analysis, DeFi operations, token migration browsing, multi-language debugging, and custom AI tool plugins.
 license: MIT
-allowed-tools: Read, Write, Bash
 metadata:
   source-repo: EmblemCompany/EmblemAi-SKILLS
   source-homepage: https://emblemvault.dev
@@ -13,6 +12,8 @@ compatibility: Cross-platform skill compatible with Claude Code, Cursor, Codex, 
 # EmblemAI developer tools
 
 EmblemAI developer tools for multi-chain wallet authentication, AI-powered crypto workflows, and app introspection.
+
+Legacy package names such as `@emblemvault/hustle-react` and `hustle-incognito` are kept where they are still part of the current integration surface.
 
 ## What You Can Build
 
@@ -56,10 +57,10 @@ npm install @emblemvault/auth-sdk
 # React integration (includes auth)
 npm install @emblemvault/emblem-auth-react
 
-# AI chat for React
+# EmblemAI chat for React
 npm install @emblemvault/hustle-react
 
-# AI chat SDK (Node.js / vanilla JS)
+# EmblemAI chat SDK (Node.js / vanilla JS)
 npm install hustle-incognito
 
 # Token migration data (Migrate.fun)
@@ -97,6 +98,8 @@ function MyComponent() {
 }
 ```
 
+If the user is building their own React app, use the dedicated [../emblem-ai-react/SKILL.md](../emblem-ai-react/SKILL.md) skill for the React-specific references and examples.
+
 ### Option B: Vanilla JavaScript / Node.js
 
 ```typescript
@@ -115,10 +118,10 @@ auth.on('session', (session) => {
 });
 
 // Initialize AI with auth
-const hustle = new HustleIncognitoClient({ sdk: auth });
+const emblemAI = new HustleIncognitoClient({ sdk: auth });
 
 // Chat with AI
-const response = await hustle.chat([
+const response = await emblemAI.chat([
   { role: 'user', content: 'What tokens are trending on Base?' }
 ]);
 ```
@@ -221,15 +224,17 @@ Pre-built UI components for rapid development:
 <AuthStatus />              // Shows connection status
 
 // AI chat components
-<HustleChat />              // Full chat interface
-<HustleChatWidget />        // Floating chat widget
+<HustleChat />              // Full EmblemAI chat interface
+<HustleChatWidget />        // Floating EmblemAI chat widget
 ```
 
 **Reference**: [references/react-components.md](references/react-components.md)
 
+**Want to integrate EmblemAI into your own React app?** See the standalone [../emblem-ai-react/SKILL.md](../emblem-ai-react/SKILL.md) skill for the React auth, chat, component, and Migrate.fun examples in one place.
+
 ### Agent Wallet CLI
 
-Give AI agents their own crypto wallets via a single CLI command. Zero-config agent mode auto-generates a wallet on first run. Supports 7 chains, the full Hustle AI toolset, browser auth for humans, and password auth for agents.
+Give AI agents their own crypto wallets via a single CLI command. Zero-config agent mode auto-generates a wallet on first run. Supports 7 chains, the full EmblemAI toolset, browser auth for humans, and password auth for agents.
 
 ```bash
 # Zero-config -- auto-generates wallet, answers query, exits
@@ -385,18 +390,22 @@ Use the dedicated reference docs for the deeper examples that were split out to 
 - [references/agentwallet.md](references/agentwallet.md) - CLI usage, auth modes, prompts, and operational troubleshooting
 - [references/auth-sdk.md](references/auth-sdk.md) - auth flows, sessions, Node persistence patterns, and TypeScript types
 - [references/auth-react.md](references/auth-react.md) - provider setup, hooks, browser integrations, and UX patterns
-- [references/hustle-react.md](references/hustle-react.md) - chat UI patterns, streaming, and React composition
-- [references/hustle-incognito.md](references/hustle-incognito.md) - Node/browser SDK examples and environment configuration
+- [references/emblem-ai-react.md](references/emblem-ai-react.md) - chat UI patterns, streaming, and React composition
+- [references/emblem-ai-incognito.md](references/emblem-ai-incognito.md) - Node/browser SDK examples and environment configuration
 - [references/ai-tools.md](references/ai-tools.md) - tool coverage, market research, DeFi, and analysis prompts
+- [references/emblem-ai-prompt-examples.md](references/emblem-ai-prompt-examples.md) - shared EmblemAI prompt index with topic-specific example files
 - [references/migratefun-react.md](references/migratefun-react.md) - token migration browsing patterns and component usage
 - [references/react-components.md](references/react-components.md) - prebuilt component catalog and UI integration examples
+- [references/react-skill-proposal.md](references/react-skill-proposal.md) - proposed future React standalone-skill boundary and example gaps
 - [references/plugins.md](references/plugins.md) - custom plugin design, tool schemas, and executor examples
 - [references/signing.md](references/signing.md) - signer adapters and transaction examples for EVM, Solana, and Bitcoin
 - [references/reflexive.md](references/reflexive.md) - AI introspection, debugging, and MCP/server workflows
 - [README.md](README.md) - quick package map for choosing the right Emblem package
 
+If the user specifically wants React integration guidance, point them to [../emblem-ai-react/SKILL.md](../emblem-ai-react/SKILL.md).
+
 ---
 
-**Getting Started**: Start with `<ConnectButton />` to add wallet auth, then add `<HustleChat />` for AI capabilities.
+**Getting Started**: Start with `<ConnectButton />` to add wallet auth, then add `<HustleChat />` for EmblemAI capabilities.
 
 **Need Help?**: Check the reference docs in the `references/` folder for detailed API documentation.

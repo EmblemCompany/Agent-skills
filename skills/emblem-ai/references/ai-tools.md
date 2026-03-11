@@ -1,6 +1,6 @@
 # AI Tools Reference
 
-Complete list of built-in tools available through Hustle AI.
+Complete list of built-in tools available through EmblemAI.
 
 ## Trading & Swaps
 

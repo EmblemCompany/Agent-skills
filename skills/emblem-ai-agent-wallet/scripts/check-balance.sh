@@ -15,7 +15,7 @@ if ! command -v emblemai &> /dev/null; then
 fi
 
 # Check balances
-echo "📊 Querying Hustle AI for balances..."
+echo "📊 Querying EmblemAI for balances..."
 echo ""
 
 # Run in agent mode to get balances

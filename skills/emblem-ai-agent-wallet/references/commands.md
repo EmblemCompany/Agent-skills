@@ -130,7 +130,7 @@ Log file defaults to `~/.emblemai-stream.log`. Override with `--log-file <path>`
 | `--stream` | | Start with streaming enabled (default: on) |
 | `--log` | | Enable stream logging |
 | `--log-file <path>` | | Override log file path (default: `~/.emblemai-stream.log`) |
-| `--hustle-url <url>` | | Override Hustle API URL |
+| `--hustle-url <url>` | | Override EmblemAI API URL |
 | `--auth-url <url>` | | Override auth service URL |
 | `--api-url <url>` | | Override API service URL |
 
@@ -139,7 +139,7 @@ Log file defaults to `~/.emblemai-stream.log`. Override with `--log-file <path>`
 | Variable | Description |
 |----------|-------------|
 | `EMBLEM_PASSWORD` | Authentication password |
-| `HUSTLE_API_URL` | Override Hustle API URL |
+| `HUSTLE_API_URL` | Override EmblemAI API URL |
 | `EMBLEM_AUTH_URL` | Override auth service URL |
 | `EMBLEM_API_URL` | Override API service URL |
 
