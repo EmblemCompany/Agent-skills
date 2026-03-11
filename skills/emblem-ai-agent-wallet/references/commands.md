@@ -77,7 +77,7 @@ The `/auth` menu provides:
 | 5. EVM Address | Show your Ethereum/EVM address |
 | 6. Solana Address | Show your Solana address |
 | 7. BTC Addresses | Show your Bitcoin addresses (P2PKH, P2WPKH, P2TR) |
-| 8. Backup Agent Auth | Export credentials to a backup file |
+| 8. Backup Agent Auth | Export auth material locally (treat as highly sensitive) |
 | 9. Logout | Clear session (`session.json`) and exit; keeps encrypted credentials and wallet data intact |
 
 ### Payment (PAYG Billing)
@@ -118,12 +118,12 @@ Log file defaults to `~/.emblemai-stream.log`. Override with `--log-file <path>`
 
 ## CLI Flags
 
+This skill only documents non-secret CLI surfaces. Secret-bearing auth flags and credential environment variables are intentionally omitted from the shared skill package.
+
 | Flag | Alias | Description |
 |------|-------|-------------|
-| `--password <pw>` | `-p` | Authentication password (16+ chars) — skips browser auth |
 | `--message <msg>` | `-m` | Message for agent mode |
-| `--agent` | `-a` | Run in agent mode (single-shot, password auth only) |
-| `--restore-auth <path>` | | Restore credentials from backup file and exit |
+| `--agent` | `-a` | Run in agent mode (single-shot) after local auth/session setup |
 | `--reset` | | Clear conversation history and exit |
 | `--payg on [TOKEN]\|off` | | Configure PAYG billing at startup |
 | `--debug` | | Start with debug mode enabled |
@@ -133,14 +133,3 @@ Log file defaults to `~/.emblemai-stream.log`. Override with `--log-file <path>`
 | `--hustle-url <url>` | | Override Hustle API URL |
 | `--auth-url <url>` | | Override auth service URL |
 | `--api-url <url>` | | Override API service URL |
-
-## Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `EMBLEM_PASSWORD` | Authentication password |
-| `HUSTLE_API_URL` | Override Hustle API URL |
-| `EMBLEM_AUTH_URL` | Override auth service URL |
-| `EMBLEM_API_URL` | Override API service URL |
-
-CLI arguments override environment variables when both are provided.

@@ -8,12 +8,12 @@ metadata:
   version: "3.1.0"
   homepage: https://emblemvault.dev
   user-invocable: "true"
-  openclaw: '{"emoji":"🛡️","primaryEnv":"EMBLEM_PASSWORD","requires":{"bins":["node","npm","emblemai"],"env":["EMBLEM_PASSWORD"]},"config_paths":["~/.emblemai/.env","~/.emblemai/.env.keys","~/.emblemai/session.json","~/.emblemai/history/"],"install":[{"id":"npm","kind":"npm","package":"@emblemvault/agentwallet","bins":["emblemai"],"label":"Install Agent Wallet CLI"}]}'
+  openclaw: '{"emoji":"🛡️","requires":{"bins":["node","npm","emblemai"]},"config_paths":["~/.emblemai/session.json","~/.emblemai/history/"],"install":[{"id":"npm","kind":"npm","package":"@emblemvault/agentwallet","bins":["emblemai"],"label":"Install Agent Wallet CLI"}]}'
 ---
 
 # Emblem Agent Wallet
 
-Connect to **Agent Hustle** - EmblemVault's autonomous crypto AI with 250+ trading tools across 7 blockchains. Browser auth, streaming responses, plugin system, and zero-config agent mode.
+Connect to **Agent Hustle** - EmblemVault's autonomous crypto AI with 250+ trading tools across 7 blockchains. Browser auth, streaming responses, plugin system, and session-based wallet access.
 
 **Requires the CLI**: `npm install -g @emblemvault/agentwallet`
 
@@ -97,16 +97,15 @@ Run `emblemai` without `-p`. Opens a browser auth modal at `127.0.0.1:18247` sup
 
 Use this when a user wants to connect an existing wallet, switch wallets, sign in with Google/Twitter, or use MetaMask. Just tell them to run `emblemai` and select their preferred method in the browser modal. No CLI flag needed.
 
-### Password Auth (Agent/Scripted)
-Run `emblemai -p "password"` or `emblemai --agent`. In agent mode without `-p`, a password is auto-generated and stored encrypted. Different passwords produce different wallets. Login and signup are the same action.
+### Local Non-Interactive Auth
+The CLI also supports local non-interactive authentication for automation, but this skill does **not** document or encourage secret-bearing flags, pasted credentials, or environment-variable based secret handling. Keep secret entry local to the CLI/session tooling and prefer a previously established local session whenever possible.
 
 ## Wallet Data Safety (Critical)
 
 - Use `/auth` -> **Logout** (option 9) to sign out safely (clears `~/.emblemai/session.json` only).
 - **Never use `rm -rf ~/.emblemai` as a logout step.**
-- Never delete `~/.emblemai/.env` or `~/.emblemai/.env.keys` unless the user explicitly asks to destroy local credentials.
-- Before any destructive troubleshooting action, create a timestamped backup:
-  `cp -r ~/.emblemai ~/.emblemai.backup.$(date +%Y%m%d-%H%M%S)`
+- Never delete local credential material unless the user explicitly asks to destroy it.
+- Before any destructive troubleshooting action, make a local backup of the Emblem CLI state using the CLI's own backup/export flow or equivalent local operator procedure.
 
 ## Common Auth Workflows (Use CLI Commands — Do Not Prompt the LLM)
 
@@ -119,21 +118,17 @@ emblemai
 # then type: /auth
 # then choose: 9  (Logout)
 ```
-Or remove the session file directly (safe — preserves encrypted credentials):
-```bash
-rm -f ~/.emblemai/session.json
-```
+If the menu is unavailable, clear only the local session file using your normal local shell workflow; do not request or expose secrets in chat while doing so.
 
 ### Switch Wallet / Re-login with MetaMask or Another Provider
-1. Remove the current session: `rm -f ~/.emblemai/session.json`
+1. Clear the current local session using the CLI logout flow (preferred) or equivalent local session reset
 2. Launch browser auth: `emblemai`
 3. The auth modal opens — user selects their wallet (MetaMask, Phantom, etc.) or OAuth provider
 4. New session is saved automatically
 
 ### Force Browser Auth (Even If Session Exists)
-If you need to force a fresh browser sign-in, clear the saved session and relaunch interactive mode:
+If you need to force a fresh browser sign-in, clear the saved session locally and relaunch interactive mode:
 ```bash
-rm -f ~/.emblemai/session.json
 emblemai
 ```
 
@@ -167,10 +162,10 @@ emblemai
 ## Usage Patterns
 
 ### Agent Mode (For AI Agents - Single Shot)
-Use `--agent` mode for programmatic, single-message queries:
+Use `--agent` mode for programmatic, single-message queries **after local authentication/session setup is already in place**:
 
 ```bash
-# Zero-config - auto-generates password on first run
+# Read-only query
 emblemai --agent -m "What are my wallet addresses?"
 
 # Quote/analysis request
@@ -178,9 +173,6 @@ emblemai --agent -m "Get a swap quote for $20 of SOL to USDC on Solana"
 
 # Pipe output to other tools
 emblemai -a -m "What is my SOL balance?" | jq .
-
-# Use in scripts
-ADDRESSES=$(emblemai -a -m "List my addresses as JSON")
 ```
 
 ### Interactive Mode (For Humans)
@@ -201,23 +193,21 @@ emblemai --reset
 
 ### Authentication
 See [references/authentication.md](references/authentication.md) for:
-- Browser auth vs password auth
-- Credential discovery priority
+- Browser auth and local session handling
 - Session management
-- Backup and restore
+- Safe local recovery guidance
 
 ### Commands and Shortcuts
 See [references/commands.md](references/commands.md) for:
 - Interactive commands (`/help`, `/auth`, `/tools`, etc.)
 - Keyboard shortcuts
-- CLI flags and environment variables
+- Non-secret CLI usage patterns
 
 ### Security Model
 See [references/security.md](references/security.md) for:
-- File locations and permissions
-- Encryption details (AES-256-GCM)
+- Local secret-handling rules
 - Safe mode and transaction confirmation
-- Password hygiene best practices
+- Session and file safety basics
 
 ### Capabilities
 See [references/capabilities.md](references/capabilities.md) for:
@@ -276,7 +266,7 @@ npm install -g @emblemvault/agentwallet
 # Interactive mode (browser auth - recommended)
 emblemai
 
-# Agent mode (zero-config - auto-generates wallet)
+# Agent mode (after local auth/session setup)
 emblemai --agent -m "What are my balances?"
 
 # Agent mode (quote first for trading)
@@ -308,11 +298,6 @@ See [scripts/swap-tokens.py](scripts/swap-tokens.py) for implementation.
 
 ---
 
-## Configuration Template
-
-See [assets/config-template.env](assets/config-template.env) for environment variable templates.
-
----
 
 ## Links
 

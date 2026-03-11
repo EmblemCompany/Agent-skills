@@ -1,6 +1,6 @@
 # Authentication
 
-EmblemAI v3 supports two authentication methods: **browser auth** for interactive use and **password auth** for agent/scripted use.
+EmblemAI v3 supports browser-based interactive authentication and local session reuse for agent/scripted use. This skill intentionally avoids publishing secret-bearing auth examples.
 
 ## Browser Auth (Interactive Mode)
 
@@ -12,7 +12,7 @@ When you run `emblemai` without `-p`, the CLI:
 4. You authenticate via the EmblemVault auth modal in the browser
 5. The session JWT is captured, saved to disk, and the CLI proceeds
 6. If the browser can't open, the URL is printed for manual copy-paste
-7. If authentication times out (5 minutes), falls back to a password prompt
+7. If authentication times out (5 minutes), retry locally rather than moving secret entry into chat or skill examples
 
 ### Supported Browser Auth Methods
 
@@ -28,35 +28,28 @@ The browser auth modal supports multiple sign-in methods:
 
 When a user wants to use a different wallet or connect an existing wallet (e.g., MetaMask), direct them to run `emblemai` in interactive mode (no `-p` flag). The browser auth modal will open and they can select their preferred wallet or sign-in method. This does not require shelling out to the CLI to ask — the agent already knows these options are available.
 
-## Password Auth (Agent Mode)
+## Local Automation Note
 
-**Login and signup are the same action.** The first use of a password creates a vault; subsequent uses return the same vault. Different passwords produce different wallets.
-
-In agent mode, if no password is provided, a secure random password is auto-generated and stored encrypted via dotenvx. Agent mode works out of the box with no manual setup.
+The upstream CLI supports additional local automation flows, but this skill does not document secret-bearing flags, environment variables, or backup payload formats. For agent use, establish auth locally first, then reuse the resulting session from the CLI.
 
 ## What Happens on Authentication
 
-1. Browser auth: session JWT is received from browser and hydrated into the SDK
-   Password auth: password is sent to `EmblemAuthSDK.authenticatePassword()`
-2. A deterministic vault is derived — same credentials always yield the same vault
+1. Browser auth: a session JWT is received from the browser and hydrated into the SDK
+2. A deterministic vault/session context is restored locally
 3. The session provides wallet addresses across multiple chains: Solana, Ethereum, Base, BSC, Polygon, Hedera, Bitcoin
 4. `HustleIncognitoClient` is initialized with the session
 
-## Credential Discovery
+## Session Reuse Priority
 
-Before making requests, use credentials in this priority:
+Before making requests, use local auth/session state in this priority:
 
 | Method | How to use | Priority |
 |--------|-----------|----------|
-| Existing browser session | `emblemai` with valid `~/.emblemai/session.json` | 1 (highest) |
-| Encrypted credential | dotenvx-encrypted `~/.emblemai/.env` managed by CLI | 2 |
-| Auto-generate (agent mode) | Automatic on first run | 3 |
-| Local secure prompt | Fallback when browser auth fails | 4 (lowest) |
+| Existing browser session | `emblemai` with a valid local session | 1 (highest) |
+| Fresh browser auth | `emblemai` interactive login flow | 2 |
+| Local operator recovery flow | CLI logout/reset/re-auth done locally | 3 |
 
-If no credentials are found, direct the user to complete auth locally in the CLI (`emblemai` or `/auth`) and do not request secrets in chat responses.
-
-- Password must be 16+ characters
-- No recovery if lost (treat it like a private key)
+If no local session is available, direct the user/operator to complete auth locally in the CLI (`emblemai` or `/auth`) and do not request secrets in chat responses.
 
 ## Execution Notes
 
@@ -71,19 +64,9 @@ If no credentials are found, direct the user to complete auth locally in the CLI
 \`\`\`
 ```
 
-## Auth Backup and Restore
+## Backup and Restore
 
-### Backup
-
-From the `/auth` menu (option 8), select **Backup Agent Auth** to export credentials to a JSON file. This file contains sensitive credential material that can unlock wallet access — store it securely and offline when possible.
-
-### Restore
-
-```bash
-emblemai --restore-auth ~/emblemai-auth-backup.json
-```
-
-This places the credential files in `~/.emblemai/` so you can authenticate immediately.
+The CLI has local backup/restore capabilities for operators, but this skill intentionally omits secret-bearing backup payload examples and restore command walkthroughs. Treat exported auth material as highly sensitive and keep those procedures in local operator docs, not shared skill prompts.
 
 ## Wallet Addresses
 
