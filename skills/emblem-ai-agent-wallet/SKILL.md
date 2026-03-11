@@ -97,8 +97,8 @@ Run `emblemai` without `-p`. Opens a browser auth modal at `127.0.0.1:18247` sup
 
 Use this when a user wants to connect an existing wallet, switch wallets, sign in with Google/Twitter, or use MetaMask. Just tell them to run `emblemai` and select their preferred method in the browser modal. No CLI flag needed.
 
-### Local Non-Interactive Auth
-The CLI also supports local non-interactive authentication for automation, but this skill does **not** document or encourage secret-bearing flags, pasted credentials, or environment-variable based secret handling. Keep secret entry local to the CLI/session tooling and prefer a previously established local session whenever possible.
+### Password Auth for Agents
+The CLI also supports **password auth** for automation and agent workflows. This is a core feature for repeatable agent wallet access, but this shared skill intentionally avoids publishing secret-bearing examples, pasted credentials, or environment-variable recipes. Keep password entry and backup handling local to the CLI/operator environment, and prefer reusing an already-established local session whenever possible.
 
 ## Wallet Data Safety (Critical)
 
@@ -193,7 +193,7 @@ emblemai --reset
 
 ### Authentication
 See [references/authentication.md](references/authentication.md) for:
-- Browser auth and local session handling
+- Browser auth and password-auth positioning
 - Session management
 - Safe local recovery guidance
 

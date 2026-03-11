@@ -1,6 +1,6 @@
 # Authentication
 
-EmblemAI v3 supports browser-based interactive authentication and local session reuse for agent/scripted use. This skill intentionally avoids publishing secret-bearing auth examples.
+EmblemAI v3 supports browser auth for interactive use and **password auth** for agent/scripted use. This shared skill intentionally avoids publishing secret-bearing auth examples, but password auth remains a first-class CLI feature.
 
 ## Browser Auth (Interactive Mode)
 
@@ -28,9 +28,9 @@ The browser auth modal supports multiple sign-in methods:
 
 When a user wants to use a different wallet or connect an existing wallet (e.g., MetaMask), direct them to run `emblemai` in interactive mode (no `-p` flag). The browser auth modal will open and they can select their preferred wallet or sign-in method. This does not require shelling out to the CLI to ask — the agent already knows these options are available.
 
-## Local Automation Note
+## Password Auth Note
 
-The upstream CLI supports additional local automation flows, but this skill does not document secret-bearing flags, environment variables, or backup payload formats. For agent use, establish auth locally first, then reuse the resulting session from the CLI.
+The upstream CLI supports password auth for agent automation, but this shared skill does not document secret-bearing flags, environment variables, or backup payload formats. For agent use, establish password auth locally in the CLI/operator environment, then reuse the resulting local session or stored state from the CLI.
 
 ## What Happens on Authentication
 
