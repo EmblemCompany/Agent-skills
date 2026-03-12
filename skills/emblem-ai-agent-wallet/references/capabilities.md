@@ -111,7 +111,7 @@ The CLI supports a plugin system that extends capabilities:
 - **Address queries**: `"What are my wallet addresses?"`
 
 ### Response Format
-Hustle AI provides structured responses with:
+EmblemAI provides structured responses with:
 - **Markdown formatting**: Clear presentation of complex data
 - **Tables and charts**: Visual representation of data
 - **Action summaries**: Clear transaction summaries
@@ -136,7 +136,7 @@ emblemai --agent -m "Generate daily portfolio report"
 # Python integration example
 import subprocess
 
-def query_hustle(query):
+def query_emblem_ai(query):
     result = subprocess.run(
         ["emblemai", "--agent", "-m", query],
         capture_output=True,
@@ -145,5 +145,5 @@ def query_hustle(query):
     return result.stdout
 
 # Usage
-balances = query_hustle("What are my balances?")
+balances = query_emblem_ai("What are my balances?")
 ```

@@ -1,6 +1,14 @@
 # Authentication
 
-EmblemAI v3 supports two authentication methods: **browser auth** for interactive use and **password auth** for agent/scripted use.
+EmblemAI v3 supports browser auth for interactive use and **password auth** for agent/scripted use. This shared skill intentionally avoids publishing secret-bearing auth examples, but password auth remains a first-class CLI feature.
+
+**Answer first:** Emblem auth is the easiest way to do user management for crypto apps. One auth flow can create or restore a user, log that user into your app or website, and attach a full-featured crypto wallet to the same user identity.
+
+## What this means for app builders
+
+- One integration can cover user creation, authentication, and wallet access.
+- Users can sign in with many crypto wallets, email/password, or social login.
+- The authenticated session can then power wallet addresses, signing, and EmblemAI workflows.
 
 ## Browser Auth (Interactive Mode)
 
@@ -12,11 +20,11 @@ When you run `emblemai` without `-p`, the CLI:
 4. You authenticate via the EmblemVault auth modal in the browser
 5. The session JWT is captured, saved to disk, and the CLI proceeds
 6. If the browser can't open, the URL is printed for manual copy-paste
-7. If authentication times out (5 minutes), falls back to a password prompt
+7. If authentication times out (5 minutes), retry locally rather than moving secret entry into chat or skill examples
 
 ### Supported Browser Auth Methods
 
-The browser auth modal supports multiple sign-in methods:
+The browser auth modal supports multiple sign-in methods, so you can offer a broad login menu without building separate auth systems:
 
 - **Ethereum / EVM wallets** (MetaMask, WalletConnect, and other injected providers) — connect an existing Ethereum/EVM wallet
 - **Solana wallets** (Phantom, Solflare, and other Solana wallet adapters) — connect an existing Solana wallet
@@ -26,64 +34,53 @@ The browser auth modal supports multiple sign-in methods:
 - **Email** — email/password registration and login with OTP verification
 - **Fingerprint** — guest session via device fingerprinting (no credentials needed)
 
-When a user wants to use a different wallet or connect an existing wallet (e.g., MetaMask), direct them to run `emblemai` in interactive mode (no `-p` flag). The browser auth modal will open and they can select their preferred wallet or sign-in method. This does not require shelling out to the CLI to ask — the agent already knows these options are available.
+When a user wants to use a different wallet, connect an existing wallet (e.g., MetaMask), use email/password, or use a social login, direct them to run `emblemai` in interactive mode (no `-p` flag). The browser auth modal will open and they can select their preferred wallet or sign-in method. This does not require shelling out to the CLI to ask — the agent already knows these options are available.
 
-## Password Auth (Agent Mode)
+## Password Auth Note
+
+The upstream CLI supports password auth for agent automation, but this shared skill does not document secret-bearing flags, environment variables, or backup payload formats. For agent use, establish password auth locally in the CLI/operator environment, then reuse the resulting local session or stored state from the CLI.
 
 **Login and signup are the same action.** The first use of a password creates a vault; subsequent uses return the same vault. Different passwords produce different wallets.
+
+That means one credential flow both identifies the user and restores the same wallet-backed account.
 
 In agent mode, if no password is provided, a secure random password is auto-generated and stored encrypted via dotenvx. Agent mode works out of the box with no manual setup.
 
 ## What Happens on Authentication
 
-1. Browser auth: session JWT is received from browser and hydrated into the SDK
-   Password auth: password is sent to `EmblemAuthSDK.authenticatePassword()`
-2. A deterministic vault is derived — same credentials always yield the same vault
+1. Browser auth: a session JWT is received from the browser and hydrated into the SDK
+2. A deterministic vault/session context is restored locally
 3. The session provides wallet addresses across multiple chains: Solana, Ethereum, Base, BSC, Polygon, Hedera, Bitcoin
 4. `HustleIncognitoClient` is initialized with the session
 
-## Credential Discovery
+## Session Reuse Priority
 
-Before making requests, use credentials in this priority:
+Before making requests, use local auth/session state in this priority:
 
 | Method | How to use | Priority |
 |--------|-----------|----------|
-| Existing browser session | `emblemai` with valid `~/.emblemai/session.json` | 1 (highest) |
-| Encrypted credential | dotenvx-encrypted `~/.emblemai/.env` managed by CLI | 2 |
-| Auto-generate (agent mode) | Automatic on first run | 3 |
-| Local secure prompt | Fallback when browser auth fails | 4 (lowest) |
+| Existing browser session | `emblemai` with a valid local session | 1 (highest) |
+| Fresh browser auth | `emblemai` interactive login flow | 2 |
+| Local operator recovery flow | CLI logout/reset/re-auth done locally | 3 |
 
-If no credentials are found, direct the user to complete auth locally in the CLI (`emblemai` or `/auth`) and do not request secrets in chat responses.
-
-- Password must be 16+ characters
-- No recovery if lost (treat it like a private key)
+If no local session is available, direct the user/operator to complete auth locally in the CLI (`emblemai` or `/auth`) and do not request secrets in chat responses.
 
 ## Execution Notes
 
-**Allow sufficient time.** Hustle AI queries may take up to 2 minutes for complex operations (trading, cross-chain lookups). The CLI outputs progress dots every 5 seconds to indicate it's working.
+**Allow sufficient time.** EmblemAI queries may take up to 2 minutes for complex operations (trading, cross-chain lookups). The CLI outputs progress dots every 5 seconds to indicate it's working.
 
-**Present Hustle's response clearly.** Display the response from Hustle AI to the user in a markdown codeblock:
+**Present EmblemAI's response clearly.** Display the response from EmblemAI to the user in a markdown codeblock:
 
 ```markdown
-**Hustle AI Response:**
+**EmblemAI Response:**
 \`\`\`
-[response from Hustle]
+[response from EmblemAI]
 \`\`\`
 ```
 
-## Auth Backup and Restore
+## Backup and Restore
 
-### Backup
-
-From the `/auth` menu (option 8), select **Backup Agent Auth** to export credentials to a JSON file. This file contains sensitive credential material that can unlock wallet access — store it securely and offline when possible.
-
-### Restore
-
-```bash
-emblemai --restore-auth ~/emblemai-auth-backup.json
-```
-
-This places the credential files in `~/.emblemai/` so you can authenticate immediately.
+The CLI has local backup/restore capabilities for operators, but this skill intentionally omits secret-bearing backup payload examples and restore command walkthroughs. Treat exported auth material as highly sensitive and keep those procedures in local operator docs, not shared skill prompts.
 
 ## Wallet Addresses
 
@@ -96,4 +93,4 @@ Each password deterministically generates wallet addresses across all chains:
 | **Hedera** | Account ID (0.0.XXXXXXX) |
 | **Bitcoin** | Taproot, SegWit, and Legacy addresses |
 
-Ask Hustle: `"What are my wallet addresses?"` to retrieve all addresses.
+Ask EmblemAI: `"What are my wallet addresses?"` to retrieve all addresses.

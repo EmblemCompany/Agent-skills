@@ -15,11 +15,9 @@
 
 | Issue | Solution |
 |-------|----------|
-| "Password must be at least 16 characters" | Use a longer password (minimum 16 characters) |
 | "Authentication failed" | Check network connectivity to auth service |
 | Browser doesn't open for auth | Copy the printed URL and open it manually |
 | Session expired | Run `emblemai` again — browser will open for fresh login |
-| "Invalid credentials" | Ensure you're using the correct password (no typos) |
 | Authentication timeout | Increase timeout: wait up to 5 minutes for browser auth |
 
 ### Runtime Issues
@@ -37,7 +35,6 @@
 
 | Issue | Solution |
 |-------|----------|
-| Environment variable not recognized | Configure credentials in your local shell/session tooling and retry; never paste secrets into chat responses |
 | Config file permissions | Check permissions: `ls -la ~/.emblemai/` (should be 600/700) |
 | Corrupted session file | Preferred: `/auth` -> Logout, then rerun `emblemai`; fallback: `rm ~/.emblemai/session.json` |
 | History not persisting | Check write permissions: `touch ~/.emblemai/history/test.json` |
@@ -47,7 +44,7 @@
 
 | Issue | Solution |
 |-------|----------|
-| Cannot connect to Hustle API | Check firewall/network settings |
+| Cannot connect to EmblemAI API | Check firewall/network settings |
 | SSL certificate errors | Update system certificates or use `--hustle-url` with HTTP (not recommended) |
 | Proxy issues | Configure npm proxy: `npm config set proxy http://proxy:port` |
 | DNS resolution failures | Check DNS settings; try using IP addresses in URLs |
@@ -115,16 +112,6 @@ Log files contain:
 
 ## Recovery Procedures
 
-### Password Recovery
-
-**Important:** There is no password recovery mechanism. If you lose your password, you lose access to the wallet.
-
-**Prevention:**
-1. Use a password manager
-2. Create secure backups
-3. Use the `/auth` > Backup Agent Auth feature
-4. Store password in multiple secure locations
-
 ### Session Recovery
 
 If your session is corrupted or expired:
@@ -136,26 +123,12 @@ If your session is corrupted or expired:
 # Start fresh
 emblemai
 
-# Fallback only if menu is unavailable:
-rm ~/.emblemai/session.json
-emblemai
+# Fallback only if menu is unavailable: clear the local session file using your normal shell workflow, then relaunch `emblemai`
 ```
 
 ### Configuration Reset
 
-To reset all configuration safely:
-
-```bash
-# REQUIRED: backup before any reset
-TS=$(date +%Y%m%d-%H%M%S)
-cp -r ~/.emblemai ~/.emblemai.backup.$TS
-
-# Do not hard-delete wallet files; quarantine instead
-mv ~/.emblemai ~/.emblemai.quarantine.$TS
-
-# Start fresh
-emblemai
-```
+To reset local configuration safely, first make a local backup/export using the CLI's own recovery flow or your normal local operator procedure, then relaunch `emblemai`. Keep backup artifacts local and out of shared prompts.
 
 ### Conversation History Reset
 
