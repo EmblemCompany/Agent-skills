@@ -1,11 +1,15 @@
 # EmblemAI developer tools
 
-EmblemAI developer tools for multi-chain wallet authentication, AI-powered crypto tools, and developer workflows.
+EmblemAI developer tools for one-shot user management, multi-chain wallet authentication, AI-powered crypto tools, and developer workflows.
+
+With Emblem, you get the easiest way to add user management for wallet-native apps. One integration can create authenticated users who also have full-featured crypto wallets. Users can sign in with wallets, email/password, or social login, then continue into chat, signing, and crypto workflows.
 
 Legacy package names such as `@emblemvault/hustle-react` and `hustle-incognito` are preserved below until the underlying npm surfaces are renamed.
 
 ## Features
 
+- **One-shot User Management**: create website users who also have full-featured crypto wallets
+- **Flexible Login Options**: wallets, email/password, Google, Twitter/X
 - **Wallet Authentication**: Ethereum, Solana, Bitcoin, Hedera
 - **Transaction Signing**: viem, ethers.js, web3.js, Solana adapters
 - **AI Chat**: Built-in crypto and web3 tools for trading, analysis, and DeFi

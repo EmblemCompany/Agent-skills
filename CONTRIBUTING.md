@@ -18,7 +18,7 @@
    - `scripts/` — executable helpers (bash, python, etc.)
    - `assets/` — config templates, schemas
    - `examples/` — sample inputs/outputs
-   - If multiple skills share the same prompt or usage examples, keep the canonical source in `shared/` and sync skill-local copies via `utils/sync-emblem-ai-prompts.sh`
+   - If multiple skills share the same prompts, reference docs, or usage examples, keep the canonical source in `shared/` and sync skill-local copies via `utils/sync-emblem-ai-shared-references.sh`
    - For larger example sets, prefer an index `.md` plus a topic directory instead of letting one reference file grow indefinitely
 
 4. Validate:
@@ -74,7 +74,7 @@ skills/your-skill-name/
 ## Validation
 
 Every PR triggers `validate-all.sh` via GitHub Actions. It checks:
-- Shared EmblemAI prompt examples and topic directories are synced into each skill-local reference copy
+- Shared EmblemAI prompt examples and repeated React reference docs are synced into each skill-local reference copy
 - SKILL.md exists with valid frontmatter
 - `name` matches directory name
 - Line count recommendation (<500) with warning output

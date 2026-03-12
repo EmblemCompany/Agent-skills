@@ -1,6 +1,8 @@
 # @emblemvault/auth-sdk
 
-Core authentication SDK for Emblem wallet sessions.
+Core authentication SDK for one-shot user management and Emblem wallet sessions.
+
+With one integration, this SDK can authenticate a user for your app, restore that user's session, and attach a reusable wallet identity to the same account.
 
 ## Installation
 
@@ -23,6 +25,8 @@ const auth = new EmblemAuthSDK({
 ```
 
 ## Authentication Methods
+
+These methods let you offer wallet login, social login, or email-based login while keeping the resulting Emblem session in one place.
 
 ### Wallet modal (browser)
 

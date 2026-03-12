@@ -15,7 +15,7 @@ STRICT_MODE=0
 TARGET_SKILL=""
 
 # Strict Agent Skills spec top-level fields.
-STRICT_ALLOWED_FIELDS=("name" "description" "license" "allowed-tools" "metadata" "compatibility")
+STRICT_ALLOWED_FIELDS=("name" "description" "license" "allowed-tools" "metadata" "compatibility" "user-invocable")
 
 # Cross-platform superset used by default for broader compatibility.
 PERMISSIVE_ALLOWED_FIELDS=("name" "description" "license" "allowed-tools" "metadata" "compatibility" "user-invocable")

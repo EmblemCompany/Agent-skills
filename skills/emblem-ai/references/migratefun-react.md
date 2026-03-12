@@ -2,6 +2,8 @@
 
 React hooks and components for integrating Migrate.fun token migration data.
 
+For teams building on Migrate.fun, this is the easiest way to add token migration data and migration-aware UI to a React app.
+
 ## Installation
 
 ```bash

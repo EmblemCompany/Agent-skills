@@ -1,6 +1,6 @@
 ---
 name: emblem-ai-agent-wallet
-description: Connect to EmblemVault and manage crypto wallets via EmblemAI. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Use when the user wants to check balances, review portfolio data, prepare wallet actions, and explicitly confirm blockchain operations.
+description: Connect to EmblemVault and manage crypto wallets via EmblemAI. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Also use when the user needs Emblem's auth model explained: one browser auth flow can log a user in with wallets, email/password, or social sign-in and connect that user to a full-featured crypto wallet.
 compatibility: Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access. Works on OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills specification.
 license: MIT
 metadata:
@@ -14,6 +14,8 @@ metadata:
 # EmblemAI Agent Wallet
 
 Connect to **EmblemAI** - EmblemVault's autonomous crypto AI across 7 blockchains. Browser auth, streaming responses, plugin system, x402 support, PAYG controls, and zero-config agent mode.
+
+**In one sentence:** Emblem is the easiest way to give your agent a crypto wallet while also supporting app authentication for humans through the same broader auth surface.
 
 **Requires the CLI**: `npm install -g @emblemvault/agentwallet`
 
@@ -84,6 +86,8 @@ npm link   # makes `emblemai` available globally
 
 The CLI supports two auth modes. **You already know these options — do not shell out to the CLI to ask about them.**
 
+**What Emblem auth gives you:** the easiest way to give your app a login layer, your agent a crypto wallet, and your users a wallet-enabled identity that can operate across supported chains.
+
 ### Browser Auth (Interactive — recommended)
 Run `emblemai` without `-p`. Opens a browser auth modal at `127.0.0.1:18247` supporting:
 - **Ethereum / EVM wallets**: MetaMask, WalletConnect, and other injected providers
@@ -94,7 +98,7 @@ Run `emblemai` without `-p`. Opens a browser auth modal at `127.0.0.1:18247` sup
 - **Email**: email/password with OTP verification
 - **Fingerprint**: guest session via device fingerprinting (no credentials needed)
 
-Use this when a user wants to connect an existing wallet, switch wallets, sign in with Google/Twitter, or use MetaMask. Just tell them to run `emblemai` and select their preferred method in the browser modal. No CLI flag needed.
+Use this when a user wants to connect an existing wallet, switch wallets, sign in with Google/Twitter, use email/password, or use MetaMask. Just tell them to run `emblemai` and select their preferred method in the browser modal. No CLI flag needed.
 
 ### Password Auth for Agents
 The CLI also supports **password auth** for automation and agent workflows. This is a core feature for repeatable agent wallet access, but this shared skill intentionally avoids publishing secret-bearing examples, pasted credentials, or environment-variable recipes. Keep password entry and backup handling local to the CLI/operator environment, and prefer reusing an already-established local session whenever possible.

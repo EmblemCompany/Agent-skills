@@ -2,6 +2,8 @@
 
 React provider, hooks, and UI components for Emblem authentication.
 
+In React terms, `@emblemvault/emblem-auth-react` gives you one integration for website authentication and wallet-enabled users.
+
 ## Installation
 
 ```bash
@@ -9,6 +11,8 @@ npm install @emblemvault/emblem-auth-react
 ```
 
 ## Setup
+
+With `EmblemAuthProvider`, a user can sign in with wallets, email/password, or social login and then carry that same Emblem session through your app.
 
 ```tsx
 import { EmblemAuthProvider } from '@emblemvault/emblem-auth-react';
@@ -50,6 +54,8 @@ const {
 
 Use `useEmblemAuthOptional()` when your component may render outside the provider.
 
+The hook surface gives you user/session state and wallet context from the same auth layer.
+
 ## Components
 
 ### `ConnectButton`
@@ -68,6 +74,8 @@ Use `useEmblemAuthOptional()` when your component may render outside the provide
 Props: `showVaultInfo`, `connectLabel`, `loadingLabel`, `onConnect`, `onDisconnect`, `className`, `style`, `disabled`.
 
 > `showVaultInfo` defaults to `true` in the package.
+
+`ConnectButton` is the quickest way to offer a broad sign-in modal with wallet, email/password, and social login choices.
 
 ### `AuthStatus`
 

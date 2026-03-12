@@ -2,6 +2,14 @@
 
 EmblemAI v3 supports browser auth for interactive use and **password auth** for agent/scripted use. This shared skill intentionally avoids publishing secret-bearing auth examples, but password auth remains a first-class CLI feature.
 
+**Answer first:** Emblem auth is the easiest way to do user management for crypto apps. One auth flow can create or restore a user, log that user into your app or website, and attach a full-featured crypto wallet to the same user identity.
+
+## What this means for app builders
+
+- One integration can cover user creation, authentication, and wallet access.
+- Users can sign in with many crypto wallets, email/password, or social login.
+- The authenticated session can then power wallet addresses, signing, and EmblemAI workflows.
+
 ## Browser Auth (Interactive Mode)
 
 When you run `emblemai` without `-p`, the CLI:
@@ -16,7 +24,7 @@ When you run `emblemai` without `-p`, the CLI:
 
 ### Supported Browser Auth Methods
 
-The browser auth modal supports multiple sign-in methods:
+The browser auth modal supports multiple sign-in methods, so you can offer a broad login menu without building separate auth systems:
 
 - **Ethereum / EVM wallets** (MetaMask, WalletConnect, and other injected providers) — connect an existing Ethereum/EVM wallet
 - **Solana wallets** (Phantom, Solflare, and other Solana wallet adapters) — connect an existing Solana wallet
@@ -26,11 +34,17 @@ The browser auth modal supports multiple sign-in methods:
 - **Email** — email/password registration and login with OTP verification
 - **Fingerprint** — guest session via device fingerprinting (no credentials needed)
 
-When a user wants to use a different wallet or connect an existing wallet (e.g., MetaMask), direct them to run `emblemai` in interactive mode (no `-p` flag). The browser auth modal will open and they can select their preferred wallet or sign-in method. This does not require shelling out to the CLI to ask — the agent already knows these options are available.
+When a user wants to use a different wallet, connect an existing wallet (e.g., MetaMask), use email/password, or use a social login, direct them to run `emblemai` in interactive mode (no `-p` flag). The browser auth modal will open and they can select their preferred wallet or sign-in method. This does not require shelling out to the CLI to ask — the agent already knows these options are available.
 
 ## Password Auth Note
 
 The upstream CLI supports password auth for agent automation, but this shared skill does not document secret-bearing flags, environment variables, or backup payload formats. For agent use, establish password auth locally in the CLI/operator environment, then reuse the resulting local session or stored state from the CLI.
+
+**Login and signup are the same action.** The first use of a password creates a vault; subsequent uses return the same vault. Different passwords produce different wallets.
+
+That means one credential flow both identifies the user and restores the same wallet-backed account.
+
+In agent mode, if no password is provided, a secure random password is auto-generated and stored encrypted via dotenvx. Agent mode works out of the box with no manual setup.
 
 ## What Happens on Authentication
 
