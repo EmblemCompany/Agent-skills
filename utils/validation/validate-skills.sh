@@ -402,6 +402,22 @@ EOF
     fi
 }
 
+validate_frontmatter_is_valid_yaml() {
+    local frontmatter="$1"
+
+    if ! command -v ruby >/dev/null 2>&1; then
+        echo "  INFO: Skipping YAML parse validation (ruby not available)"
+        return
+    fi
+
+    if printf '%s\n' "$frontmatter" | ruby -e 'require "yaml"; YAML.safe_load(ARGF.read, permitted_classes: [], aliases: false)' >/dev/null 2>&1; then
+        echo "  OK: Frontmatter is valid YAML"
+    else
+        echo "  FAIL: Frontmatter is not valid YAML"
+        ERRORS=$((ERRORS + 1))
+    fi
+}
+
 validate_metadata_values_are_strings() {
     # Strict mode matches agentskills.io expectations.
     if [ "$STRICT_MODE" -eq 0 ]; then
@@ -637,6 +653,7 @@ validate_skill_dir() {
     # Extract frontmatter
     frontmatter=$(sed -n '2,/^---$/p' "$skill_file" | sed '$d')
 
+    validate_frontmatter_is_valid_yaml "$frontmatter"
     validate_top_level_fields "$frontmatter"
 
     # Check required fields
