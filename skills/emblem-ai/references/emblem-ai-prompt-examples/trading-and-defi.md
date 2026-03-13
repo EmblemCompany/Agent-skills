@@ -14,8 +14,8 @@ Get a quote to swap MATIC to USDC on Polygon. Do not execute.
 
 ```text
 Quote $100 of JUP on Solana. Do not execute.
-Buy BONK with 0.5 SOL on Solana.
-Buy 100k BONK on Solana and show me the exact expected spend first.
+Prepare a quote to buy BONK with 0.5 SOL on Solana. Stop before execution.
+Draft a plan to buy 100k BONK on Solana and show the exact expected spend before asking for confirmation.
 Swap 50 USDC to BONK on Solana and stop before execution.
 If BONK is ambiguous, show me the candidate token addresses first.
 ```
@@ -26,7 +26,7 @@ If BONK is ambiguous, show me the candidate token addresses first.
 Prepare a swap plan for $100 of ETH to USDC on Base, but stop before execution.
 Show the exact transaction summary and approval steps before any swap.
 Quote this trade with a maximum slippage tolerance of 1%.
-Find the best BSC route to swap BNB into USDC and summarize fees.
+Find the best BSC route to swap BNB into USDC, summarize fees, and wait for explicit confirmation before execution.
 Show me the preferred native USDC route on Base instead of bridged USDbC.
 ```
 
@@ -43,9 +43,9 @@ Compare lending, LP, and staking options for idle USDC.
 ## Meme Token Discovery By Platform
 
 ```text
-Show me trending Clanker tokens on Base with enough liquidity to trade.
+Show me trending Clanker tokens on Base with enough liquidity for safe execution planning.
 Find new PumpFun launches on Solana with growing holders and volume.
 Show me promising FourMeme tokens on BSC.
 Find active MemeJob tokens on Hedera.
-Recommend tradeable meme tokens above a 10k market cap and filter obvious rugs.
+Recommend meme tokens above a 10k market cap, filter obvious rugs, and stop at watchlist output.
 ```

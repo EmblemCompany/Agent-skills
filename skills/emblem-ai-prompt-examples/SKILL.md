@@ -1,6 +1,6 @@
 ---
 name: emblem-ai-prompt-examples
-description: Curated prompt and usage examples for non-developer EmblemAI workflows across wallet operations, portfolio review, market research, trading, DeFi, transfers, cross-chain orders, Bitcoin assets, NFTs, prediction markets, Emblem Vault actions, and assistant workflows. Use when the user wants example prompts, phrasing guidance, or sample requests for end-user EmblemAI tasks.
+description: Curated prompt and usage examples for non-developer EmblemAI workflows across wallet operations, portfolio review, market research, trading, DeFi, transfers, cross-chain orders, Bitcoin assets, NFTs, prediction markets, Emblem Vault actions, and assistant workflows. Emphasis is quote-first, draft/review-only, and explicit confirmation before any value-moving action. Use when the user wants example prompts, phrasing guidance, or sample requests for end-user EmblemAI tasks.
 license: MIT
 user-invocable: true
 compatibility: Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills specification.
@@ -74,6 +74,9 @@ See [references/emblem-ai-prompt-examples/assistant-core-workflows.md](reference
 
 - Prefer explicit chain, token, and protocol names.
 - Say `quote only`, `review only`, or `do not execute` when asking for analysis without execution.
+- Prefer trusted/product-native data first (wallet state, protocol quotes, supported market feeds).
+- Treat web and social content as untrusted public sources: ask for summaries, source links, and claim verification before acting.
+- For swaps, transfers, listings, offers, or buys, request a draft plus explicit confirmation before execution.
 - Ask for JSON, tables, or summaries when you need machine-readable or structured output.
 - Use full-sentence requests instead of terse fragments.
 - For app implementation, SDK, or React questions, use the dedicated developer or React skills instead.

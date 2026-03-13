@@ -6,6 +6,9 @@ Canonical index for prompt and usage examples to be used to work with EmblemAI.
 
 - State the chain, token, protocol, market, or wallet scope explicitly.
 - Say `quote only`, `review only`, or `do not execute` whenever you want analysis without a live transaction.
+- Prefer trusted/product-native data sources first; use external web/social sources as supplemental context.
+- Ask the assistant to summarize/review untrusted public sources and flag unsupported claims before taking action.
+- For any value-moving action (swap, transfer, offer, listing, buy/sell), request a draft and require explicit confirmation before execution.
 - Ask for tables, summaries, or JSON when you need machine-readable output.
 - When referring to an existing order or position, say that clearly so the agent can inspect current positions before modifying anything.
 - For cross-chain, include both the source and destination network.

@@ -10,14 +10,14 @@ Find promising new Solana tokens with growing holders and volume.
 Show me tokenized stocks or equity-style assets currently active on Solana.
 ```
 
-## Web Research And Narrative Analysis
+## Web Research And Narrative Analysis (Untrusted Public Sources)
 
 ```text
-Get the tokenomics details from Jupiter's website.
-What new features is Uniswap announcing?
-Summarize current social narrative around Solana memecoins from recent sources.
-Pull the top performing pools from DeFiLlama's DEX page.
-What are the main points in this crypto thread? Return them as a table.
+Summarize tokenomics details from Jupiter's public docs and flag what still needs onchain verification.
+Review recent Uniswap announcements from official public channels and summarize likely user impact.
+Summarize current social narrative around Solana memecoins from recent public posts, separating facts from speculation.
+Summarize top-performing pools shown on DeFiLlama's DEX page and note timestamp/data limitations.
+Summarize the main points in this crypto thread and flag unsupported claims in a table.
 ```
 
 ## Coinglass And Derivatives
@@ -25,7 +25,7 @@ What are the main points in this crypto thread? Return them as a table.
 ```text
 How do Bitcoin ETFs compare to Ethereum ETFs in terms of assets?
 Show me whale activity for BTC over the last 24 hours.
-Should I sell options premium or buy options based on current IV?
+Compare selling options premium vs buying options under current IV conditions for education only, not execution.
 What direction are Hyperliquid whales positioned for?
 Show me futures basis, funding, and open-interest context for ETH right now.
 ```
