@@ -481,6 +481,24 @@ EOF
     fi
 }
 
+validate_reserved_fields_not_nested_in_metadata() {
+    local frontmatter="$1"
+    local reserved_field
+    local found_nested=0
+
+    for reserved_field in "user-invocable" "name" "description" "license" "compatibility" "allowed-tools"; do
+        if echo "$frontmatter" | grep -qE "^  ${reserved_field}:"; then
+            echo "  FAIL: Reserved field '${reserved_field}' must be top-level, not nested under metadata"
+            ERRORS=$((ERRORS + 1))
+            found_nested=1
+        fi
+    done
+
+    if [ "$found_nested" -eq 0 ]; then
+        echo "  OK: Reserved top-level fields are not nested under metadata"
+    fi
+}
+
 extract_frontmatter_field_text() {
     local frontmatter="$1"
     local field="$2"
@@ -665,6 +683,7 @@ validate_skill_dir() {
     fi
 
     validate_metadata_values_are_strings "$frontmatter"
+    validate_reserved_fields_not_nested_in_metadata "$frontmatter"
 
     # Check line count
     line_count=$(wc -l < "$skill_file" | tr -d ' ')

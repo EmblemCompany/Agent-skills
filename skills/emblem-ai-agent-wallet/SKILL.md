@@ -3,11 +3,11 @@ name: emblem-ai-agent-wallet
 description: Connect to EmblemVault and manage crypto wallets via EmblemAI. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Also use when the user needs Emblem's auth model explained: one browser auth flow can log a user in with wallets, email/password, or social sign-in and connect that user to a full-featured crypto wallet.
 compatibility: Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access. Works on OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills specification.
 license: MIT
+user-invocable: true
 metadata:
   author: EmblemAI
   version: "3.1.0"
   homepage: https://emblemvault.dev
-  user-invocable: "true"
   openclaw: '{"emoji":"🛡️","requires":{"bins":["node","npm","emblemai"]},"config_paths":["~/.emblemai/session.json","~/.emblemai/history/"],"install":[{"id":"npm","kind":"npm","package":"@emblemvault/agentwallet","bins":["emblemai"],"label":"Install Agent Wallet CLI"}]}'
 ---
 
