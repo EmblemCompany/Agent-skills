@@ -8,7 +8,6 @@ sync_prompt_examples() {
   local source_file="$ROOT_DIR/shared/emblem-ai-prompt-examples.md"
   local source_dir="$ROOT_DIR/shared/emblem-ai-prompt-examples"
   local targets=(
-    "$ROOT_DIR/skills/emblem-ai-agent-wallet/references/emblem-ai-prompt-examples.md"
     "$ROOT_DIR/skills/emblem-ai/references/emblem-ai-prompt-examples.md"
     "$ROOT_DIR/skills/emblem-ai-react/references/emblem-ai-prompt-examples.md"
     "$ROOT_DIR/skills/emblem-ai-prompt-examples/references/emblem-ai-prompt-examples.md"

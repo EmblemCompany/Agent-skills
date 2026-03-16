@@ -13,14 +13,6 @@ All commands are prefixed with `/`. Type them in the input bar and press Enter.
 | `/settings` | Show current configuration (vault ID, model, streaming, debug, tools) |
 | `/exit` | Exit the CLI (also: `/quit`) |
 
-### Plugins
-
-| Command | Description |
-|---------|-------------|
-| `/plugins` | List all plugins with status |
-| `/plugin <name> on\|off` | Enable or disable a plugin by name |
-| `/secrets` | Manage encrypted plugin secrets |
-
 ### Chat and History
 
 | Command | Description |
@@ -116,31 +108,6 @@ Log file defaults to `~/.emblemai-stream.log`. Override with `--log-file <path>`
 | `Ctrl+C` | Exit |
 | `Ctrl+D` | Exit (EOF) |
 
-## CLI Flags
+## Local-Only Flags And Environment
 
-| Flag | Alias | Description |
-|------|-------|-------------|
-| `--password <pw>` | `-p` | Authentication password (16+ chars) — skips browser auth |
-| `--message <msg>` | `-m` | Message for agent mode |
-| `--agent` | `-a` | Run in agent mode (single-shot, password auth only) |
-| `--restore-auth <path>` | | Restore credentials from backup file and exit |
-| `--reset` | | Clear conversation history and exit |
-| `--payg on [TOKEN]\|off` | | Configure PAYG billing at startup |
-| `--debug` | | Start with debug mode enabled |
-| `--stream` | | Start with streaming enabled (default: on) |
-| `--log` | | Enable stream logging |
-| `--log-file <path>` | | Override log file path (default: `~/.emblemai-stream.log`) |
-| `--hustle-url <url>` | | Override EmblemAI API URL |
-| `--auth-url <url>` | | Override auth service URL |
-| `--api-url <url>` | | Override API service URL |
-
-## Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `EMBLEM_PASSWORD` | Authentication password |
-| `HUSTLE_API_URL` | Override EmblemAI API URL |
-| `EMBLEM_AUTH_URL` | Override auth service URL |
-| `EMBLEM_API_URL` | Override API service URL |
-
-CLI arguments override environment variables when both are provided.
+This shared skill intentionally omits secret-bearing flags, local environment variables, and non-interactive auth recipes from the public docs. Use interactive mode, `/auth`, and the CLI's local `/help` output when an operator needs that local-only detail.

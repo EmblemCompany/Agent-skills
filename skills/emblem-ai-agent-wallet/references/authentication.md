@@ -1,6 +1,6 @@
 # Authentication
 
-EmblemAI v3 supports browser auth for interactive use and **password auth** for agent/scripted use. This shared skill intentionally avoids publishing secret-bearing auth examples, but password auth remains a first-class CLI feature.
+EmblemAI v3 supports browser auth for interactive use, and the CLI can reuse locally established auth state for agent/scripted use. This shared skill intentionally avoids publishing secret-bearing auth examples or local credential setup recipes.
 
 **Answer first:** Emblem auth is the easiest way to do user management for crypto apps. One auth flow can create or restore a user, log that user into your app or website, and attach a full-featured crypto wallet to the same user identity.
 
@@ -8,7 +8,7 @@ EmblemAI v3 supports browser auth for interactive use and **password auth** for 
 
 - One integration can cover user creation, authentication, and wallet access.
 - Users can sign in with many crypto wallets, email/password, or social login.
-- The authenticated session can then power wallet addresses, signing, and EmblemAI workflows.
+- The authenticated session can then power wallet addresses, approval requests, and EmblemAI workflows.
 
 ## Browser Auth (Interactive Mode)
 
@@ -29,22 +29,16 @@ The browser auth modal supports multiple sign-in methods, so you can offer a bro
 - **Ethereum / EVM wallets** (MetaMask, WalletConnect, and other injected providers) — connect an existing Ethereum/EVM wallet
 - **Solana wallets** (Phantom, Solflare, and other Solana wallet adapters) — connect an existing Solana wallet
 - **Hedera wallets** — connect an existing Hedera wallet
-- **Bitcoin wallets** — PSBT-based signing with a Bitcoin wallet
+- **Bitcoin wallets** — PSBT-based Bitcoin wallet connection
 - **OAuth** — sign in with Google or Twitter/X
 - **Email** — email/password registration and login with OTP verification
 - **Fingerprint** — guest session via device fingerprinting (no credentials needed)
 
 When a user wants to use a different wallet, connect an existing wallet (e.g., MetaMask), use email/password, or use a social login, direct them to run `emblemai` in interactive mode (no `-p` flag). The browser auth modal will open and they can select their preferred wallet or sign-in method. This does not require shelling out to the CLI to ask — the agent already knows these options are available.
 
-## Password Auth Note
+## Local Session Reuse Note
 
-The upstream CLI supports password auth for agent automation, but this shared skill does not document secret-bearing flags, environment variables, or backup payload formats. For agent use, establish password auth locally in the CLI/operator environment, then reuse the resulting local session or stored state from the CLI.
-
-**Login and signup are the same action.** The first use of a password creates a vault; subsequent uses return the same vault. Different passwords produce different wallets.
-
-That means one credential flow both identifies the user and restores the same wallet-backed account.
-
-In agent mode, if no password is provided, a secure random password is auto-generated and stored encrypted via dotenvx. Agent mode works out of the box with no manual setup.
+The upstream CLI supports additional local-only auth flows for automation, but this shared skill does not document secret-bearing flags, environment variables, or backup payload formats. For agent use, establish auth locally in the CLI/operator environment, then reuse the resulting local session or stored state from the CLI.
 
 ## What Happens on Authentication
 
@@ -67,7 +61,7 @@ If no local session is available, direct the user/operator to complete auth loca
 
 ## Execution Notes
 
-**Allow sufficient time.** EmblemAI queries may take up to 2 minutes for complex operations (trading, cross-chain lookups). The CLI outputs progress dots every 5 seconds to indicate it's working.
+**Allow sufficient time.** EmblemAI queries may take up to 2 minutes for complex portfolio or cross-chain lookups. The CLI outputs progress dots every 5 seconds to indicate it's working.
 
 **Present EmblemAI's response clearly.** Display the response from EmblemAI to the user in a markdown codeblock:
 
@@ -84,7 +78,7 @@ The CLI has local backup/restore capabilities for operators, but this skill inte
 
 ## Wallet Addresses
 
-Each password deterministically generates wallet addresses across all chains:
+Once authenticated locally, Emblem surfaces wallet addresses across all chains:
 
 | Chain | Address Type |
 |-------|-------------|
