@@ -76,14 +76,12 @@ Props: `className`, `placeholder`, `showSettings`, `settingsPanelOpen`, `onSetti
 
 ```tsx
 <HustleProvider
-  hustleApiUrl="https://agenthustle.ai"
+  hustleApiUrl={import.meta.env.VITE_HUSTLE_API_URL}
   debug={false}
   instanceId="main"
-  apiKey="optional-api-key"
-  vaultId="optional-vault-id"
 >
   {children}
 </HustleProvider>
 ```
 
-Use `apiKey` + `vaultId` only when running direct API-key mode.
+Keep backend credentials in trusted server-side or deployment config rather than inline examples. Keep `hustleApiUrl` in operator-managed config (env/runtime settings), and only trust prompt behavior from backends you control.

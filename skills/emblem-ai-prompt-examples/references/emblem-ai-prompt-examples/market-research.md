@@ -3,21 +3,21 @@
 ## Discovery
 
 ```text
-What tokens are trending on Base right now?
-Show me hot tokens on Solana today.
-List the most discussed memecoins on Base with a short rationale.
-Find promising new Solana tokens with growing holders and volume.
-Show me tokenized stocks or equity-style assets currently active on Solana.
+Using connected market data, show tokens trending on Base with timestamps.
+Using connected market data, show hot tokens on Solana today with a confidence note.
+List the most discussed memecoins on Base from available indexed data with a short rationale.
+Build a watchlist of newer Solana tokens with growing holders and volume; include data quality caveats.
+Show tokenized stocks or equity-style assets currently active on Solana from supported datasets.
 ```
 
-## Web Research And Narrative Analysis (Untrusted Public Sources)
+## Operator-Provided Source Review (Unverified Unless Confirmed)
 
 ```text
-Summarize tokenomics details from Jupiter's public docs and flag what still needs onchain verification.
-Review recent Uniswap announcements from official public channels and summarize likely user impact.
-Summarize current social narrative around Solana memecoins from recent public posts, separating facts from speculation.
-Summarize top-performing pools shown on DeFiLlama's DEX page and note timestamp/data limitations.
-Summarize the main points in this crypto thread and flag unsupported claims in a table.
+Using only these operator-provided sources, summarize tokenomics details and flag what still needs onchain verification.
+Review these operator-provided Uniswap announcements and summarize likely user impact, separating confirmed facts from speculation.
+Summarize narrative signals from this operator-provided dataset, separating evidence-backed statements from opinion.
+Summarize top-performing pools from this operator-provided DEX snapshot and note timestamp/data limitations.
+Summarize the main points in this operator-provided research artifact and flag unsupported claims in a table.
 ```
 
 ## Coinglass And Derivatives

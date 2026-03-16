@@ -1,6 +1,6 @@
 # reflexive
 
-AI-powered introspection and debugging for running applications. Reflexive embeds Claude inside your app or child process so it can inspect logs, read and edit files, set breakpoints, and respond to runtime events.
+AI-powered introspection and debugging for running applications. Reflexive embeds Claude inside your app or child process so it can inspect logs, read files, set breakpoints, and respond to runtime events. File edits and shell execution are opt-in capabilities, disabled by default.
 
 **Supported runtimes:** Node.js, Python, Go, .NET, Rust
 
@@ -24,29 +24,32 @@ npx reflexive ./server.js
 # Basic read-only monitoring
 npx reflexive ./server.js
 
-# Development mode with file write + shell access
-npx reflexive --write --shell --watch ./server.js
+# Development mode with watch + debugging (read-only baseline)
+npx reflexive --debug --watch ./server.js
 
 # Python app with debugging
 npx reflexive --debug ./app.py
 
 # Open the dashboard automatically
-npx reflexive --write --open ./server.js
+npx reflexive --open ./server.js
 ```
 
 Open `http://localhost:3099` to chat with the app, inspect logs, and manage breakpoints.
 
 ## Safety Model
 
-Default mode is read-only. Reflexive can see logs and read files, but it cannot mutate code or run shell commands unless you explicitly opt in.
+Default mode is read-only. Reflexive can see logs and read files, but any mutating or execution-oriented capability must be explicitly enabled by a trusted operator.
 
-| Flag | Enables |
-|------|---------|
-| `--write` | File modification |
-| `--shell` | Shell command execution |
-| `--inject` | Deep Node.js instrumentation (console, HTTP, GC, event loop) |
-| `--eval` | Runtime code evaluation in Node.js |
-| `--debug` | Breakpoints, stepping, and scope inspection |
+| Capability class | Purpose |
+|------------------|---------|
+| Read-only baseline | Logs, file reads, breakpoints, and runtime inspection |
+| Advanced mutation options | File changes, deeper instrumentation, or command execution when you intentionally opt in |
+| Debug controls | Breakpoints, stepping, and scope inspection |
+
+Recommended guardrails:
+- Keep Reflexive bound to local interfaces (`--host localhost`) unless you intentionally need remote access.
+- Enable advanced mutation or execution flags only for trusted codebases and trusted operators.
+- Treat MCP-connected tools and external servers as separate trust boundaries; review before enabling.
 
 ## CLI Reference
 
@@ -65,11 +68,7 @@ reflexive [options] [entry-file] [-- app-args...]
 | `-i, --interactive` | Proxy stdin/stdout for interactive apps |
 | `--mcp` | Run as an MCP server for external AI agents |
 | `--no-webui` | Disable the dashboard in MCP mode |
-| `--inject` | Enable deep Node.js instrumentation |
-| `--eval` | Allow runtime eval in Node.js |
 | `-d, --debug` | Enable multi-language debugging |
-| `--write` | Allow file writes |
-| `--shell` | Allow shell execution |
 | `--node-args <args>` | Pass extra args to Node.js |
 
 ## Operating Modes
@@ -84,10 +83,10 @@ npx reflexive ./server.js
 
 ### MCP server mode
 
-Run Reflexive as a stdio MCP server so external agents can control an app.
+Run Reflexive as a stdio MCP server so external agents can inspect and control an app. Start read-only, then add mutating flags only when required.
 
 ```bash
-npx reflexive --mcp --write --shell ./server.js
+npx reflexive --mcp ./server.js
 ```
 
 Useful with Claude Code, Claude Desktop, and any MCP-compatible client. Reflexive supports dynamic app switching through the `run_app` tool, so the MCP server does not need to restart when you move between apps.
@@ -95,7 +94,7 @@ Useful with Claude Code, Claude Desktop, and any MCP-compatible client. Reflexiv
 #### Claude Code integration
 
 ```bash
-claude mcp add --transport stdio reflexive -- npx reflexive --mcp --write --shell --debug
+claude mcp add --transport stdio reflexive -- npx reflexive --mcp --debug
 ```
 
 Or add to `.mcp.json`:
@@ -104,10 +103,12 @@ Or add to `.mcp.json`:
 {
   "reflexive": {
     "command": "npx",
-    "args": ["reflexive", "--mcp", "--write", "--shell", "--debug"]
+    "args": ["reflexive", "--mcp", "--debug"]
   }
 }
 ```
+
+If a workflow requires mutation, add only the minimum needed capability (for example `--write` without `--shell`) and keep execution local.
 
 ### Library mode
 
@@ -171,8 +172,7 @@ When Reflexive is running as an MCP server, the connected agent can use tools su
 - `search_logs`
 - `read_file`
 - `list_directory`
-- `write_file` / `edit_file` (requires `--write`)
-- `exec_shell` (requires `--shell`)
+- Advanced mutation tools become available only when a trusted operator explicitly enables mutation capabilities.
 - `chat`
 - `reflexive_self_knowledge`
 - `list_available_mcp_servers`

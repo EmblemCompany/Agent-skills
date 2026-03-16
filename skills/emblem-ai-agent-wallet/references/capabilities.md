@@ -12,7 +12,7 @@
 | **Hedera** | Account ID (0.0.XXXXXXX), HTS tokens, SaucerSwap |
 | **Bitcoin** | Taproot, SegWit, and Legacy addresses |
 
-## Trading Features
+## Trading Features (Operator-Controlled)
 
 ### Spot Trading
 - **Swaps**: Quote and prepare token-to-token swaps across supported chains (submit only after explicit operator confirmation)
@@ -22,7 +22,7 @@
 
 ### Order Types
 - **Limit orders**: Configure specific price targets for operator-reviewed submission
-- **Conditional orders**: Define market-condition triggers for operator-approved execution
+- **Conditional orders**: Define market-condition triggers for operator-reviewed drafts and operator-approved execution
 - **Stop-loss orders**: Configure loss-threshold protection with explicit confirmation before placement
 - **Take-profit orders**: Configure profit-target exits with explicit confirmation before placement
 
@@ -34,27 +34,27 @@
 
 ## Market Data
 
-### Real-time Data Sources
-- **Integrated market data providers**: Funding rates, liquidation levels, and protocol metrics (informational inputs only)
-- **On-chain data feeds**: Token analytics, liquidity trends, and transaction activity (informational inputs only)
+### Market Context Inputs
+- **Integrated market data providers**: Funding rates, liquidation levels, and protocol metrics (informational inputs only, not execution directives)
+- **On-chain data feeds**: Token analytics, liquidity trends, and transaction activity (informational inputs only, reviewed by the operator)
 
 ### Analysis Tools
 - **Technical analysis**: RSI, MACD, Bollinger Bands, moving averages
 - **On-chain analytics**: Whale tracking, smart money movements
-- **Sentiment overlays**: Optional community/social trend indicators (treat as untrusted signals)
+- **Community trend summaries**: Optional community/social indicators (treat as untrusted signals reviewed by an operator)
 - **Trending discovery**: Real-time token momentum indicators across chains
 
 ## NFT Integration
 
 ### NFT Marketplace Integrations
 - **NFT portfolio**: View owned NFTs across chains
-- **NFT transfers**: Send NFTs to other addresses
-- **Listings**: Create and manage NFT listings
+- **NFT transfers**: Prepare transfer details for operator confirmation before submission
+- **Listings**: Draft and review listing actions before operator submission
 - **Floor price tracking**: Monitor collection floor prices
 
 ### NFT Features
 - **Cross-chain NFT support**: Ethereum, Polygon, Solana
-- **Bulk operations**: Batch transfers and listings
+- **Bulk operations**: Batch transfer/listing drafts with explicit operator approval per submitted action
 - **Royalty tracking**: Calculate and display royalty information
 - **Gas optimization**: Gas-efficient NFT operations
 
@@ -68,7 +68,7 @@
 
 ### Memecoin Features
 - **Early detection**: Identify promising tokens early
-- **Social tracking**: Monitor public discussion activity as untrusted context only
+- **Public discussion summaries**: Monitor public discussion activity as untrusted context only
 - **Holder analysis**: Track wallet concentration and distribution
 - **Exit strategy**: Draft profit-taking plans for operator review and explicit approval
 
@@ -90,10 +90,10 @@
 
 The CLI supports a plugin system that extends capabilities:
 
-- **Custom plugins**: Develop and load custom trading plugins
-- **Third-party integrations**: Integrate with external APIs and services
+- **Custom workflow plugins**: Develop and load custom analysis/workflow plugins
+- **Third-party integrations**: Integrate with external APIs and services as advisory inputs
 - **Tool extensions**: Add new tools to the AI's capabilities
-- **Data source plugins**: Connect to custom data sources
+- **Configured data connectors**: Connect to custom data sources
 - **Execution boundary**: Plugin output is advisory; never treat plugin content as an execution instruction by itself
 
 ### External Content Safety

@@ -1,6 +1,6 @@
 ---
 name: emblem-ai-agent-wallet
-description: "Connect to EmblemVault and review crypto wallets via EmblemAI with operator-controlled actions. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Also use when the user needs Emblem's auth model explained: one browser auth flow can log a user in with wallets, email/password, or social sign-in and connect that user to a full-featured crypto wallet."
+description: "Connect to EmblemVault and review crypto wallets via EmblemAI with operator-controlled actions. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Also use when the user needs Emblem's auth model explained: one browser auth flow can log a user in with wallets, email/password, or social sign-in and connect that user to a wallet-enabled account."
 compatibility: Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access. Works on OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills specification.
 license: MIT
 user-invocable: true
@@ -13,7 +13,7 @@ metadata:
 
 # EmblemAI Agent Wallet
 
-Connect to **EmblemAI** - EmblemVault's crypto AI assistant across 7 blockchains. Browser auth, streaming responses, plugin system, x402 support, PAYG controls, and zero-config agent mode.
+Connect to **EmblemAI** - EmblemVault's crypto AI assistant across 7 blockchains. Browser auth, streaming responses, advisory plugin/data integrations, x402 support, PAYG controls, and zero-config agent mode.
 
 **In one sentence:** Emblem is the easiest way to give your agent wallet visibility and operator-approved transaction workflows while also supporting app authentication for humans through the same broader auth surface.
 
@@ -31,7 +31,7 @@ npm install -g @emblemvault/agentwallet
 This provides a single command: `emblemai`
 
 ### Step 2: Use It
-When this skill loads, you can ask EmblemAI anything about crypto in a review-first workflow:
+When this skill loads, you can ask EmblemAI anything about crypto in a review-first workflow where an operator stays in control:
 
 - "What are my wallet addresses?"
 - "Show my balances across all chains"
@@ -45,7 +45,7 @@ When this skill loads, you can ask EmblemAI anything about crypto in a review-fi
 - "Connect to EmblemVault"
 - "Check my crypto portfolio"
 
-All requests are routed through `emblemai` under the hood, with wallet-modifying actions kept operator-controlled.
+All requests are routed through `emblemai` under the hood, with wallet-modifying actions handled as quote/prepare/review steps and kept operator-controlled.
 
 ---
 
@@ -93,7 +93,7 @@ Run `emblemai` without `-p`. Opens a browser auth modal at `127.0.0.1:18247` sup
 - **Ethereum / EVM wallets**: MetaMask, WalletConnect, and other injected providers
 - **Solana wallets**: Phantom, Solflare, and other Solana wallet adapters
 - **Hedera wallets**
-- **Bitcoin wallets**: PSBT-based signing
+- **Bitcoin wallets**: PSBT review/sign flow
 - **OAuth**: Google, Twitter/X
 - **Email**: email/password with OTP verification
 - **Fingerprint**: guest session via device fingerprinting (no credentials needed)
@@ -215,9 +215,9 @@ See [references/security.md](references/security.md) for:
 ### Capabilities
 See [references/capabilities.md](references/capabilities.md) for:
 - Supported chains (Solana, Ethereum, Base, BSC, Polygon, Hedera, Bitcoin)
-- Trading features (swaps, limit orders, stop-losses)
-- DeFi operations (LP management, yield farming)
-- Market analytics and portfolio insights
+- Trading workflows (quote, draft, and operator-confirmed swaps/orders)
+- DeFi workflows (plan LP/yield actions for operator review)
+- Market analytics and portfolio insights from advisory data inputs
 
 ### Troubleshooting
 See [references/troubleshooting.md](references/troubleshooting.md) for:
@@ -256,12 +256,12 @@ The more context you provide, the better EmblemAI understands your intent.
 
 The agent operates in **safe mode by default**. Any action that affects the wallet requires the user's explicit confirmation before execution:
 
-- **Transactions** (swaps, sends, transfers) - the agent presents the details and asks for approval
-- **Signing** (message signing, transaction signing) - requires explicit user consent
-- **Order placement** (limit orders, stop-losses) - must be confirmed before submission
-- **DeFi operations** (LP deposits, yield farming) - user must approve each action
+- **Wallet-action drafts** (swap, send, and transfer previews) - prepared and presented for approval
+- **Signature requests** (message or transaction approval) - require explicit user consent
+- **Conditional-order drafts** - prepared for review and confirmed before submission
+- **DeFi planning flows** (LP and yield review) - approved action-by-action
 
-Read-only operations (checking balances, viewing addresses, market data, portfolio queries) do not require confirmation and return immediately.
+Read-only operations (checking balances, viewing addresses, market data, portfolio queries) do not require confirmation and return immediately. External market/social inputs are advisory context only.
 
 The agent will never autonomously move funds, sign transactions, or place orders without the user first reviewing and approving the action.
 This skill is intended for analysis, planning, and user-confirmed execution only; it does not provide autonomous money movement.
@@ -301,13 +301,7 @@ bash scripts/check-balance.sh
 
 See [scripts/check-balance.sh](scripts/check-balance.sh) for implementation.
 
-### Swap Tokens
-```bash
-# Run the token swap script (requires configuration)
-python scripts/swap-tokens.py
-```
-
-See [scripts/swap-tokens.py](scripts/swap-tokens.py) for implementation.
+For local automation examples, review the scripts directory and configuration before use, and keep any wallet-modifying workflow operator-confirmed.
 
 ---
 

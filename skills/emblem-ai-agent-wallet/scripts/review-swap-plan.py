@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# swap-tokens.py - Example Python script for token swaps using EmblemAI Agent Wallet
-# Usage: python3 scripts/swap-tokens.py
+# review-swap-plan.py - Example Python script for quote/review swap planning with EmblemAI Agent Wallet
+# Usage: python3 scripts/review-swap-plan.py
 
 import subprocess
 import json
@@ -47,8 +47,8 @@ def check_balances():
             print(response)
     return None
 
-def swap_tokens(from_token, to_token, amount, chain="Solana"):
-    """Get a token swap quote."""
+def get_swap_quote(from_token, to_token, amount, chain="Solana"):
+    """Get a quote-only swap plan."""
     query = f"Get a quote to swap {amount} of {from_token} to {to_token} on {chain} with 1% slippage (do not execute)"
     print(f"🔄 Requesting swap quote: {query}")
     
@@ -63,7 +63,7 @@ def swap_tokens(from_token, to_token, amount, chain="Solana"):
     return None
 
 def main():
-    print("🔄 EmblemAI Token Swap Quote Script")
+    print("🔄 EmblemAI Swap Quote Review Script")
     print("==============================")
     
     # Check if emblemai is available
@@ -75,15 +75,15 @@ def main():
     # Example 1: Check balances
     balances = check_balances()
     
-    # Example 2: Generate a swap quote
+    # Example 2: Generate a quote-only swap plan
     print("\n" + "="*50)
-    print("Example swap quote command:")
+    print("Example quote-review command:")
     print("="*50)
     
     # This is just an example; execution still requires explicit user confirmation
     # Uncomment and modify for actual use
     """
-    swap_response = swap_tokens(
+    swap_response = get_swap_quote(
         from_token="SOL",
         to_token="USDC",
         amount="$20",
@@ -91,12 +91,12 @@ def main():
     )
     """
     
-    print("\n📝 Example swap command you can run manually:")
+    print("\n📝 Example quote-review command you can run manually:")
     print("  emblemai --agent -m 'Get a quote to swap $20 of SOL to USDC on Solana with 1% slippage (do not execute)'")
     
     print("\n🔧 Configuration tips:")
     print("1. Complete browser auth first by running: emblemai")
-    print("2. Run in script: python3 scripts/swap-tokens.py")
+    print("2. Run in script: python3 scripts/review-swap-plan.py")
     print("3. For production, handle credentials with local secure storage")
     
     print("\n⚠️  Important:")

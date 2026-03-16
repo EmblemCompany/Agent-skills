@@ -20,7 +20,7 @@ import { HustleIncognitoClient } from 'hustle-incognito';
 const emblemAIClient = new HustleIncognitoClient({
   apiKey: process.env.HUSTLE_API_KEY,
   vaultId: process.env.VAULT_ID,
-  hustleApiUrl: 'https://agenthustle.ai' // optional
+  hustleApiUrl: process.env.HUSTLE_API_URL // optional trusted backend URL
 });
 ```
 
@@ -33,7 +33,7 @@ import { HustleIncognitoClient } from 'hustle-incognito';
 const auth = new EmblemAuthSDK({ appId: 'your-app-id' });
 const emblemAIClient = new HustleIncognitoClient({
   sdk: auth,
-  hustleApiUrl: 'https://agenthustle.ai'
+  hustleApiUrl: process.env.HUSTLE_API_URL
 });
 ```
 
@@ -113,5 +113,5 @@ await emblemAIClient.use({
 ```bash
 export HUSTLE_API_KEY=your-key
 export VAULT_ID=your-vault-id
-export HUSTLE_API_URL=https://agenthustle.ai
+export HUSTLE_API_URL=https://api.emblemvault.ai
 ```

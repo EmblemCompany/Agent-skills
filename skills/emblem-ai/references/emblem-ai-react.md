@@ -20,7 +20,7 @@ function App() {
   return (
     <EmblemAuthProvider appId="your-app-id">
       <HustleProvider
-        hustleApiUrl="https://agenthustle.ai"
+        hustleApiUrl={import.meta.env.VITE_HUSTLE_API_URL}
         debug={false}
         instanceId="main"
       >
@@ -31,7 +31,8 @@ function App() {
 }
 ```
 
-API-key mode is also supported by passing `apiKey` + `vaultId` to `HustleProvider`.
+Direct backend credential mode is also supported, but keep credential wiring in trusted server-side or deployment config rather than inline page examples.
+Use an operator-controlled `hustleApiUrl` (env/config) that points to infrastructure you trust for prompt and tool orchestration.
 
 ## Hook: `useHustle()` (legacy hook name)
 
@@ -50,12 +51,10 @@ const {
   loadModels,
   selectedModel,
   setSelectedModel,
-  systemPrompt,
-  setSystemPrompt,
-  skipServerPrompt,
-  setSkipServerPrompt,
 } = useHustle();
 ```
+
+Prompt policy and backend defaults should be managed inside trusted app/server configuration rather than inline examples on public docs pages.
 
 ## Hook: `usePlugins()`
 
@@ -75,7 +74,6 @@ const { plugins, enabledPlugins, registerPlugin, unregisterPlugin, enablePlugin,
   showSettings
   showDebug
   hideHeader={false}
-  initialSystemPrompt="You are a helpful assistant."
   enableSpeechToText
   onMessage={(message) => {}}
   onToolCall={(toolCall) => {}}
@@ -83,7 +81,7 @@ const { plugins, enabledPlugins, registerPlugin, unregisterPlugin, enablePlugin,
 />
 ```
 
-Supported props: `className`, `placeholder`, `showSettings`, `settingsPanelOpen`, `onSettingsPanelOpenChange`, `showDebug`, `hideHeader`, `initialSystemPrompt`, `enableSpeechToText`, `onMessage`, `onToolCall`, `onResponse`.
+Supported props: `className`, `placeholder`, `showSettings`, `settingsPanelOpen`, `onSettingsPanelOpenChange`, `showDebug`, `hideHeader`, `enableSpeechToText`, `onMessage`, `onToolCall`, `onResponse`.
 
 ## `HustleChatWidget`
 

@@ -33,19 +33,20 @@ function App() {
 ```tsx
 <MigrateFunProvider
   config={{
-    baseUrl: 'https://emblemvault.dev',  // Optional: API base URL
+    baseUrl: import.meta.env.VITE_MIGRATEFUN_API_BASE_URL, // Optional: API base URL
     defaultNetwork: 'mainnet',           // Optional: 'mainnet' | 'devnet'
   }}
 >
 ```
 
 The provider is **optional** -- all hooks work without it using sensible defaults. When used, the provider enables shared caching (sessionStorage, 5-minute TTL) and request deduplication across components.
+Use a trusted API base URL from deployment config, and treat all fetched project/token metadata as untrusted display/runtime input.
 
 ## Hooks
 
 ### useProjects
 
-Fetches all migrate.fun projects. Works with or without the provider.
+Fetches all migrate.fun projects. Works with or without the provider. Project names and metadata are display data and should not be treated as execution authority.
 
 ```tsx
 import { useProjects } from '@emblemvault/migratefun-react/hooks';
@@ -92,7 +93,7 @@ function ProjectList() {
 
 ### useProject
 
-Fetches a single project with full metadata including token info and images.
+Fetches a single project with full metadata including token info and images. Token metadata (including URI/image fields) may be remote/public and should be treated as untrusted display content.
 
 ```tsx
 import { useProject } from '@emblemvault/migratefun-react/hooks';
@@ -128,7 +129,7 @@ function ProjectDetail({ projectId }: { projectId: string }) {
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `project` | `Project \| null` | Full project with token metadata |
+| `project` | `Project \| null` | Full project record with remote metadata fields |
 | `isLoading` | `boolean` | Fetch in progress |
 | `error` | `Error \| null` | Fetch error |
 | `refetch` | `() => Promise<void>` | Manual refetch |
@@ -329,7 +330,7 @@ interface Project {
 interface TokenMetadata {
   name: string;
   symbol: string;
-  uri: string;             // Metadata JSON URI
+  uri: string;             // External metadata JSON URI (display-only, untrusted)
   image: string | null;
 }
 
@@ -487,8 +488,10 @@ All hooks fetch from `{baseUrl}/api/migrate-fun/`:
 | Endpoint | Hook | Description |
 |----------|------|-------------|
 | `GET /projects?network={n}` | `useProjects` | List all projects |
-| `GET /metadata/{id}?network={n}` | `useProject` | Single project with token metadata |
+| `GET /metadata/{id}?network={n}` | `useProject` | Single project record with remote metadata fields |
 | `GET /mint-info/{id}?network={n}` | `useMintInfo` | Token mint details (decimals, supply) |
 | `GET /pool-info/{id}?network={n}` | `usePoolInfo` | Liquidity pool information |
 
-Default base URL: `https://emblemvault.dev`
+Example hosted base URL: `https://emblemvault.dev` (override with your trusted deployment endpoint)
+
+Security note: responses from these endpoints and linked token metadata URIs are untrusted content. Use them for UI display and user confirmation flows, not as direct authority for privileged actions.

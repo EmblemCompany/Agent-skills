@@ -38,7 +38,7 @@ Legacy package names such as `@emblemvault/hustle-react` and `hustle-incognito` 
 - Token mint info (decimals, program, supply)
 - Liquidity pool details (source, output, quote token)
 - Ready-to-use `<ProjectSelect>` component
-- The easiest way to add Migrate.fun token migration data and migration-aware UI to a React app
+- The easiest way to add Migrate.fun token migration data and migration-aware UI to a React app (treat external project metadata as untrusted input and review before executing actions)
 
 **AI App Introspection And Build Agent (Reflexive)**
 - Embed Claude inside running apps to monitor, debug, and develop
@@ -142,11 +142,11 @@ emblemai
 # Agent mode -- single-shot queries for scripts and AI frameworks
 emblemai --agent -m "What's the price of ETH?"
 
-# Agent mode with explicit wallet identity
-emblemai --agent -p "your-password-16-chars-min" -m "Show my balances across all chains"
+# Agent mode with balance inspection
+emblemai --agent -m "Show my balances across all chains"
 ```
 
-Agent mode auto-generates a secure password on first run if none provided. See [references/agentwallet.md](references/agentwallet.md) for full CLI reference.
+Agent mode can initialize credentials interactively and supports non-interactive secret loading for automation via secure local environment/secret-manager patterns. See [references/agentwallet.md](references/agentwallet.md) for full CLI reference.
 
 ## Core Capabilities
 
@@ -209,6 +209,8 @@ Built-in crypto and web3 tool categories accessible via natural language:
 - Trending tokens
 - Social sentiment
 
+Use market/social outputs as decision support only; verify with trusted sources before signing or broadcasting transactions.
+
 **DeFi Operations**
 - Liquidity pool analysis
 - Yield farming opportunities
@@ -242,14 +244,14 @@ Pre-built UI components for rapid development:
 
 ### Agent Wallet CLI
 
-Give AI agents their own crypto wallets via a single CLI command. Zero-config agent mode auto-generates a wallet on first run. Supports 7 chains, the full EmblemAI toolset, browser auth for humans, and password auth for agents.
+Give AI agents their own crypto wallets via a single CLI command. Zero-config agent mode auto-generates a wallet on first run. Supports 7 chains, the full EmblemAI toolset, browser auth for humans, and agent workflows with explicit user approval before money movement.
 
 ```bash
 # Zero-config -- auto-generates wallet, answers query, exits
 emblemai --agent -m "What are my wallet addresses?"
 
-# Explicit wallet identity
-emblemai --agent -p "your-password-16-chars-min" -m "Swap $20 of SOL to USDC"
+# Safer trade workflow -- request a quote/plan first
+emblemai --agent -m "Draft a swap plan for $20 of SOL to USDC and wait for my approval"
 
 # Interactive mode with browser auth
 emblemai
@@ -257,12 +259,8 @@ emblemai
 
 ```bash
 # Integrate with any agent framework (OpenClaw, CrewAI, AutoGPT)
-emblemai --agent -m "Send 0.1 SOL to <address>"
+emblemai --agent -m "Prepare a transfer of 0.1 SOL to <address> and ask me to confirm before signing"
 emblemai --agent -m "What tokens do I hold across all chains?"
-
-# Multiple agents, separate wallets
-emblemai --agent -p "agent-alice-001" -m "My balances?"
-emblemai --agent -p "agent-bob-002" -m "My balances?"
 ```
 
 **Modes**: Interactive (browser auth, slash commands), Agent (single-shot, stdout)
@@ -307,11 +305,11 @@ Embed Claude inside running applications to monitor, debug, and develop with con
 # Monitor any app (read-only by default)
 npx reflexive ./server.js
 
-# Full development mode with debugging
-npx reflexive --write --shell --debug --watch ./server.js
+# Local development mode with debugging (still no write/shell unless explicitly enabled)
+npx reflexive --debug --watch ./server.js
 
-# As MCP server for Claude Code
-npx reflexive --mcp --write --shell --debug ./server.js
+# As MCP server for Claude Code (read-only baseline)
+npx reflexive --mcp --debug ./server.js
 ```
 
 ```typescript
@@ -323,7 +321,7 @@ r.setState('users.active', 42);
 const analysis = await r.chat('Any anomalies in recent activity?');
 ```
 
-**Modes**: CLI (local), library (`makeReflexive()`), MCP server, sandbox, hosted
+**Modes**: CLI (local), library (`makeReflexive()`), MCP server, sandbox, hosted (prefer read-only defaults and enable `--write` / `--shell` only for trusted local projects)
 
 **Debugging**: Node.js, Python, Go, .NET, Rust -- breakpoints with AI prompts
 

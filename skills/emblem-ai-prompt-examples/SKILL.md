@@ -1,6 +1,6 @@
 ---
 name: emblem-ai-prompt-examples
-description: Curated prompt and usage examples for non-developer EmblemAI workflows across wallet operations, portfolio review, market research, trading, DeFi, transfers, cross-chain orders, Bitcoin assets, NFTs, prediction markets, Emblem Vault actions, and assistant workflows. Emphasis is quote-first, draft/review-only, and explicit confirmation before any value-moving action. Use when the user wants example prompts, phrasing guidance, or sample requests for end-user EmblemAI tasks.
+description: Curated prompt and usage examples for research, portfolio review, quote requests, approval-gated drafts, NFT discovery, prediction-market analysis, and assistant workflows. Emphasis is review-first, trust-boundary-aware use of external data, and explicit confirmation before any value-moving action. Use when the user wants example prompts, phrasing guidance, or sample requests for end-user EmblemAI tasks.
 license: MIT
 user-invocable: true
 compatibility: Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills specification.
@@ -45,25 +45,25 @@ See [references/emblem-ai-prompt-examples/wallet-and-portfolio.md](references/em
 See [references/emblem-ai-prompt-examples/market-research.md](references/emblem-ai-prompt-examples/market-research.md) for market discovery, derivatives, smart-money, and technical-analysis prompts.
 
 ### Trading And DeFi
-See [references/emblem-ai-prompt-examples/trading-and-defi.md](references/emblem-ai-prompt-examples/trading-and-defi.md) for quote-first swaps, routing, and yield prompts.
+See [references/emblem-ai-prompt-examples/trading-and-defi.md](references/emblem-ai-prompt-examples/trading-and-defi.md) for quote-first swaps, routing review, and yield-planning prompts.
 
 ### Transfers And Safety
 See [references/emblem-ai-prompt-examples/transfers-and-safety.md](references/emblem-ai-prompt-examples/transfers-and-safety.md) for review-only transfer language and approval framing.
 
 ### Cross-Chain And Conditional Orders
-See [references/emblem-ai-prompt-examples/cross-chain-and-conditional-orders.md](references/emblem-ai-prompt-examples/cross-chain-and-conditional-orders.md) for bridge workflows, stop-losses, take-profit orders, and multi-network trade prompts.
+See [references/emblem-ai-prompt-examples/cross-chain-and-conditional-orders.md](references/emblem-ai-prompt-examples/cross-chain-and-conditional-orders.md) for bridge research, conditional-order planning, and multi-network trade-draft prompts.
 
 ### Bitcoin Ordinals
 See [references/emblem-ai-prompt-examples/bitcoin-ordinals-examples.md](references/emblem-ai-prompt-examples/bitcoin-ordinals-examples.md) for ordinals, runes, rare sats, and Bitcoin wallet prompts.
 
 ### Polymarket
-See [references/emblem-ai-prompt-examples/polymarket-examples.md](references/emblem-ai-prompt-examples/polymarket-examples.md) for prediction-market discovery, odds analysis, and order prompts.
+See [references/emblem-ai-prompt-examples/polymarket-examples.md](references/emblem-ai-prompt-examples/polymarket-examples.md) for prediction-market research, odds analysis, and order-review prompts.
 
 ### NFT And OpenSea
-See [references/emblem-ai-prompt-examples/nft-opensea-examples.md](references/emblem-ai-prompt-examples/nft-opensea-examples.md) for NFT discovery, listings, offers, and marketplace flows.
+See [references/emblem-ai-prompt-examples/nft-opensea-examples.md](references/emblem-ai-prompt-examples/nft-opensea-examples.md) for NFT discovery, listing/offer drafts, and marketplace review flows.
 
 ### Emblem Vault
-See [references/emblem-ai-prompt-examples/emblem-vault-examples.md](references/emblem-ai-prompt-examples/emblem-vault-examples.md) for vault discovery, QuickVault, minting, and key-reveal safety prompts.
+See [references/emblem-ai-prompt-examples/emblem-vault-examples.md](references/emblem-ai-prompt-examples/emblem-vault-examples.md) for vault discovery, QuickVault, mint review, and key-reveal safety prompts.
 
 ### Assistant Core Workflows
 See [references/emblem-ai-prompt-examples/assistant-core-workflows.md](references/emblem-ai-prompt-examples/assistant-core-workflows.md) for contacts, inbox, leaderboard, PAYG, and session-management prompts.
