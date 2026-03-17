@@ -54,11 +54,11 @@ await auth.openOAuth('google'); // or 'twitter'
 ### Email OTP
 
 ```typescript
-await auth.sendEmailOtp({ email: 'user@example.com' });
+await auth.sendEmailOtp({ email: userProvidedEmail });
 
 const session = await auth.verifyEmailOtp({
-  email: 'user@example.com',
-  otpCode: '123456'
+  email: userProvidedEmail,
+  otpCode: userProvidedOtp
 });
 ```
 
@@ -68,8 +68,7 @@ const session = await auth.verifyEmailOtp({
 const session = auth.getSession(); // sync
 
 if (session) {
-  console.log(session.authToken);
-  console.log(session.user.vaultId);
+  console.log('Session available for the authenticated user');
 }
 
 await auth.refreshSession();
@@ -84,7 +83,6 @@ The SDK does not expose a custom `storage` adapter config. For Node or custom pe
 
 ```typescript
 const vaultInfo = await auth.getVaultInfo();
-const apiKey = await auth.getVaultApiKey();
 ```
 
 ## Events

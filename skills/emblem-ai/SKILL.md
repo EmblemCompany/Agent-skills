@@ -92,7 +92,7 @@ function App() {
 }
 
 function MyComponent() {
-  const { isAuthenticated, walletAddress, vaultId } = useEmblemAuth();
+  const { isAuthenticated, walletAddress } = useEmblemAuth();
 
   if (!isAuthenticated) {
     return <ConnectButton />;
@@ -117,8 +117,8 @@ const auth = new EmblemAuthSDK({ appId: 'your-app-id' });
 auth.openAuthModal();
 
 // Listen for session
-auth.on('session', (session) => {
-  console.log('Authenticated:', session.user.vaultId);
+auth.on('session', () => {
+  console.log('Authenticated session ready');
 });
 
 // Initialize AI with auth
@@ -329,31 +329,21 @@ const analysis = await r.chat('Any anomalies in recent activity?');
 
 ## Session Management
 
-Emblem uses JWT-based sessions with automatic refresh:
+Emblem uses short-lived sessions with automatic refresh. Treat session data as sensitive runtime state: do not print tokens, paste them into prompts, or pass them via CLI flags.
 
 ```typescript
-// Session structure
-interface Session {
-  authToken: string;      // JWT for API calls
-  refreshToken?: string;  // For mobile/native apps
-  expiresAt: number;      // Unix timestamp
-  user: {
-    vaultId: string;
-    identifier?: string;
-  };
-  appId: string;
-}
-
-// Events
-auth.on('session', (session) => { /* new session */ });
+auth.on('session', () => { /* new session available */ });
 auth.on('sessionExpired', () => { /* handle expiry */ });
-auth.on('sessionRefreshed', (session) => { /* refreshed */ });
-auth.on('sessionWillRefresh', (info) => { /* refresh soon */ });
-auth.on('authError', (error) => { /* auth failure */ });
+auth.on('sessionRefreshed', () => { /* refreshed */ });
+auth.on('sessionWillRefresh', () => { /* refresh soon */ });
+auth.on('authError', () => { /* auth failure */ });
 auth.on('cancelled', () => { /* user closed auth */ });
+
+await auth.refreshSession();
+auth.logout();
 ```
 
-Sessions auto-refresh ~60 seconds before expiry. No manual token management needed.
+Sessions auto-refresh ~60 seconds before expiry. No manual token handling is needed in typical browser flows.
 
 ## Custom AI Plugins
 

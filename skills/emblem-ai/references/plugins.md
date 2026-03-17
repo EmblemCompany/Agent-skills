@@ -67,7 +67,9 @@ const weatherPlugin = {
 ```typescript
 import { HustleIncognito } from 'hustle-incognito';
 
-const client = new HustleIncognito({ apiKey: '...' });
+const client = new HustleIncognito({
+  getAuthHeaders: async () => buildTrustedBackendHeaders()
+});
 client.use(weatherPlugin);
 
 // Now EmblemAI can use get_weather

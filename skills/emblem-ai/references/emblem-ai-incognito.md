@@ -12,17 +12,9 @@ npm install hustle-incognito
 
 ## Initialization
 
-### API key mode (server scripts)
+### Server-side credential mode
 
-```typescript
-import { HustleIncognitoClient } from 'hustle-incognito';
-
-const emblemAIClient = new HustleIncognitoClient({
-  apiKey: process.env.HUSTLE_API_KEY,
-  vaultId: process.env.VAULT_ID,
-  hustleApiUrl: process.env.HUSTLE_API_URL // optional trusted backend URL
-});
-```
+Initialize the client on a trusted backend with credentials loaded from your deployment platform or secret manager. Public docs intentionally omit raw API-key, vault-id, and bearer-token field examples.
 
 ### Auth SDK mode (browser)
 
@@ -37,19 +29,11 @@ const emblemAIClient = new HustleIncognitoClient({
 });
 ```
 
-### JWT / custom auth mode
+### Trusted header / custom auth mode
 
 ```typescript
 const emblemAIClient = new HustleIncognitoClient({
-  jwt: 'token' // or getJwt / getAuthHeaders
-});
-
-const clientWithDynamicJwt = new HustleIncognitoClient({
-  getJwt: async () => getToken()
-});
-
-const clientWithHeaders = new HustleIncognitoClient({
-  getAuthHeaders: async () => ({ Authorization: `Bearer ${await getToken()}` })
+  getAuthHeaders: async () => buildTrustedBackendHeaders()
 });
 ```
 
@@ -108,10 +92,6 @@ await emblemAIClient.use({
 });
 ```
 
-## Environment variables
+## Deployment note
 
-```bash
-export HUSTLE_API_KEY=your-key
-export VAULT_ID=your-vault-id
-export HUSTLE_API_URL=https://api.emblemvault.ai
-```
+Keep EmblemAI credentials in your existing secret manager or deployment environment. Avoid hard-coding API keys, vault identifiers, or bearer tokens in prompts, docs, or CLI arguments.
