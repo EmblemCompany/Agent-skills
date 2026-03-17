@@ -63,7 +63,7 @@ emblemai --agent -m "What is the price of ETH?"
   - [emblem-ai-react.md](./references/emblem-ai-react.md) - React EmblemAI chat
   - [emblem-ai-incognito.md](./references/emblem-ai-incognito.md) - EmblemAI SDK
   - [ai-tools.md](./references/ai-tools.md) - Built-in AI tools
-  - [emblem-ai-prompt-examples.md](./references/emblem-ai-prompt-examples.md) - Prompt and usage examples shared across EmblemAI skills
+  - [../emblem-ai-prompt-examples/SKILL.md](../emblem-ai-prompt-examples/SKILL.md) - Standalone EmblemAI prompt catalog shared across skills
   - [plugins.md](./references/plugins.md) - Plugin integrations
   - [react-components.md](./references/react-components.md) - Component reference
   - [migratefun-react.md](./references/migratefun-react.md) - Migrate.fun React hooks

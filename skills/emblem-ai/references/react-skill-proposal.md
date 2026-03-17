@@ -24,7 +24,7 @@ The right next shape is one React skill, not three separate skills.
 - `auth-react.md`
 - `emblem-ai-react.md`
 - `react-components.md`
-- `emblem-ai-prompt-examples/react-examples.md`
+- [../../emblem-ai-prompt-examples/SKILL.md](../../emblem-ai-prompt-examples/SKILL.md) (shared prompt catalog with React-specific recipes)
 
 ## Why This Split Makes Sense
 
@@ -61,7 +61,7 @@ Until that standalone React skill exists, keep the React material grouped as an 
 - `auth-react.md`
 - `emblem-ai-react.md`
 - `react-components.md`
-- `emblem-ai-prompt-examples/react-examples.md`
+- [../../emblem-ai-prompt-examples/SKILL.md](../../emblem-ai-prompt-examples/SKILL.md) (shared prompt catalog with React-specific recipes)
 
 This preserves a clean split between:
 

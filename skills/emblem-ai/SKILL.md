@@ -399,7 +399,7 @@ Use the dedicated reference docs for the deeper examples that were split out to 
 - [references/emblem-ai-react.md](references/emblem-ai-react.md) - chat UI patterns, streaming, and React composition
 - [references/emblem-ai-incognito.md](references/emblem-ai-incognito.md) - Node/browser SDK examples and environment configuration
 - [references/ai-tools.md](references/ai-tools.md) - tool coverage, market research, DeFi, and analysis prompts
-- [references/emblem-ai-prompt-examples.md](references/emblem-ai-prompt-examples.md) - shared EmblemAI prompt index with topic-specific example files
+- [../emblem-ai-prompt-examples/SKILL.md](../emblem-ai-prompt-examples/SKILL.md) - standalone EmblemAI prompt catalog covering wallet, trading, Ordinals, and workflow-specific examples
 - [references/migratefun-react.md](references/migratefun-react.md) - token migration browsing patterns and component usage
 - [references/react-components.md](references/react-components.md) - prebuilt component catalog and UI integration examples
 - [references/react-skill-proposal.md](references/react-skill-proposal.md) - proposed future React standalone-skill boundary and example gaps

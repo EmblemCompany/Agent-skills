@@ -1,6 +1,6 @@
 # EmblemAI React
 
-Standalone skill for building React apps with EmblemAI's one-shot user management, chat components, React composition patterns, Migrate.fun React hooks, and React-specific prompt examples.
+Standalone skill for building React apps with EmblemAI's one-shot user management, chat components, React composition patterns, and Migrate.fun React hooks. For prompt catalogs, use the dedicated `emblem-ai-prompt-examples` skill.
 
 This is the easiest way to add website authentication and wallet-enabled users to a React app, with sign-in options across wallets, email/password, and social login.
 

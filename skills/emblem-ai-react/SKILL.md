@@ -6,7 +6,7 @@ user-invocable: true
 compatibility: Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills specification.
 metadata:
   author: EmblemAI
-  version: "1.0.0"
+  version: "1.0.1"
   homepage: https://emblemvault.dev
 ---
 
