@@ -55,9 +55,9 @@
 
 **Expected response times:**
 - Simple queries (balances, addresses): 5-15 seconds
-- Market data queries: 15-30 seconds
-- Trading operations: 30-60 seconds
-- Complex DeFi operations: 60-120 seconds
+- Portfolio and activity queries: 15-30 seconds
+- NFT collection lookups: 30-60 seconds
+- Large history summaries: 60-120 seconds
 
 **If responses are consistently slow:**
 1. Check internet connection speed

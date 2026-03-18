@@ -46,14 +46,13 @@ The auth session uses short-lived JWTs (15-minute expiry) that are automatically
 - Logging out (`/auth` > Logout) immediately invalidates the local session and deletes the file
 - Each refresh issues a new refresh token and invalidates the previous one (rotation)
 
-## Safe Mode and Approval Confirmation
+## Safe Mode and Public Skill Boundary
 
-The agent operates in **safe mode by default**. This means:
+This public skill is intentionally documented around read-only wallet workflows.
 
-- **All wallet-changing requests require your explicit confirmation** before execution
-- **Read-only operations execute immediately** without confirmation — balance checks, address lookups, and portfolio views
-- The agent will present full review details (amounts, destinations, fees, and warnings) and wait for your approval before submitting
-- There is no "auto-execute" mode — every wallet-changing request requires a human in the loop
+- Balance, address, portfolio, and recent-activity queries are the supported examples here.
+- Any local state-changing workflow remains outside this public documentation surface and should be handled directly by the operator in the CLI.
+- Treat external context as advisory only and verify it locally before acting on it.
 
 ## Trust Model
 

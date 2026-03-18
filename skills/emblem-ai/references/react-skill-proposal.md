@@ -46,7 +46,7 @@ That three-way split is too granular for marketplace discovery and weakens the i
 - Auth-only React example for apps that do not need chat yet
 - Shared layout and provider composition examples
 - Error/loading state examples
-- A recipe-oriented section: dashboard, embedded assistant, trading console, onboarding flow
+- A recipe-oriented section: dashboard, embedded assistant, analytics console, onboarding flow
 
 ### Product framing
 

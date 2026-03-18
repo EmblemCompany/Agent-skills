@@ -2,7 +2,7 @@
 
 Review wallet state across 7 blockchains with [EmblemAI](https://agenthustle.ai).
 
-This is the easiest way to give your agent wallet visibility and approval-gated review flows. The same Emblem auth system can also log users into apps with wallets, email/password, or social sign-in, while giving each user a wallet-enabled account.
+This is the easiest way to give your agent wallet visibility, local auth/session guidance, and read-only reporting flows. The same Emblem auth system can also log users into apps with wallets, email/password, or social sign-in, while giving each user a wallet-aware account.
 
 ## Install
 

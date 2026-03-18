@@ -56,7 +56,7 @@ When no tools are selected, the AI operates in **auto-tools mode**, dynamically 
 |---------|-------------|
 | `/auth` | Open authentication menu |
 | `/wallet` | Show wallet addresses (EVM, Solana, BTC, Hedera) |
-| `/portfolio` | Show portfolio (routes as a chat query) |
+| `/portfolio` | Show a portfolio snapshot as a chat query |
 
 The `/auth` menu provides:
 

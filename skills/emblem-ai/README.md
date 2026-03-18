@@ -1,19 +1,19 @@
 # EmblemAI developer tools
 
-EmblemAI developer tools for one-shot user management, multi-chain wallet authentication, AI-powered crypto tools, and developer workflows.
+EmblemAI developer tools for one-shot user management, multi-chain wallet authentication, AI chat surfaces, and developer observability workflows.
 
-With Emblem, you get the easiest way to add user management for wallet-native apps. One integration can create authenticated users who also have full-featured crypto wallets. Users can sign in with wallets, email/password, or social login, then continue into chat, signing, and crypto workflows.
+With Emblem, you get the easiest way to add user management for wallet-native apps without juggling separate auth and wallet stacks. Users can sign in with wallets, email/password, or social login, then continue into chat, plugin, or Reflexive experiences. Wallet/CLI-first workflows are documented in the dedicated agent-wallet skill so this core skill can stay focused on auth, UI, and introspection.
 
 Legacy package names such as `@emblemvault/hustle-react` and `hustle-incognito` are preserved below until the underlying npm surfaces are renamed.
 
 ## Features
 
-- **One-shot User Management**: create website users who also have full-featured crypto wallets
+- **One-shot User Management**: create website users who also have wallet-enabled profiles
 - **Flexible Login Options**: wallets, email/password, Google, Twitter/X
 - **Wallet Authentication**: Ethereum, Solana, Bitcoin, Hedera
-- **Transaction Signing**: viem, ethers.js, web3.js, Solana adapters
-- **AI Chat**: Built-in crypto and web3 tools for trading, analysis, and DeFi
+- **AI Chat & Plugins**: Embed EmblemAI chat surfaces and connect your own tools with approval prompts
 - **React Components**: Pre-built UI for rapid development
+- **Reflexive Observability**: AI-powered app introspection for debugging and operations
 
 ## Quick Start
 
@@ -39,18 +39,9 @@ function App() {
 
 If you want to integrate EmblemAI into your own React app, see the dedicated [../emblem-ai-react/SKILL.md](../emblem-ai-react/SKILL.md) skill for the React-specific examples and references.
 
-### CLI (Agent Wallet)
+### Need CLI or wallet-first automations?
 
-```bash
-# Install globally
-npm install -g @emblemvault/agentwallet
-
-# Interactive mode (browser auth)
-emblemai
-
-# Agent mode (single-shot)
-emblemai --agent -m "What is the price of ETH?"
-```
+Use [../emblem-ai-agent-wallet/SKILL.md](../emblem-ai-agent-wallet/SKILL.md) plus [skills/emblem-ai/references/agentwallet.md](./references/agentwallet.md) whenever the user needs the Agent Wallet CLI, credential bootstrap guidance, or automation recipes.
 
 ## Documentation
 
@@ -58,16 +49,16 @@ emblemai --agent -m "What is the price of ETH?"
 - [references/](./references/) - Detailed API references
   - [agentwallet.md](./references/agentwallet.md) - CLI for AI agents
   - [auth-sdk.md](./references/auth-sdk.md) - Authentication SDK
-  - [signing.md](./references/signing.md) - Transaction signing
   - [auth-react.md](./references/auth-react.md) - React auth hooks
   - [emblem-ai-react.md](./references/emblem-ai-react.md) - React EmblemAI chat
   - [emblem-ai-incognito.md](./references/emblem-ai-incognito.md) - EmblemAI SDK
-  - [ai-tools.md](./references/ai-tools.md) - Built-in AI tools
-  - [../emblem-ai-prompt-examples/SKILL.md](../emblem-ai-prompt-examples/SKILL.md) - Standalone EmblemAI prompt catalog shared across skills
   - [plugins.md](./references/plugins.md) - Plugin integrations
   - [react-components.md](./references/react-components.md) - Component reference
-  - [migratefun-react.md](./references/migratefun-react.md) - Migrate.fun React hooks
+  - [react-skill-proposal.md](./references/react-skill-proposal.md) - Proposed React scope adjustments
   - [reflexive.md](./references/reflexive.md) - AI app introspection
+- [../emblem-ai-react/SKILL.md](../emblem-ai-react/SKILL.md) - React-only view with migrate.fun hooks
+- [../emblem-ai-agent-wallet/SKILL.md](../emblem-ai-agent-wallet/SKILL.md) - Dedicated Agent Wallet CLI skill
+- [../emblem-ai-prompt-examples/SKILL.md](../emblem-ai-prompt-examples/SKILL.md) - Standalone EmblemAI prompt catalog shared across skills
 
 For a React-only install surface, use [../emblem-ai-react/SKILL.md](../emblem-ai-react/SKILL.md).
 
@@ -75,10 +66,10 @@ For a React-only install surface, use [../emblem-ai-react/SKILL.md](../emblem-ai
 
 | Package | Description |
 |---------|-------------|
-| `@emblemvault/agentwallet` | CLI for AI agent wallet management |
+| `@emblemvault/agentwallet` | CLI for AI agent wallet management (see ../emblem-ai-agent-wallet/SKILL.md) |
 | `@emblemvault/auth-sdk` | Core authentication SDK |
 | `@emblemvault/emblem-auth-react` | React hooks and components for auth |
 | `@emblemvault/hustle-react` | React EmblemAI chat components |
-| `@emblemvault/migratefun-react` | Migrate.fun React hooks and components |
+| `@emblemvault/migratefun-react` | React migrate.fun hooks (see ../emblem-ai-react/SKILL.md) |
 | `hustle-incognito` | Low-level EmblemAI SDK |
 | `reflexive` | AI app introspection and debugging |
