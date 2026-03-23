@@ -17,8 +17,11 @@
 |-------|----------|
 | "Authentication failed" | Check network connectivity to auth service |
 | Browser doesn't open for auth | Copy the printed URL and open it manually |
-| Session expired | Run `emblemai` again — browser will open for fresh login |
+| Session expired | Run `emblemai --profile <name>` again — browser will open for fresh login |
 | Authentication timeout | Increase timeout: wait up to 5 minutes for browser auth |
+| `Multiple profiles detected. In agent mode you must pass --profile <name>.` | Re-run with `--profile <name>`; agent mode fails closed when multiple profiles exist |
+| Agent created a new wallet unexpectedly | Check which profile was selected and whether that profile already had `.env`, `.env.keys`, or `session.json` |
+| Restoring auth into a new profile fails | Use `--profile <name> --restore-auth <path>`; restore creates the target profile first |
 
 ### Runtime Issues
 
@@ -35,10 +38,12 @@
 
 | Issue | Solution |
 |-------|----------|
-| Config file permissions | Check permissions: `ls -la ~/.emblemai/` (should be 600/700) |
-| Corrupted session file | Preferred: `/auth` -> Logout, then rerun `emblemai`; fallback: `rm ~/.emblemai/session.json` |
-| History not persisting | Check write permissions: `touch ~/.emblemai/history/test.json` |
+| Config file permissions | Check permissions: sensitive profile files should be `600`, directories `700` |
+| Corrupted session file | Preferred: `/auth` -> Logout, then rerun `emblemai --profile <name>`; fallback: remove `~/.emblemai/profiles/<name>/session.json` locally |
+| History not persisting | Check write permissions inside `~/.emblemai/profiles/<name>/history/` |
 | Log file not created | Check directory permissions: `mkdir -p ~/.emblemai` |
+| Plugins missing after upgrade | Custom plugins are now stored per profile in `plugins.json`, not `~/.emblemai-plugins.json` |
+| Old install paths changed | Legacy flat-layout installs are migrated automatically into `profiles/default/` on first run |
 
 ### Network Issues
 
@@ -121,7 +126,7 @@ If your session is corrupted or expired:
 # /auth -> Logout
 
 # Start fresh
-emblemai
+emblemai --profile <name>
 
 # Fallback only if menu is unavailable: clear the local session file using your normal shell workflow, then relaunch `emblemai`
 ```
@@ -130,6 +135,16 @@ emblemai
 
 To reset local configuration safely, first make a local backup/export using the CLI's own recovery flow or your normal local operator procedure, then relaunch `emblemai`. Keep backup artifacts local and out of shared prompts.
 
+### Backup Recovery
+
+If a profile was created in agent mode and you need to move it to another machine, restore the backup into the same profile name:
+
+```bash
+emblemai --profile motoko --restore-auth ~/emblemai-auth-backup.json
+```
+
+This recreates the profile if needed and restores the encrypted local credentials.
+
 ### Conversation History Reset
 
 ```bash
@@ -137,7 +152,7 @@ To reset local configuration safely, first make a local backup/export using the 
 emblemai --reset
 
 # Or manually
-rm ~/.emblemai/history/*.json
+rm ~/.emblemai/profiles/<name>/history/*.json
 ```
 
 ## Getting Help
@@ -163,4 +178,5 @@ npm list -g @emblemvault/agentwallet
 
 # Configuration (sanitized)
 ls -la ~/.emblemai/
+find ~/.emblemai/profiles -maxdepth 2 -type f | sort
 ```

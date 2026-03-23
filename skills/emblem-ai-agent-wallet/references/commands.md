@@ -10,8 +10,21 @@ All commands are prefixed with `/`. Type them in the input bar and press Enter.
 | Command | Description |
 |---------|-------------|
 | `/help` | Show all available commands |
+| `/profile` | List and manage wallet profiles |
 | `/settings` | Show current configuration (vault ID, model, streaming, debug, tools) |
 | `/exit` | Exit the CLI (also: `/quit`) |
+
+### Profiles
+
+| Command | Description |
+|---------|-------------|
+| `/profile` | List profiles with current/default markers |
+| `/profile create <name>` | Create a named profile |
+| `/profile use <name>` | Switch this session and new sessions to a profile |
+| `/profile inspect [name]` | Inspect profile metadata, files, and runtime wallet info |
+| `/profile delete <name>` | Delete a noncurrent profile |
+
+If more than one profile exists, every agent-mode CLI invocation must include `--profile <name>`.
 
 ### Chat and History
 
@@ -81,6 +94,15 @@ The `/auth` menu provides:
 | `/payment token <TOKEN>` | Set payment token (SOL, ETH, HUSTLE, etc.) |
 | `/payment mode <MODE>` | Set payment mode: `pay_per_request` or `debt_accumulation` |
 
+### Plugins and Secrets
+
+| Command | Description |
+|---------|-------------|
+| `/plugins` | List plugins and status |
+| `/plugin <name> on\|off` | Toggle a plugin |
+| `/secrets` | Manage encrypted plugin secrets for the current profile |
+| `/x402` | x402 payment plugin status and actions |
+
 ### Markdown Rendering
 
 | Command | Description |
@@ -108,6 +130,20 @@ Log file defaults to `~/.emblemai-stream.log`. Override with `--log-file <path>`
 | `Ctrl+C` | Exit |
 | `Ctrl+D` | Exit (EOF) |
 
-## Local-Only Flags And Environment
+## CLI Flags
 
-This shared skill intentionally omits secret-bearing flags, local environment variables, and non-interactive auth recipes from the public docs. Use interactive mode, `/auth`, and the CLI's local `/help` output when an operator needs that local-only detail.
+| Flag | Description |
+|------|-------------|
+| `--profile <name>` | Select a named wallet profile for the invocation |
+| `--agent`, `-a` | Run in single-shot agent mode |
+| `--message <msg>`, `-m` | Message for agent mode |
+| `--restore-auth <path>` | Restore credentials from a backup file into the resolved or selected profile |
+| `--payg on [TOKEN]` | Enable PAYG billing, optionally choosing a token |
+| `--payg off` | Disable PAYG billing |
+| `--password <pw>`, `-p` | Local password auth flag; keep secret entry local only |
+
+## Operator Notes
+
+- `--restore-auth` can be combined with `--profile <name>` and creates the target profile first when needed.
+- The legacy flat file `~/.emblemai-plugins.json` is obsolete. Custom plugins are now stored per profile in `plugins.json`.
+- Keep secret-bearing values local to the terminal. Do not ask users to paste them into chat.
