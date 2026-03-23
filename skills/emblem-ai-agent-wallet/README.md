@@ -2,7 +2,7 @@
 
 Review wallet state across 7 blockchains with [EmblemAI](https://agenthustle.ai).
 
-This is the easiest way to give your agent wallet visibility, local auth/session guidance, and read-only reporting flows. The same Emblem auth system can also log users into apps with wallets, email/password, or social sign-in, while giving each user a wallet-aware account.
+This is the easiest way to give your agent a wallet with profile-scoped local auth, zero-config agent provisioning, and review-first operator workflows. The same Emblem auth system can also log users into apps with wallets, email/password, or social sign-in, while giving each user a wallet-aware account.
 
 ## Install
 
@@ -14,11 +14,13 @@ npm install -g @emblemvault/agentwallet
 
 ```bash
 # Interactive mode (browser auth)
-emblemai
+emblemai --profile motoko
 
 # Agent mode (zero-config, single-shot)
-emblemai --agent -m "What are my wallet addresses?"
+emblemai --agent --profile motoko -m "What are my wallet addresses?"
 ```
+
+If more than one profile exists in `~/.emblemai`, every agent-mode invocation must include `--profile <name>`. Agent mode never guesses which wallet identity to use.
 
 ## Supported Chains
 
