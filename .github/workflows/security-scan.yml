@@ -1,0 +1,86 @@
+name: Security Scan
+
+on:
+  pull_request:
+    paths: &scan_paths
+      - 'skills/**'
+      - 'scan-security.sh'
+      - '.github/workflows/security-scan.yml'
+  push:
+    branches: [main]
+    paths: *scan_paths
+  workflow_dispatch:
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Run Snyk agent-scan on all skills
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          echo "╔══════════════════════════════════════════════╗"
+          echo "║  Agent-skills Security Scan (CI)             ║"
+          echo "╚══════════════════════════════════════════════╝"
+
+          if [ -z "$SNYK_TOKEN" ]; then
+            echo "::warning::SNYK_TOKEN not set — running in inspect mode only. Add SNYK_TOKEN secret for full analysis."
+          fi
+
+          EXIT_CODE=0
+          for skill_dir in skills/*/; do
+            SKILL_FILE="$skill_dir/SKILL.md"
+            if [ ! -f "$SKILL_FILE" ]; then
+              continue
+            fi
+
+            SKILL_NAME=$(basename "$skill_dir")
+            echo ""
+            echo "━━━ Scanning: $SKILL_NAME ━━━"
+
+            # Run scan, capture output
+            OUTPUT=$(uvx snyk-agent-scan@latest --skills "$SKILL_FILE" --json 2>&1) || true
+
+            # Check for CRITICAL findings
+            if echo "$OUTPUT" | grep -qi '"severity":\s*"CRITICAL"'; then
+              echo "::error::CRITICAL finding in $SKILL_NAME"
+              echo "$OUTPUT"
+              EXIT_CODE=1
+            elif echo "$OUTPUT" | grep -qi '"severity":\s*"HIGH"'; then
+              echo "::warning::HIGH finding in $SKILL_NAME"
+            fi
+
+            # Always show summary
+            echo "$OUTPUT" | python3 -c "
+          import sys, json
+          try:
+              data = sys.stdin.read()
+              start = data.find('{')
+              if start < 0:
+                  print('  No JSON output')
+                  sys.exit(0)
+              obj = json.loads(data[start:])
+              for s in obj.get('skills', []):
+                  issues = s.get('issues', [])
+                  labels = s.get('labels', [])
+                  if issues:
+                      for i in issues:
+                          sev = i.get('severity', '?')
+                          code = i.get('code', '?')
+                          title = i.get('title', '?')
+                          print(f'  {sev} {code}: {title}')
+                  else:
+                      print('  ✅ No issues found')
+                  if labels:
+                      print(f'  Labels: {labels}')
+          except Exception as e:
+              print(f'  Parse error: {e}')
+          " 2>&1 || true
+          done
+
+          exit $EXIT_CODE
