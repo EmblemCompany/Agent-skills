@@ -2,6 +2,7 @@
 name: emblem-ai-prompt-examples
 description: Curated prompt and usage examples for research, portfolio review, quote requests, approval-gated drafts, NFT discovery, prediction-market analysis, and assistant workflows. Emphasis is review-first, trust-boundary-aware use of external data, and explicit confirmation before any value-moving action. Use when the user wants example prompts, phrasing guidance, or sample requests for end-user EmblemAI tasks.
 license: MIT
+allowed-tools: Read
 user-invocable: true
 compatibility: Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills specification.
 metadata:
@@ -15,6 +16,15 @@ metadata:
 Use this skill when the user wants example prompts, wording patterns, or sample requests for end-user EmblemAI workflows rather than SDK, React, or app implementation details.
 
 ---
+
+## Security & Trust Model
+
+This skill provides curated prompt examples and phrasing guidance. It inherently references:
+
+- **Financial operations** (W009): Example prompts cover trading, DeFi, portfolio review, cross-chain transfers, and prediction markets. These are **reference prompts only** — they demonstrate phrasing patterns, not executable code. All examples emphasize quote-first and approval-gated workflows.
+- **Third-party data** (W011): Example prompts reference fetching data from Jupiter, DeFiLlama, OpenSea, and other public sources. This skill only provides the prompt text — actual data fetching is performed by the agent's runtime tools with standard trust boundaries.
+
+This skill is read-only reference material. It does not execute transactions, fetch external data, or modify files. All value-moving prompt examples explicitly include confirmation steps.
 
 ## Quick Start
 
