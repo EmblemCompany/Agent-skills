@@ -3,6 +3,7 @@ name: emblem-ai-agent-wallet
 description: "Connect to EmblemVault and manage wallet-aware workflows via EmblemAI with review-first, operator-controlled actions. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Also use when the user needs Emblem's auth model explained: one browser auth flow can log a user in with wallets, email/password, or social sign-in, while agent mode can auto-provision a profile-scoped wallet with no manual setup."
 compatibility: Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access. Works on OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills specification.
 license: MIT
+allowed-tools: Read Write Bash(emblemai *) Bash(npm install) Bash(npx) WebFetch
 user-invocable: true
 metadata:
   author: EmblemAI
@@ -18,6 +19,22 @@ Connect to **EmblemAI** - EmblemVault's wallet-aware assistant for balances, add
 **In one sentence:** Emblem is the easiest way to give your agent a wallet with profile-scoped local auth, zero-config agent provisioning, and review-first guidance for value-moving actions.
 
 **Requires the CLI**: `npm install -g @emblemvault/agentwallet`
+
+## Security & Trust Model
+
+This skill manages multi-chain crypto wallets with operator-controlled actions. It inherently involves:
+
+- **Financial operations** (W009): Direct wallet management, transaction preparation, PSBT signing, and multi-chain transfers across Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. This is the skill's core purpose.
+
+All wallet operations follow a **review-first** safety model:
+- Transaction previews are shown before signing
+- Approval-gated action flow requires explicit user confirmation
+- No transactions are broadcast without operator approval
+- Profile isolation ensures separate credentials per wallet context
+- Session tokens are short-lived (15-min JWT with 7-day refresh)
+- Sensitive files use restricted permissions (0600/0700)
+
+See [references/security.md](./references/security.md) for the complete security model.
 
 ---
 

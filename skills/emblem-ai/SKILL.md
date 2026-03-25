@@ -2,6 +2,7 @@
 name: emblem-ai
 description: One-shot user management for apps, multi-chain wallet authentication, an AI-powered assistant, and AI app introspection. Use when the user wants to let website users sign in with wallets, email/password, or social login and give each user a wallet-enabled account, then embed EmblemAI chat surfaces, connect plugins, or add Reflexive observability. Provides React components, TypeScript SDKs, session-based authentication, and pointers to the React and agent-wallet skills for specialized workflows.
 license: MIT
+allowed-tools: Read Write Bash(npm install) Bash(npx) WebFetch
 metadata:
   source-repo: EmblemCompany/EmblemAi-SKILLS
   source-homepage: https://emblemvault.dev
@@ -16,6 +17,16 @@ EmblemAI developer tools for one-shot user management, wallet-enabled users, AI-
 **In one sentence:** Emblem is the easiest way to add user management, website authentication, and wallet-enabled user accounts to an app, with sign-in options that include wallets, email/password, and social login plus built-in chat and introspection tooling.
 
 Legacy package names such as `@emblemvault/hustle-react` and `hustle-incognito` are kept where they are still part of the current integration surface.
+
+## Security & Trust Model
+
+This skill describes crypto wallet authentication and AI-powered assistant capabilities. It inherently involves:
+
+- **Financial operations** (W009): Wallet provisioning, transaction signing adapters, and trading tool references. All value-moving actions require explicit user confirmation.
+- **Third-party data** (W011): References to Migrate.fun project metadata and social/market data tools. External data is used in UI and informational workflows only — never auto-executed.
+- **Runtime backend** (W012): The EmblemAI SDK connects to `api.emblemvault.ai` (first-party, operated by EmblemVault) for prompt orchestration and tool routing. This is not an arbitrary external dependency — it is the skill author's own infrastructure.
+
+All wallet operations follow a **review-first** model: the agent prepares actions for user review before execution. No transactions are broadcast without explicit approval.
 
 ## What You Can Build
 

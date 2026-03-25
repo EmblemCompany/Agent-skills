@@ -2,6 +2,7 @@
 name: emblem-ai-react
 description: React integration skill for EmblemAI's one-shot user management. Use when the user wants to add website authentication plus wallet-enabled users to a React app with EmblemAuthProvider, ConnectButton, social/email/wallet login, chat components, React auth hooks, React composition patterns, or Migrate.fun React hooks.
 license: MIT
+allowed-tools: Read Write Bash(npm install) Bash(npx)
 user-invocable: true
 compatibility: Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills specification.
 metadata:
@@ -17,6 +18,15 @@ Use this skill when the user wants to integrate EmblemAI into a React app rather
 **In one sentence:** this is the easiest way to add user management and wallet-enabled accounts to a React app.
 
 ---
+
+## Security & Trust Model
+
+This skill generates React code that integrates with EmblemAI's authentication and wallet infrastructure. It inherently involves:
+
+- **Third-party data** (W011): Migrate.fun React hooks (`useProject`, `useProjects`) fetch project and token metadata from remote APIs. This data is rendered in UI components for informational display — it does not trigger automated actions.
+- **Runtime backend** (W012): `HustleProvider` connects to a configurable backend URL (`hustleApiUrl` / `import.meta.env.VITE_HUSTLE_API_URL`) for prompt and tool orchestration. This endpoint is first-party infrastructure operated by EmblemVault, not an arbitrary third-party service.
+
+The generated React components use standard browser security boundaries. No server-side code execution or file system access is involved at runtime.
 
 ## Quick Start
 
