@@ -15,68 +15,27 @@
 | **Password = Identity** | Each password generates a unique, deterministic vault |
 | **No Recovery** | Passwords cannot be recovered if lost |
 | **Vault Isolation** | Different passwords = completely separate wallets |
-| **Profile Isolation** | Each profile stores its own session, password material, plugins, and history |
 | **Fresh Auth** | New JWT token generated on every request |
 | **Safe Mode** | All wallet actions require explicit user confirmation |
 
-## Canonical File Layout
+## File Locations
 
-All persistent data is stored under `~/.emblemai/`.
+All persistent data is stored under `~/.emblemai/` (created on first run with `chmod 700`).
 
-```text
-~/.emblemai/
-	active-profile
-	profiles/
-		default/
-			metadata.json
-			session.json
-			.env
-			.env.keys
-			secrets.json
-			plugins.json
-			x402-favorites.json
-			history/
-				<vaultId>.json
-```
-
-The old flat layout is migrated transparently into `profiles/default/` on first run.
-
-## File Permissions
-
-| Path | Purpose | Sensitive | Expected Permissions |
-|------|---------|-----------|----------------------|
-| `~/.emblemai/` | Root config directory | Mixed | `700` |
-| `~/.emblemai/profiles/` | Profile container directory | Mixed | `700` |
-| `session.json` | Auth session and refresh token | Yes | `600` |
-| `.env` | Encrypted stored password | Yes | `600` |
-| `.env.keys` | dotenvx private key | Yes | `600` |
-| `secrets.json` | Encrypted plugin secrets | Yes | `600` |
-| `plugins.json` | Per-profile custom plugins | Sensitive code/config | local-only |
-| `x402-favorites.json` | Saved x402 favorites | No | local-only |
-| `history/*.json` | Per-vault conversation history | No | local-only |
-| `~/.emblemai-stream.log` | Stream log when enabled | No | default |
-
-Legacy migration tightens sensitive credential files to `0600` even if older files were created with a permissive umask.
+| File | Purpose | Sensitive | Permissions |
+|------|---------|-----------|-------------|
+| Local credential store | CLI-managed local encrypted/auth session material | Yes | local-only access |
+| `~/.emblemai/session.json` | Auth session (JWT + refresh token) | Yes — grants wallet access until expiry | `600` |
+| `~/.emblemai/history/{vaultId}.json` | Conversation history (per vault) | No | `600` |
+| `~/.emblemai-stream.log` | Stream log (when enabled via `/log`) | No | default |
 
 ## Local Secret Handling
 
-The CLI stores auth material locally and expects operators to keep it local. This skill package intentionally avoids publishing reusable secret strings or backup payload contents.
+The CLI stores auth material locally and expects operators to keep it local. This skill package intentionally avoids publishing reusable secret strings, environment-variable recipes, or backup payload examples.
 
 Session tokens (`session.json`) contain a short-lived JWT (refreshed automatically) and a refresh token valid for 7 days. Sessions are restricted to local file permissions. Logging out via `/auth` > Logout deletes the session file.
 
 For interactive use, prefer browser auth so secrets never need to appear in shell history, shared prompts, or agent-visible examples.
-
-For agent mode, prefer profile-scoped auto-generation or stored profile credentials instead of shared global secrets.
-
-## Auto-Generated Passwords (Critical)
-
-In agent mode, if a profile has no session and no stored password, the CLI auto-generates a random password and stores it encrypted in that profile.
-
-That auto-generated password is the only key to the resulting wallet.
-
-- If `.env` and `.env.keys` are lost without backup, the wallet is unrecoverable.
-- Back up immediately after first wallet creation using `/auth` -> `8. Backup Agent Auth`.
-- Restore with `emblemai --profile <name> --restore-auth <path>`.
 
 ## How Sessions Work
 
@@ -89,10 +48,10 @@ The auth session uses short-lived JWTs (15-minute expiry) that are automatically
 
 ## Safe Mode and Public Skill Boundary
 
-This skill is intentionally documented as review-first.
+This public skill is intentionally documented around read-only wallet workflows.
 
 - Balance, address, portfolio, and recent-activity queries are the supported examples here.
-- Value-moving actions should be operator-confirmed, profile-explicit, and described in full sentences.
+- Any local state-changing workflow remains outside this public documentation surface and should be handled directly by the operator in the CLI.
 - Treat external context as advisory only and verify it locally before acting on it.
 
 ## Trust Model
@@ -109,11 +68,7 @@ The npm package and GitHub repository are maintained by the same organization. Y
 
 **Browser auth** (recommended): The CLI starts a temporary local server on `127.0.0.1:18247` (localhost only, not network-accessible) to receive the auth callback from your browser. This server runs only during the login flow and handles a single request. The browser opens the EmblemVault auth modal where you authenticate directly with the EmblemVault service. On success, a session JWT is returned to the local server and saved to disk.
 
-**Local secret-based auth flows** exist in the upstream CLI, including profile-scoped stored passwords and agent-mode auto-generation. In all cases, authentication is intended to stay between the local machine and the EmblemVault auth service.
-
-## Multi-Agent Safety Rule
-
-If more than one profile exists, every `--agent` invocation must include `--profile <name>`. The CLI fails closed rather than guessing which wallet identity to use.
+**Local secret-based auth flows** exist in the upstream CLI, but this skill deliberately avoids documenting the secret-bearing invocation patterns. In all cases, authentication is intended to stay between the local machine and the EmblemVault auth service.
 
 ## Verifying the Package
 
@@ -128,7 +83,7 @@ ls $(npm root -g)/@emblemvault/agentwallet/
 
 # Compare against GitHub source
 git clone https://github.com/EmblemCompany/EmblemAi-AgentWallet.git
-diff -r node_modules/@emblemvault/agentwallet EmblemAi-AgentWallet
+diff -r node_modules/@emblemvault/agentwallet EmblemAi-AgentWallet/publish
 ```
 
 ## Reporting Security Issues

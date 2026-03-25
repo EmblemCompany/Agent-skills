@@ -62,13 +62,10 @@ EmblemAI provides structured responses with:
 ### Script Integration
 ```bash
 # Get balances for scripting
-emblemai --agent --profile treasury -m "List all balances as JSON" | jq .
+emblemai --agent -m "List all balances as JSON" | jq .
 
 # Portfolio monitoring
-emblemai --agent --profile treasury -m "Generate daily portfolio report"
-
-# Zero-config first-run wallet creation
-emblemai --agent --profile motoko -m "What are my wallet addresses?"
+emblemai --agent -m "Generate daily portfolio report"
 ```
 
 ### Agent Framework Integration
@@ -78,7 +75,7 @@ import subprocess
 
 def query_emblem_ai(query):
     result = subprocess.run(
-        ["emblemai", "--agent", "--profile", "treasury", "-m", query],
+        ["emblemai", "--agent", "-m", query],
         capture_output=True,
         text=True
     )

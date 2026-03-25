@@ -18,6 +18,8 @@ else
 
   if [[ -n "$NPM_ROOT" && -f "$NPM_ROOT/@emblemvault/agentwallet/src/commands.js" ]]; then
     COMMANDS_JS="$NPM_ROOT/@emblemvault/agentwallet/src/commands.js"
+  elif [[ -f "/Users/decent/.nvm/versions/node/v24.12.0/lib/node_modules/@emblemvault/agentwallet/src/commands.js" ]]; then
+    COMMANDS_JS="/Users/decent/.nvm/versions/node/v24.12.0/lib/node_modules/@emblemvault/agentwallet/src/commands.js"
   fi
 fi
 
