@@ -4,8 +4,6 @@
 
 set -e
 
-PROFILE="${EMBLEM_PROFILE:-default}"
-
 echo "🔍 Checking crypto balances across all chains..."
 echo "=================================================="
 
@@ -20,20 +18,22 @@ fi
 echo "📊 Querying EmblemAI for balances..."
 echo ""
 
-# Run in agent mode to get balances. This will auto-generate profile credentials
-# on first run if the selected profile has no local state yet.
-echo "Using profile: $PROFILE"
-emblemai --agent --profile "$PROFILE" -m "Show my balances across all chains in a clear table format"
+# Run in agent mode to get balances
+if [ -f "$HOME/.emblemai/session.json" ] || [ -d "$HOME/.emblemai" ]; then
+    echo "Using existing local Emblem CLI state"
+    emblemai --agent -m "Show my balances across all chains in a clear table format"
+else
+    echo "⚠️  No credentials found. Run 'emblemai' once to complete browser auth."
+    echo ""
+    echo "Example query you can run manually:"
+    echo "  emblemai --agent -m 'Show my balances across all chains'"
+fi
 
 echo ""
 echo "=================================================="
 echo "✅ Balance check script completed"
 echo ""
 echo "Additional commands you can try:"
-echo "  emblemai --agent --profile '$PROFILE' -m 'What are my wallet addresses?'"
-echo "  emblemai --agent --profile '$PROFILE' -m 'Show my portfolio performance'"
-echo "  emblemai --agent --profile '$PROFILE' -m 'Summarize my recent wallet activity on Solana'"
-echo ""
-echo "If this is the first wallet created for that profile, back it up immediately:"
-echo "  emblemai --profile '$PROFILE'"
-echo "  # then /auth -> 8  (Backup Agent Auth)"
+echo "  emblemai --agent -m 'What are my wallet addresses?'"
+echo "  emblemai --agent -m 'Show my portfolio performance'"
+echo "  emblemai --agent -m 'Summarize my recent wallet activity on Solana'"
