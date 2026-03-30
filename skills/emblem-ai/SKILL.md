@@ -2,7 +2,7 @@
 name: emblem-ai
 description: One-shot user management for apps, multi-chain wallet authentication, an AI-powered assistant, and AI app introspection. Use when the user wants to let website users sign in with wallets, email/password, or social login and give each user a wallet-enabled account, then embed EmblemAI chat surfaces, connect plugins, or add Reflexive observability. Provides React components, TypeScript SDKs, session-based authentication, and pointers to the React and agent-wallet skills for specialized workflows.
 license: MIT
-allowed-tools: Read Write Bash(npm install) Bash(npx) WebFetch
+allowed-tools: Bash Read Write WebFetch
 metadata:
   source-repo: EmblemCompany/EmblemAi-SKILLS
   source-homepage: https://emblemvault.dev
