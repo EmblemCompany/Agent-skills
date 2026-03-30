@@ -15,7 +15,7 @@ STRICT_MODE=0
 TARGET_SKILL=""
 
 # Strict Agent Skills spec top-level fields.
-STRICT_ALLOWED_FIELDS=("name" "description" "license" "allowed-tools" "metadata" "compatibility" "user-invocable")
+STRICT_ALLOWED_FIELDS=("name" "description" "license" "allowed-tools" "metadata" "compatibility")
 
 # Cross-platform superset used by default for broader compatibility.
 PERMISSIVE_ALLOWED_FIELDS=("name" "description" "license" "allowed-tools" "metadata" "compatibility" "user-invocable")
@@ -497,12 +497,44 @@ EOF
     fi
 }
 
+validate_allowed_tools_format() {
+    if [ "$STRICT_MODE" -eq 0 ]; then
+        echo "  INFO: Skipping strict allowed-tools format checks (permissive mode)"
+        return
+    fi
+
+    local frontmatter="$1"
+    local allowed_tools_value
+    local token
+    local invalid_token=""
+
+    allowed_tools_value=$(extract_frontmatter_field_text "$frontmatter" "allowed-tools")
+
+    if [ -z "$allowed_tools_value" ]; then
+        return
+    fi
+
+    for token in $allowed_tools_value; do
+        if ! echo "$token" | grep -qE '^[A-Za-z0-9_.:-]+(\([^[:space:]()]+\))?$'; then
+            invalid_token="$token"
+            break
+        fi
+    done
+
+    if [ -n "$invalid_token" ]; then
+        echo "  FAIL: allowed-tools must be a space-delimited list of tool tokens; invalid token '$invalid_token'"
+        ERRORS=$((ERRORS + 1))
+    else
+        echo "  OK: allowed-tools uses space-delimited tool tokens"
+    fi
+}
+
 validate_reserved_fields_not_nested_in_metadata() {
     local frontmatter="$1"
     local reserved_field
     local found_nested=0
 
-    for reserved_field in "user-invocable" "name" "description" "license" "compatibility" "allowed-tools"; do
+    for reserved_field in "name" "description" "license" "compatibility" "allowed-tools"; do
         if echo "$frontmatter" | grep -qE "^  ${reserved_field}:"; then
             echo "  FAIL: Reserved field '${reserved_field}' must be top-level, not nested under metadata"
             ERRORS=$((ERRORS + 1))
@@ -699,6 +731,7 @@ validate_skill_dir() {
         fi
     fi
 
+    validate_allowed_tools_format "$frontmatter"
     validate_metadata_values_are_strings "$frontmatter"
     validate_reserved_fields_not_nested_in_metadata "$frontmatter"
 
@@ -748,7 +781,7 @@ fi
 
 echo "========================================"
 if [ "$STRICT_MODE" -eq 1 ]; then
-    echo "Mode: strict (agentskills.io-compatible)"
+    echo "Mode: strict (upstream Agent Skills spec)"
 else
     echo "Mode: permissive (cross-platform)"
 fi

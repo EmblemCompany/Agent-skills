@@ -4,7 +4,6 @@ description: >
   Brief description of what this skill does and when to use it.
   Use when the user wants to [specific trigger].
 license: MIT
-user-invocable: true
 compatibility: >
   List requirements here. Example: Requires Node.js >= 18.0.0 and internet access.
   Works on Claude Code, Cursor, Codex, and other agents following the Agent Skills spec.

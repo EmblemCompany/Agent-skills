@@ -3,7 +3,6 @@ name: emblem-ai-prompt-examples
 description: Curated prompt and usage examples for research, portfolio review, quote requests, approval-gated drafts, NFT discovery, prediction-market analysis, and assistant workflows. Emphasis is review-first, trust-boundary-aware use of external data, and explicit confirmation before any value-moving action. Use when the user wants example prompts, phrasing guidance, or sample requests for end-user EmblemAI tasks.
 license: MIT
 allowed-tools: Read
-user-invocable: true
 compatibility: Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills specification.
 metadata:
   author: EmblemAI

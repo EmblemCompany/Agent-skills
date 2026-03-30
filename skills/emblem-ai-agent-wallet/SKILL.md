@@ -3,8 +3,7 @@ name: emblem-ai-agent-wallet
 description: "Connect to EmblemVault and inspect wallet state via EmblemAI with operator-guided read-only review. Supports Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Also use when the user needs Emblem's auth model explained: one browser auth flow can log a user in with wallets, email/password, or social sign-in and connect that user to a wallet-aware account."
 compatibility: Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access. Works on OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills specification.
 license: MIT
-allowed-tools: Read Write Bash(emblemai *) Bash(npm install) Bash(npx) WebFetch
-user-invocable: true
+allowed-tools: Bash Read Write WebFetch
 metadata:
   author: EmblemAI
   version: "3.1.2"

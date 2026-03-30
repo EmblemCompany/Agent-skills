@@ -25,4 +25,4 @@ jobs:
           test -f utils/validation/validate-skills.sh
 
       - name: Validate all skills
-        run: bash ./validate-all.sh
+        run: bash ./validate-all.sh --strict

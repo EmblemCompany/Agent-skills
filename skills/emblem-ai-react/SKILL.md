@@ -2,8 +2,7 @@
 name: emblem-ai-react
 description: React integration skill for EmblemAI's one-shot user management. Use when the user wants to add website authentication plus wallet-enabled users to a React app with EmblemAuthProvider, ConnectButton, social/email/wallet login, chat components, React auth hooks, React composition patterns, or Migrate.fun React hooks.
 license: MIT
-allowed-tools: Read Write Bash(npm install) Bash(npx)
-user-invocable: true
+allowed-tools: Bash Read Write
 compatibility: Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills specification.
 metadata:
   author: EmblemAI

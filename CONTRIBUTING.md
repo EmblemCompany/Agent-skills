@@ -8,10 +8,11 @@
    ```
 
 2. Rename and edit `SKILL.md`:
-   - Set `name` to match your directory name (lowercase, hyphens only)
-   - Write a keyword-rich `description` (what it does + when to use it)
-   - Add `license`, `compatibility`, and `metadata` fields
-   - Keep SKILL.md under 500 lines (recommended)
+    - Set `name` to match your directory name (lowercase, hyphens only)
+    - Write a keyword-rich `description` (what it does + when to use it)
+    - Use only public Agent Skills top-level fields in publishable frontmatter: `name`, `description`, and optional `license`, `compatibility`, `metadata`, `allowed-tools`
+    - Keep vendor-specific toggles such as `user-invocable` out of publishable `SKILL.md` files if you want registry/spec portability
+    - Keep SKILL.md under 500 lines (recommended)
 
 3. Add supporting files:
    - `references/` — detailed documentation split by topic
@@ -22,13 +23,18 @@
    - For larger example sets, prefer an index `.md` plus a topic directory instead of letting one reference file grow indefinitely
 
 4. Validate:
-   ```bash
-   bash validate-all.sh
-   ```
+    ```bash
+    bash validate-all.sh
+    ```
 
-   Validate a single skill:
-   ```bash
-   bash validate-skill.sh your-skill-name
+    Validate the publishable format that CI enforces:
+    ```bash
+    bash validate-all.sh --strict
+    ```
+
+    Validate a single skill:
+    ```bash
+    bash validate-skill.sh your-skill-name
    ```
 
    Strict validation (agentskills.io-only frontmatter):
@@ -76,6 +82,7 @@ skills/your-skill-name/
 Every PR triggers `validate-all.sh` via GitHub Actions. It checks:
 - Shared EmblemAI prompt examples and repeated React reference docs are synced into each skill-local reference copy
 - SKILL.md exists with valid frontmatter
+- strict CI mode matches the upstream Agent Skills spec for publishable top-level fields
 - `name` matches directory name
 - Line count recommendation (<500) with warning output
 - Trailing newlines present

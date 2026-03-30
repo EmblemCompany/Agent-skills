@@ -51,17 +51,33 @@ skills/<skill-name>/
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on adding new skills.
 
+## Registry Compatibility
+
+The publishable `SKILL.md` files in this repo intentionally stay within the public Agent Skills frontmatter defined at [agentskills.io/specification](https://agentskills.io/specification): `name`, `description`, and the optional `license`, `compatibility`, `metadata`, and `allowed-tools` fields.
+
+That keeps these skills portable across `agentskills.io` / `agentskills.to` compatible tooling instead of relying on vendor-only top-level fields.
+
+The public docs we found describe a repo-based sharing and install flow rather than a documented manual “add skill” form in the web UI. In practice, keep the skill in git, validate it in strict mode, and share or install it from the repository.
+
 ## Validation
 
 ```bash
 # Validate all skills locally
 bash validate-all.sh
 
+# Validate publishable frontmatter against the upstream spec
+bash validate-all.sh --strict
+
 # Validate one skill locally
 bash validate-skill.sh emblem-ai-agent-wallet
+
+# Validate one skill in strict mode
+bash validate-skill.sh emblem-ai-agent-wallet --strict
 ```
 
 The validation entrypoints automatically sync shared EmblemAI reference sources into skill-local copies before running checks.
+
+Pull requests run the strict validation mode in CI so public skill frontmatter stays spec-compatible.
 
 ## Shared Sources
 
