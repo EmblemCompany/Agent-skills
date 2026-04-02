@@ -4,9 +4,14 @@ on:
   pull_request:
     paths: &validate_paths
       - 'skills/**'
+      - 'shared/**'
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'CONTRIBUTING.md'
       - '.github/workflows/validate-skills.yml'
       - 'validate-all.sh'
       - 'validate-skill.sh'
+      - 'utils/sync-emblem-ai-shared-references.sh'
       - 'utils/validation/validate-skills.sh'
   push:
     branches: [main]
@@ -18,11 +23,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Verify validation scripts exist
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install official validator
+        run: python -m pip install --upgrade pip skills-ref==0.1.1
+
+      - name: Verify validation entrypoints exist
         run: |
           test -f validate-all.sh
           test -f validate-skill.sh
           test -f utils/validation/validate-skills.sh
+          command -v agentskills
 
       - name: Validate all skills
-        run: bash ./validate-all.sh --strict
+        run: bash ./validate-all.sh
+
+      - name: Fail if synced references are not committed
+        run: git diff --exit-code -- skills

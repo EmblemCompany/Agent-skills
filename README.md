@@ -57,27 +57,31 @@ The publishable `SKILL.md` files in this repo intentionally stay within the publ
 
 That keeps these skills portable across `agentskills.io` / `agentskills.to` compatible tooling instead of relying on vendor-only top-level fields.
 
-The public docs we found describe a repo-based sharing and install flow rather than a documented manual “add skill” form in the web UI. In practice, keep the skill in git, validate it in strict mode, and share or install it from the repository.
+The public docs we found describe a repo-based sharing and install flow rather than a documented manual “add skill” form in the web UI. In practice, keep the skill in git, validate it with the official CLI, and share or install it from the repository.
 
 ## Validation
 
 ```bash
-# Validate all skills locally
+# Install the official validator
+python -m pip install skills-ref==0.1.1
+
+# Validate one skill with the official CLI
+agentskills validate skills/emblem-ai-agent-wallet
+
+# Validate all skills in this repository
 bash validate-all.sh
 
-# Validate publishable frontmatter against the upstream spec
-bash validate-all.sh --strict
-
-# Validate one skill locally
+# Validate one skill with the repo wrapper
 bash validate-skill.sh emblem-ai-agent-wallet
-
-# Validate one skill in strict mode
-bash validate-skill.sh emblem-ai-agent-wallet --strict
 ```
 
-The validation entrypoints automatically sync shared EmblemAI reference sources into skill-local copies before running checks.
+The upstream `agentskills validate` command validates one skill directory at a time, not the top-level `./skills` folder. This repository's `validate-all.sh` wrapper loops through `skills/*/`, syncs shared EmblemAI reference sources into skill-local copies, and then runs repository-specific markdown/link checks.
 
-Pull requests run the strict validation mode in CI so public skill frontmatter stays spec-compatible.
+The legacy `--strict` flag is still accepted by the wrapper scripts for backwards compatibility, but it no longer changes behavior because the official validator is spec-compatible by default.
+
+Pull requests install the official `skills-ref` validator in CI and run the repository wrapper so public skill frontmatter stays spec-compatible.
+
+CI also fails if the sync step rewrites generated files under `skills/`, which prevents uncommitted shared-reference updates from slipping through.
 
 ## Shared Sources
 

@@ -24,22 +24,16 @@
 
 4. Validate:
     ```bash
-    bash validate-all.sh
-    ```
+    python -m pip install skills-ref==0.1.1
 
-    Validate the publishable format that CI enforces:
-    ```bash
-    bash validate-all.sh --strict
+    agentskills validate skills/your-skill-name
+
+    bash validate-all.sh
     ```
 
     Validate a single skill:
     ```bash
     bash validate-skill.sh your-skill-name
-   ```
-
-   Strict validation (agentskills.io-only frontmatter):
-   ```bash
-   bash validate-all.sh --strict
    ```
 
 5. Open a PR against `main`.
@@ -79,14 +73,14 @@ skills/your-skill-name/
 
 ## Validation
 
-Every PR triggers `validate-all.sh` via GitHub Actions. It checks:
+Every PR installs the official `skills-ref` validator and triggers `validate-all.sh` via GitHub Actions. It checks:
 - Shared EmblemAI prompt examples and repeated React reference docs are synced into each skill-local reference copy
-- SKILL.md exists with valid frontmatter
-- strict CI mode matches the upstream Agent Skills spec for publishable top-level fields
+- The official `agentskills validate` check passes for each skill directory
 - `name` matches directory name
 - Line count recommendation (<500) with warning output
 - Trailing newlines present
 - Required fields present
+- Generated files under `skills/` are already committed after the sync step
 
 ## Code of Conduct
 

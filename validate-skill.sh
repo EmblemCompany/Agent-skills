@@ -1,5 +1,6 @@
 #!/bin/bash
-# validate-skill.sh - Validate a single skill
+# validate-skill.sh - Validate a single skill with the official agentskills
+# validator plus repository-specific checks.
 # Usage: bash validate-skill.sh <skill-name-or-path> [--strict]
 
 set -e

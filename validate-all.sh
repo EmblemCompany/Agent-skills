@@ -1,5 +1,6 @@
 #!/bin/bash
-# validate-all.sh - Validate all skills in the repository
+# validate-all.sh - Validate all skills in the repository with the official
+# agentskills validator plus repository-specific checks.
 # Usage: bash validate-all.sh [--strict]
 
 set -e

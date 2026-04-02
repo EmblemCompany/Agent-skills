@@ -1,8 +1,12 @@
 #!/bin/bash
 # validate-skills.sh - Validate one or all skills in the repository
 # Usage:
-#   bash utils/validation/validate-skills.sh [--strict]
-#   bash utils/validation/validate-skills.sh [--strict] --skill <name-or-path>
+#   bash utils/validation/validate-skills.sh
+#   bash utils/validation/validate-skills.sh --skill <name-or-path>
+#
+# This wrapper runs the official `agentskills` validator from the
+# `skills-ref` package for each selected skill directory, then applies
+# repository-specific markdown/link checks.
 
 set -e
 
@@ -11,7 +15,7 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 SKILLS_DIR="skills"
 ERRORS=0
-STRICT_MODE=0
+STRICT_FLAG_SEEN=0
 TARGET_SKILL=""
 
 # Strict Agent Skills spec top-level fields.
@@ -279,22 +283,34 @@ EOF
 usage() {
     cat <<EOF
 Usage:
-  bash utils/validation/validate-skills.sh [--strict]
-  bash utils/validation/validate-skills.sh [--strict] --skill <name-or-path>
-  bash utils/validation/validate-skills.sh [--strict] --skills-dir <path>
+    bash utils/validation/validate-skills.sh
+    bash utils/validation/validate-skills.sh --skill <name-or-path>
+    bash utils/validation/validate-skills.sh --skills-dir <path>
 
 Options:
-  --strict            Use strict agentskills.io-compatible frontmatter checks
+    --strict            Deprecated no-op; official agentskills validation is always spec-compatible
   --skill <value>     Validate only one skill (name under skills/ or directory path)
   --skills-dir <path> Override the skills directory (default: skills)
   -h, --help          Show this help
 EOF
 }
 
+require_agentskills_cli() {
+        if command -v agentskills >/dev/null 2>&1; then
+                return 0
+        fi
+
+        echo "ERROR: Missing official Agent Skills validator 'agentskills'"
+        echo "Install it with one of:"
+        echo "  pip install skills-ref"
+        echo "  python -m pip install skills-ref"
+        exit 2
+}
+
 while [ $# -gt 0 ]; do
     case "$1" in
         --strict)
-            STRICT_MODE=1
+            STRICT_FLAG_SEEN=1
             ;;
         --skill)
             if [ -z "${2:-}" ]; then
@@ -645,11 +661,6 @@ validate_skill_dir() {
     local skill_file
     local frontmatter
     local field
-    local yaml_name
-    local description_value
-    local description_len
-    local compatibility_value
-    local compatibility_len
     local line_count
 
     skill_name=$(basename "$skill_dir")
@@ -666,76 +677,14 @@ validate_skill_dir() {
     fi
     echo "  OK: SKILL.md exists"
 
-    # Check frontmatter exists
-    if ! head -1 "$skill_file" | grep -q "^---$"; then
-        echo "  FAIL: Missing frontmatter (no opening ---)"
+    echo "  INFO: Running official validator"
+    if ! agentskills validate "$skill_dir"; then
         ERRORS=$((ERRORS + 1))
         return
     fi
-    echo "  OK: Frontmatter present"
 
-    # Check frontmatter closing delimiter exists.
-    if [ "$(grep -c '^---$' "$skill_file")" -lt 2 ]; then
-        echo "  FAIL: Missing frontmatter closing delimiter (---)"
-        ERRORS=$((ERRORS + 1))
-        return
-    fi
-    echo "  OK: Frontmatter closing delimiter present"
-
-    # Extract frontmatter
     frontmatter=$(sed -n '2,/^---$/p' "$skill_file" | sed '$d')
 
-    validate_frontmatter_is_valid_yaml "$frontmatter"
-    validate_top_level_fields "$frontmatter"
-
-    # Check required fields
-    for field in "name:" "description:"; do
-        if ! echo "$frontmatter" | grep -q "^$field"; then
-            echo "  FAIL: Missing required field '$field'"
-            ERRORS=$((ERRORS + 1))
-        else
-            echo "  OK: Has '$field'"
-        fi
-    done
-
-    # Check name matches directory
-    yaml_name=$(echo "$frontmatter" | grep "^name:" | sed 's/^name: *//')
-    if [ "$yaml_name" != "$skill_name" ]; then
-        echo "  FAIL: name '$yaml_name' does not match directory '$skill_name'"
-        ERRORS=$((ERRORS + 1))
-    else
-        echo "  OK: name matches directory"
-    fi
-
-    validate_name_format "$yaml_name"
-
-    # Check description length (spec max 1024 chars)
-    description_value=$(extract_frontmatter_field_text "$frontmatter" "description")
-    description_len=${#description_value}
-    if [ "$description_len" -gt 1024 ]; then
-        echo "  FAIL: description is $description_len chars (max 1024)"
-        ERRORS=$((ERRORS + 1))
-    else
-        echo "  OK: description length <= 1024"
-    fi
-
-    # Check compatibility length if present (spec max 500 chars)
-    compatibility_value=$(extract_frontmatter_field_text "$frontmatter" "compatibility")
-    if [ -n "$compatibility_value" ]; then
-        compatibility_len=${#compatibility_value}
-        if [ "$compatibility_len" -gt 500 ]; then
-            echo "  FAIL: compatibility is $compatibility_len chars (max 500)"
-            ERRORS=$((ERRORS + 1))
-        else
-            echo "  OK: compatibility length <= 500"
-        fi
-    fi
-
-    validate_allowed_tools_format "$frontmatter"
-    validate_metadata_values_are_strings "$frontmatter"
-    validate_reserved_fields_not_nested_in_metadata "$frontmatter"
-
-    # Check line count
     line_count=$(wc -l < "$skill_file" | tr -d ' ')
     if [ "$line_count" -gt 500 ]; then
         echo "  WARN: SKILL.md has $line_count lines (recommended < 500)"
@@ -763,6 +712,8 @@ validate_skill_dir() {
 
 skill_dirs=()
 
+require_agentskills_cli
+
 if [ -n "$TARGET_SKILL" ]; then
     if ! target_skill_dir=$(resolve_target_skill_dir "$TARGET_SKILL"); then
         echo "ERROR: Could not resolve skill target '$TARGET_SKILL'"
@@ -780,10 +731,9 @@ else
 fi
 
 echo "========================================"
-if [ "$STRICT_MODE" -eq 1 ]; then
-    echo "Mode: strict (upstream Agent Skills spec)"
-else
-    echo "Mode: permissive (cross-platform)"
+echo "Mode: official skills-ref validator + repository checks"
+if [ "$STRICT_FLAG_SEEN" -eq 1 ]; then
+    echo "INFO: --strict is deprecated; validation is already spec-compatible by default"
 fi
 
 if [ "${#skill_dirs[@]}" -eq 0 ]; then
