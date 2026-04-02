@@ -49,8 +49,11 @@ If more than one profile exists, every agent-mode CLI invocation must include `-
 | Command | Description |
 |---------|-------------|
 | `/model <id>` | Set the active model by ID |
-| `/model clear` | Reset to API default model |
+| `/model clear` | Reset to the CLI's default model |
 | `/model` | Show currently selected model |
+| `/models` | Show the active model plus curated default choices |
+| `/models use <number\|id>` | Pick one of the curated default models |
+| `/models search <query>` | Fuzzy-search OpenRouter models and pick one via `/model <number\|id>` |
 
 ### Tool Management
 
