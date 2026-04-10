@@ -6,7 +6,6 @@ description: >
   holder analysis, and smart money tracking. Use when the user wants to find new memecoins,
   check if a token is a rug pull, or scout trending low-cap tokens.
 license: MIT
-user-invocable: true
 compatibility: >
   Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access.
   Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills spec.

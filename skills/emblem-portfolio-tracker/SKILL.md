@@ -5,7 +5,6 @@ description: >
   conditional trade P&L, and DeFi position tracking via Nansen. Use when the user wants to check
   their portfolio, see balances across chains, or review trade positions.
 license: MIT
-user-invocable: true
 compatibility: >
   Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access.
   Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills spec.

@@ -5,7 +5,6 @@ description: >
   and smart money tracking from CoinGecko, CoinGlass, Birdeye, and Nansen. Use when the user wants
   market data, trending tokens, derivatives analytics, or on-chain intelligence.
 license: MIT
-user-invocable: true
 compatibility: >
   Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access.
   Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills spec.

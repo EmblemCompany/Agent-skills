@@ -5,7 +5,6 @@ description: >
   cross-chain bridging via ChangeNow. Use when the user wants to swap tokens, exchange crypto,
   convert between currencies, or bridge assets cross-chain.
 license: MIT
-user-invocable: true
 compatibility: >
   Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access.
   Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills spec.
