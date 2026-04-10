@@ -1,9 +1,9 @@
 ---
 name: emblem-defi-yield
 description: >
-  DeFi yield farming and liquidity management via Agent Hustle. Add/remove liquidity,
-  stake LP tokens, track yields, and manage positions across DEXs on 6 chains. Use when
-  the user wants to farm yield, provide liquidity, stake tokens, or manage DeFi positions.
+  DeFi yield research and liquid staking via Agent Hustle. Discover yield opportunities,
+  compare protocols, check DeFi positions with Nansen, and enter liquid staking via token swaps.
+  Use when the user wants to research yields, find staking options, or review DeFi positions.
 license: MIT
 user-invocable: true
 compatibility: >
@@ -11,15 +11,41 @@ compatibility: >
   Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills spec.
 metadata:
   author: EmblemAI
-  version: "1.0.0"
+  version: "1.1.0"
   homepage: https://emblemvault.dev
 ---
 
 # Emblem DeFi Yield
 
-DeFi yield farming and liquidity management powered by **Agent Hustle**. Provide liquidity, stake LP tokens, track yields, and manage positions across major DEXs on Solana, Ethereum, Base, BSC, Polygon, and Hedera.
+DeFi yield research and liquid staking powered by **Agent Hustle**. Research yield opportunities across protocols, review existing DeFi positions via Nansen, and enter liquid staking positions through token swaps on Solana, Ethereum, Base, BSC, Polygon, and Hedera.
 
 **Requires**: `npm install -g @emblemvault/agentwallet`
+
+---
+
+## What This Skill Can Do
+
+| Capability | How | Tools Used |
+|-----------|-----|------------|
+| Research yield opportunities | Ask about yields, APYs, protocols | LLM knowledge + `birdeyeTradeData`, `birdeyeTrendingTokens` |
+| Review existing DeFi positions | Check LP, lending, staking, farming positions for any wallet | `nansen_defi_portfolio` |
+| Liquid staking (Solana) | Swap SOL for LSTs (mSOL, JitoSOL, bSOL, jupSOL) | `splBuyIntent` |
+| Token swaps for DeFi entry | Swap into DeFi tokens on any chain | `splBuyIntent`, `ethSwap`, `baseSwap`, `bscSwap`, `polygonSwap`, `hederaTokensSwap` |
+| Protocol comparison | Compare yield strategies across DEXs | LLM knowledge + market data tools |
+| Rug-pull checks | Verify token safety before entering positions | `rugcheck` |
+| Smart money DeFi tracking | See what whales are farming | `nansen_smart_money_holdings`, `nansen_defi_portfolio` |
+
+### Not Supported (Yet)
+
+These features require direct LP pool management tools that are not currently available:
+
+- Adding/removing liquidity to DEX pools
+- Opening/closing concentrated liquidity (CLMM) positions
+- Staking LP tokens
+- Claiming farming rewards
+- Pool APY rankings with live on-chain data
+
+For these operations, use the DEX UIs directly (Raydium, Orca, Uniswap, etc.).
 
 ---
 
@@ -28,133 +54,148 @@ DeFi yield farming and liquidity management powered by **Agent Hustle**. Provide
 ```bash
 npm install -g @emblemvault/agentwallet
 
-# Find yield opportunities
+# Research yield opportunities
 emblemai --agent --profile default -m "What are the best yield farming opportunities on Solana right now?"
 
-# Check existing positions
-emblemai --agent --profile default -m "Show my current liquidity positions across all chains"
+# Check DeFi positions for a wallet (uses nansen_defi_portfolio)
+emblemai --agent --profile default -m "Use nansen_defi_portfolio to show DeFi positions for wallet 0x1234...abcd on ethereum"
+
+# Enter liquid staking via swap
+emblemai --agent --profile default -m "Swap 5 SOL for JitoSOL using splBuyIntent"
 ```
 
 **Trigger phrases:**
 - "Find yield opportunities"
-- "Add liquidity to a pool"
 - "What are the best APYs?"
-- "Manage my LP positions"
-- "Stake my tokens"
+- "Show DeFi positions for this wallet"
+- "Swap SOL for JitoSOL"
+- "What liquid staking options exist?"
 
 ---
 
-## Supported Protocols
+## Supported Chains
 
-| Chain | DEXs / Protocols |
-|-------|-----------------|
-| Solana | Raydium |
-| Ethereum | Uniswap, SushiSwap |
-| Base | Aerodrome, BaseSwap |
-| BSC | PancakeSwap |
-| Polygon | QuickSwap, SushiSwap |
-| Hedera | SaucerSwap |
-
-TVL and yield data from **DeFiLlama**.
+| Chain | Swap Tool | Balances | Conditional Orders |
+|-------|-----------|----------|--------------------|
+| Solana | `splBuyIntent` | `solanaBalances` | Yes |
+| Ethereum | `ethSwap` | `ethGetBalances` | Yes |
+| Base | `baseSwap` | `baseGetBalances` | Yes |
+| BSC | `bscSwap` | `bscGetBalances` | Yes |
+| Polygon | `polygonSwap` | `polygonGetBalances` | Yes |
+| Hedera | `hederaTokensSwap` | `hederaGetBalances` | Yes |
 
 ---
 
-## Workflow: Provide Liquidity
+## Workflow: Research and Enter Yield
 
-### Step 1: Research Pools
-Find high-yield pools with sustainable APY.
+### Step 1: Research Opportunities
+Ask about current yield landscape. The agent uses its knowledge plus live token data.
 ```bash
-emblemai --agent --profile default -m "Show the top 10 liquidity pools on Solana by APY with TVL and volume"
+emblemai --agent --profile default -m "What are the best yield farming opportunities on Solana right now? Use birdeyeTrendingTokens to see what's hot."
 ```
 
-### Step 2: Check Requirements
-See what tokens you need for the pool.
+### Step 2: Check a Wallet's DeFi Positions
+Use Nansen to see existing LP, lending, staking, and farming positions.
 ```bash
-emblemai --agent --profile default -m "What tokens do I need to provide liquidity to the SOL/USDC pool on Raydium?"
+emblemai --agent --profile default -m "Use nansen_defi_portfolio to check DeFi positions for wallet 0x1234...abcd on ethereum"
 ```
 
 ### Step 3: Verify Balances
-Confirm you have the required tokens.
+Check what you have available before swapping.
 ```bash
-emblemai --agent --profile default -m "Show my SOL and USDC balances on Solana"
+emblemai --agent --profile default -m "Use solanaBalances to show my Solana balances"
 ```
 
-### Step 4: Add Liquidity
-Provide liquidity to the pool.
+### Step 4: Enter a Position via Swap
+Swap into liquid staking tokens or DeFi tokens.
 ```bash
-emblemai --agent --profile default -m "Add $100 of liquidity to the SOL/USDC pool on Raydium, split evenly between both tokens"
+emblemai --agent --profile default -m "Use splBuyIntent to swap 5 SOL for JitoSOL"
 ```
 Requires user confirmation in safe mode.
 
-### Step 5: Verify Position
-Confirm the LP position.
+### Step 5: Verify
+Confirm the swap executed.
 ```bash
-emblemai --agent --profile default -m "Show my current liquidity positions on Solana with value and rewards earned"
+emblemai --agent --profile default -m "Use solanaBalances to show my updated balances"
 ```
 
 ---
 
 ## DeFi Patterns
 
-### Yield Discovery
+### Yield Research
 ```bash
-emblemai --agent --profile default -m "What are the highest APY opportunities across all chains with at least $100k TVL?"
-emblemai --agent --profile default -m "Show stable pair pools on Ethereum with the best yield"
+emblemai --agent --profile default -m "What are the best yield farming opportunities on Solana? Include liquid staking, LP strategies, and lending protocols."
+emblemai --agent --profile default -m "Compare Marinade (mSOL), Jito (JitoSOL), and BlazeStake (bSOL) for SOL liquid staking."
 ```
 
-### Position Management
+### DeFi Position Tracking (Nansen)
 ```bash
-emblemai --agent --profile default -m "Show all my LP positions with current value, impermanent loss, and rewards earned"
-emblemai --agent --profile default -m "Remove my liquidity from the SOL/USDC pool on Raydium"
+emblemai --agent --profile default -m "Use nansen_defi_portfolio to show DeFi positions for wallet 0xABC123 on ethereum"
+emblemai --agent --profile default -m "Use nansen_defi_portfolio to check what DeFi protocols wallet 2J9Xrm...BL5WBJ is using on solana"
 ```
 
-### Staking
+### Smart Money DeFi Analysis
 ```bash
-emblemai --agent --profile default -m "What staking options are available for my SOL tokens?"
-emblemai --agent --profile default -m "Stake 10 SOL on the best available validator"
+emblemai --agent --profile default -m "Use nansen_smart_money_holdings to see what tokens smart money is holding on solana"
+emblemai --agent --profile default -m "Use nansen_smart_money_trades to see recent smart money trades for JitoSOL"
+```
+
+### Liquid Staking (Solana)
+```bash
+emblemai --agent --profile default -m "Use splBuyIntent to swap 10 SOL for mSOL"
+emblemai --agent --profile default -m "Use splBuyIntent to get a quote for swapping 5 SOL to JitoSOL"
+```
+
+### Safety Checks
+```bash
+emblemai --agent --profile default -m "Use rugcheck to verify token So11111111111111111111111111111111111111112"
 ```
 
 ### Protocol Comparison
 ```bash
-emblemai --agent --profile default -m "Compare yields for SOL/USDC pools across Raydium and other Solana DEXs"
+emblemai --agent --profile default -m "Compare yields for SOL liquid staking across Marinade, Jito, BlazeStake, and Jupiter"
 ```
 
 ---
 
 ## Communication Tips
 
-DeFi operations need precision. Always specify:
-1. **Action** — add liquidity, remove, stake, unstake
-2. **Amount** — dollar value or token quantity
-3. **Pool/Pair** — which tokens
-4. **Protocol** — which DEX
-5. **Chain** — which blockchain
+When asking about DeFi, be specific:
+1. **Name the tool** — mention exact tool names for reliable execution
+2. **Specify chain** — which blockchain
+3. **Specify wallet** — for position lookups
+4. **Specify tokens** — which tokens to swap
 
 | Bad | Good |
 |-----|------|
-| `"yield"` | `"What are the best yield farming pools on Solana by APY?"` |
-| `"add LP"` | `"Add $100 of liquidity to SOL/USDC on Raydium, split evenly"` |
+| `"show yield"` | `"What are the best yield opportunities on Solana? Include APYs and risks."` |
+| `"check positions"` | `"Use nansen_defi_portfolio to show DeFi positions for wallet 0x123 on ethereum"` |
+| `"stake SOL"` | `"Use splBuyIntent to swap 5 SOL for JitoSOL"` |
 
 ---
 
 ## Safety
 
-All value-moving DeFi operations require user confirmation:
-- Adding/removing liquidity
-- Staking/unstaking
-- Claiming rewards
+All value-moving operations require user confirmation:
+- Token swaps (entering liquid staking, DeFi tokens)
+- Cross-chain bridges
 
-Read-only operations (yield lookup, position viewing, protocol comparison) execute immediately.
+Read-only operations execute immediately:
+- Yield research
+- DeFi position viewing (Nansen)
+- Balance checks
+- Rug-pull checks
 
 ---
 
 ## Helper Script
 
 ```bash
-bash scripts/yield-scan.sh
+bash scripts/yield-scan.sh [chain]
 ```
 
-See [scripts/yield-scan.sh](scripts/yield-scan.sh) for yield opportunity scanning.
+Scans yield landscape for a chain. See [scripts/yield-scan.sh](scripts/yield-scan.sh).
 
 ---
 
