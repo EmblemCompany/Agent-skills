@@ -1,9 +1,9 @@
 ---
 name: emblem-token-swap
 description: >
-  Execute token swaps across 7 blockchains via Agent Hustle. Automatic route optimization,
-  slippage control, and multi-DEX support. Use when the user wants to swap tokens, exchange
-  crypto, convert between currencies, or trade on a DEX.
+  Execute token swaps across 6 blockchains via EmblemAI. Automatic route optimization and
+  cross-chain bridging via ChangeNow. Use when the user wants to swap tokens, exchange crypto,
+  convert between currencies, or bridge assets cross-chain.
 license: MIT
 user-invocable: true
 compatibility: >
@@ -11,15 +11,36 @@ compatibility: >
   Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills spec.
 metadata:
   author: EmblemAI
-  version: "1.0.0"
+  version: "1.1.0"
   homepage: https://emblemvault.dev
 ---
 
 # Emblem Token Swap
 
-Guided token swapping powered by **Agent Hustle**. Multi-hop routing, slippage protection, and support for major DEXs across Solana, Ethereum, Base, BSC, Polygon, and Hedera.
+Guided token swapping powered by **EmblemAI**. Swap tokens on Solana, Ethereum, Base, BSC, Polygon, and Hedera with automatic routing. Cross-chain bridging via ChangeNow.
 
 **Requires**: `npm install -g @emblemvault/agentwallet`
+
+---
+
+## What This Skill Can Do
+
+| Chain | Quote Tool | Swap Tool | Balance Tool | Token Search |
+|-------|-----------|-----------|-------------|--------------|
+| Solana | `splBuyIntent` (quote mode) | `splBuyIntent` (swap mode) | `solanaBalances` | `findSolanaSwapToken` |
+| Ethereum | `ethSwapQuote` | `ethSwap` | `ethGetBalances` | `searchCryptoByName` |
+| Base | `baseSwapQuote` | `baseSwap` | `baseGetBalances` | `searchEvmTokensBirdeye` |
+| BSC | `bscSwapQuote` | `bscSwap` | `bscGetBalances` | `searchEvmTokensBirdeye` |
+| Polygon | `polygonSwapQuote` | `polygonSwap` | `polygonGetBalances` | `searchEvmTokensBirdeye` |
+| Hedera | `hederaTokensSwapQuote` | `hederaTokensSwap` | `hederaGetBalances` | `hederaFindTokens` |
+| Cross-chain | `getChangeNowSwapQuote` | `swapUsingChangeNow` | — | `getChangeNowSupportedCurrencies` |
+
+### Notes
+
+- **Solana** uses `splBuyIntent` for both quotes and execution — it handles token lookup by name/symbol/CA and flexible amounts ($USD, SOL, or token quantity)
+- **EVM chains** (Ethereum, Base, BSC, Polygon) route through automatic DEX aggregation
+- **Cross-chain** bridges via ChangeNow support 500+ currencies
+- Bitcoin has balance support (`getBTCBalances`) but no on-chain swap tools — use ChangeNow for BTC bridges
 
 ---
 
@@ -28,34 +49,18 @@ Guided token swapping powered by **Agent Hustle**. Multi-hop routing, slippage p
 ```bash
 npm install -g @emblemvault/agentwallet
 
-# Simple swap
-emblemai --agent --profile default -m "Swap $20 worth of SOL to USDC on Solana with 1% slippage"
+# Solana swap (uses splBuyIntent)
+emblemai --agent --profile default -m "Use splBuyIntent to swap 5 SOL for USDC on Solana"
 
-# Cross-chain bridge
-emblemai --agent --profile default -m "Bridge $50 of ETH from Ethereum to Base via ChangeNow"
+# Cross-chain bridge (uses ChangeNow)
+emblemai --agent --profile default -m "Use getChangeNowSwapQuote to get a quote for bridging 0.05 ETH from Ethereum to SOL on Solana"
 ```
 
 **Trigger phrases:**
 - "Swap SOL to USDC"
 - "Exchange ETH for USDT"
 - "Convert my tokens"
-- "Trade on Uniswap"
 - "Bridge tokens to Base"
-
----
-
-## Supported DEXs
-
-| Chain | DEXs |
-|-------|------|
-| Solana | Raydium, Serum |
-| Ethereum | Uniswap, SushiSwap |
-| Base | BaseSwap, Aerodrome |
-| BSC | PancakeSwap |
-| Polygon | QuickSwap, SushiSwap |
-| Hedera | SaucerSwap |
-
-Cross-chain bridging via **ChangeNow**.
 
 ---
 
@@ -64,50 +69,67 @@ Cross-chain bridging via **ChangeNow**.
 ### Step 1: Check Balance
 Confirm you have enough of the source token.
 ```bash
-emblemai --agent --profile default -m "What is my SOL balance on Solana?"
+emblemai --agent --profile default -m "Use solanaBalances to show my Solana token balances"
 ```
 
 ### Step 2: Get a Quote
 Preview the swap before executing.
 ```bash
-emblemai --agent --profile default -m "How much USDC would I get if I swapped $20 of SOL on Solana?"
+emblemai --agent --profile default -m "Use splBuyIntent to get a quote for swapping 5 SOL to USDC"
 ```
 
 ### Step 3: Execute the Swap
-Always specify amount, tokens, chain, and slippage.
 ```bash
-emblemai --agent --profile default -m "Swap $20 worth of SOL to USDC on Solana with 1% slippage"
+emblemai --agent --profile default -m "Use splBuyIntent to swap 5 SOL for USDC on Solana"
 ```
 Safe mode requires your confirmation before executing.
 
 ### Step 4: Verify
 Confirm the new balance.
 ```bash
-emblemai --agent --profile default -m "Show my USDC and SOL balances on Solana"
+emblemai --agent --profile default -m "Use solanaBalances to show my updated balances"
 ```
 
 ---
 
 ## Swap Patterns
 
-### Dollar-Amount Swap
+### Solana Swaps
 ```bash
-emblemai --agent --profile default -m "Swap $50 worth of ETH to USDC on Ethereum with 0.5% slippage"
+# By token amount
+emblemai --agent --profile default -m "Use splBuyIntent to swap 0.5 SOL for USDC"
+
+# By dollar amount
+emblemai --agent --profile default -m "Use splBuyIntent to swap $20 of SOL for JUP"
+
+# By token name
+emblemai --agent --profile default -m "Use splBuyIntent to swap 100 USDC for BONK"
 ```
 
-### Token-Amount Swap
+### EVM Swaps
 ```bash
-emblemai --agent --profile default -m "Swap 0.1 ETH to USDC on Ethereum with 1% slippage"
+# Ethereum
+emblemai --agent --profile default -m "Use ethSwapQuote to get a quote for swapping 0.01 ETH to USDC, then use ethSwap to execute"
+
+# Base
+emblemai --agent --profile default -m "Use baseSwapQuote to quote 0.005 ETH to USDC on Base"
+
+# BSC
+emblemai --agent --profile default -m "Use bscSwapQuote to quote 0.1 BNB to USDT on BSC"
+
+# Polygon
+emblemai --agent --profile default -m "Use polygonSwapQuote to quote 10 POL to USDC on Polygon"
 ```
 
-### Specific DEX
+### Hedera Swaps
 ```bash
-emblemai --agent --profile default -m "Swap $30 of BNB to USDT on PancakeSwap with 1% slippage"
+emblemai --agent --profile default -m "Use hederaTokensSwapQuote to get a quote for 100 HBAR to USDC, then use hederaTokensSwap to execute"
 ```
 
 ### Cross-Chain Bridge
 ```bash
-emblemai --agent --profile default -m "Bridge 0.05 ETH from Ethereum to Base using ChangeNow"
+emblemai --agent --profile default -m "Use getChangeNowSwapQuote to quote bridging 0.1 ETH to SOL"
+emblemai --agent --profile default -m "Use getChangeNowSupportedCurrencies to show available bridge currencies"
 ```
 
 ---
@@ -115,16 +137,16 @@ emblemai --agent --profile default -m "Bridge 0.05 ETH from Ethereum to Base usi
 ## Communication Rules
 
 **Always include these in swap requests:**
-1. **Amount** — dollar value or token quantity
-2. **Source token** — what you're swapping from
-3. **Target token** — what you're swapping to
-4. **Chain** — which blockchain
-5. **Slippage** — tolerance percentage (recommend 0.5-2%)
+1. **Tool name** — specify the exact tool for reliable routing
+2. **Amount** — dollar value or token quantity
+3. **Source token** — what you're swapping from
+4. **Target token** — what you're swapping to
 
 | Bad | Good |
 |-----|------|
-| `"swap sol usdc"` | `"Swap $20 of SOL to USDC on Solana with 1% slippage"` |
-| `"buy eth"` | `"Swap $100 of USDC to ETH on Ethereum with 0.5% slippage"` |
+| `"swap sol usdc"` | `"Use splBuyIntent to swap 5 SOL for USDC"` |
+| `"buy eth"` | `"Use ethSwap to swap 100 USDC to ETH on Ethereum"` |
+| `"bridge"` | `"Use getChangeNowSwapQuote to bridge 0.05 ETH to SOL"` |
 
 ---
 
@@ -132,9 +154,8 @@ emblemai --agent --profile default -m "Bridge 0.05 ETH from Ethereum to Base usi
 
 All swaps require explicit user confirmation (safe mode). The agent will:
 1. Show you the swap details (amount, route, estimated output)
-2. Display gas estimate
-3. Wait for your approval before executing
-4. Report the transaction result
+2. Wait for your approval before executing
+3. Report the transaction result
 
 Never bypasses confirmation for any value-moving operation.
 
@@ -154,4 +175,3 @@ See [scripts/swap-helper.sh](scripts/swap-helper.sh) for an interactive swap wal
 
 - [Agent Wallet CLI](https://www.npmjs.com/package/@emblemvault/agentwallet)
 - [EmblemVault Docs](https://emblemvault.dev)
-- [Agent Hustle](https://agenthustle.ai)

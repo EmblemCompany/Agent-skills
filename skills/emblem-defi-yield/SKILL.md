@@ -1,7 +1,7 @@
 ---
 name: emblem-defi-yield
 description: >
-  DeFi yield research and liquid staking via Agent Hustle. Discover yield opportunities,
+  DeFi yield research and liquid staking via EmblemAI. Discover yield opportunities,
   compare protocols, check DeFi positions with Nansen, and enter liquid staking via token swaps.
   Use when the user wants to research yields, find staking options, or review DeFi positions.
 license: MIT
@@ -17,7 +17,7 @@ metadata:
 
 # Emblem DeFi Yield
 
-DeFi yield research and liquid staking powered by **Agent Hustle**. Research yield opportunities across protocols, review existing DeFi positions via Nansen, and enter liquid staking positions through token swaps on Solana, Ethereum, Base, BSC, Polygon, and Hedera.
+DeFi yield research and liquid staking powered by **EmblemAI**. Research yield opportunities across protocols, review existing DeFi positions via Nansen, and enter liquid staking positions through token swaps on Solana, Ethereum, Base, BSC, Polygon, and Hedera.
 
 **Requires**: `npm install -g @emblemvault/agentwallet`
 
@@ -203,4 +203,3 @@ Scans yield landscape for a chain. See [scripts/yield-scan.sh](scripts/yield-sca
 
 - [Agent Wallet CLI](https://www.npmjs.com/package/@emblemvault/agentwallet)
 - [EmblemVault Docs](https://emblemvault.dev)
-- [Agent Hustle](https://agenthustle.ai)
