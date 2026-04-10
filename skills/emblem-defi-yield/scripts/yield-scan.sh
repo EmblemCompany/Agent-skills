@@ -1,5 +1,5 @@
 #!/bin/bash
-# yield-scan.sh - Scan DeFi yield opportunities via Agent Hustle
+# yield-scan.sh - Scan DeFi yield landscape via Agent Hustle
 # Usage: bash scripts/yield-scan.sh [chain]
 
 set -e
@@ -17,19 +17,33 @@ if ! command -v emblemai &> /dev/null; then
 fi
 
 echo ""
-echo "1. Top Yield Pools"
-echo "------------------"
-emblemai --agent --profile default -m "Show the top 10 liquidity pools on $CHAIN by APY with TVL over \$50k"
+echo "1. Yield Opportunities"
+echo "----------------------"
+emblemai --agent --profile default -m "What are the best yield farming opportunities on $CHAIN right now? Include liquid staking, LP strategies, lending protocols, and estimated APYs. Use birdeyeTrendingTokens to check what tokens are trending."
 
 echo ""
-echo "2. Stable Pair Opportunities"
+echo "2. Smart Money DeFi Activity"
 echo "----------------------------"
-emblemai --agent --profile default -m "Show stablecoin pair pools on $CHAIN sorted by APY"
+emblemai --agent --profile default -m "Use nansen_smart_money_holdings to show what smart money is holding on ${CHAIN,,}. Focus on DeFi tokens, LSTs, and yield-bearing assets."
 
 echo ""
-echo "3. My Positions"
-echo "---------------"
-emblemai --agent --profile default -m "Show my current liquidity and staking positions on $CHAIN with earned rewards"
+echo "3. My Balances"
+echo "--------------"
+if [ "${CHAIN,,}" = "solana" ]; then
+    emblemai --agent --profile default -m "Use solanaBalances to show my Solana token balances"
+elif [ "${CHAIN,,}" = "ethereum" ]; then
+    emblemai --agent --profile default -m "Use ethGetBalances to show my Ethereum token balances"
+elif [ "${CHAIN,,}" = "base" ]; then
+    emblemai --agent --profile default -m "Use baseGetBalances to show my Base token balances"
+elif [ "${CHAIN,,}" = "bsc" ]; then
+    emblemai --agent --profile default -m "Use bscGetBalances to show my BSC token balances"
+elif [ "${CHAIN,,}" = "polygon" ]; then
+    emblemai --agent --profile default -m "Use polygonGetBalances to show my Polygon token balances"
+elif [ "${CHAIN,,}" = "hedera" ]; then
+    emblemai --agent --profile default -m "Use hederaGetBalances to show my Hedera token balances"
+else
+    echo "Unknown chain: $CHAIN"
+fi
 
 echo ""
 echo "=================================================="
