@@ -4,12 +4,22 @@ Official skill collection for AI agents building with [EmblemAI](https://emblemv
 
 ## Available Skills
 
+### Core
 | Skill | Description | Install |
 |-------|-------------|---------|
 | [emblem-ai](skills/emblem-ai/) | EmblemAI developer tools for one-shot user management, wallet-enabled users, AI crypto tooling, React SDKs, and app introspection | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai` |
 | [emblem-ai-react](skills/emblem-ai-react/) | React-focused EmblemAI integration skill for adding auth, wallet-enabled users, chat components, and Migrate.fun flows to an app | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai-react` |
 | [emblem-ai-agent-wallet](skills/emblem-ai-agent-wallet/) | Agent wallet CLI and browser auth across 7 blockchains, with wallet, email/password, and social sign-in options | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai-agent-wallet` |
 | [emblem-ai-prompt-examples](skills/emblem-ai-prompt-examples/) | Curated non-developer prompt and usage examples for EmblemAI wallet, market, trading, NFT, Bitcoin, prediction-market, vault, and assistant workflows | `npx skills add EmblemCompany/Agent-skills --skill emblem-ai-prompt-examples` |
+
+### Use Cases
+| Skill | Description | Install |
+|-------|-------------|---------|
+| [emblem-portfolio-tracker](skills/emblem-portfolio-tracker/) | Cross-chain portfolio monitoring, P&L tracking, and performance analytics | `npx skills add EmblemCompany/Agent-skills --skill emblem-portfolio-tracker` |
+| [emblem-token-swap](skills/emblem-token-swap/) | Guided token swapping with route optimization and slippage control | `npx skills add EmblemCompany/Agent-skills --skill emblem-token-swap` |
+| [emblem-market-research](skills/emblem-market-research/) | Trending tokens, sentiment analysis, and market intelligence | `npx skills add EmblemCompany/Agent-skills --skill emblem-market-research` |
+| [emblem-defi-yield](skills/emblem-defi-yield/) | DeFi yield farming, LP management, and staking across DEXs | `npx skills add EmblemCompany/Agent-skills --skill emblem-defi-yield` |
+| [emblem-memecoin-scout](skills/emblem-memecoin-scout/) | Memecoin discovery, rug-pull detection, and trending new tokens | `npx skills add EmblemCompany/Agent-skills --skill emblem-memecoin-scout` |
 
 ## Quick Install
 
@@ -109,6 +119,14 @@ The sync entrypoint is `utils/sync-emblem-ai-shared-references.sh`.
 If a reference file is duplicated across multiple skills, move it into `shared/` and sync it back into each standalone skill instead of maintaining separate manual copies.
 
 Validation also runs automatically on every PR via GitHub Actions.
+
+## About EmblemAI
+
+[EmblemAI](https://agenthustle.ai) provides 199 autonomous trading tools across 7 blockchains (Solana, Ethereum, Base, BSC, Polygon, Hedera, Bitcoin).
+
+- **Website**: [agenthustle.ai](https://agenthustle.ai)
+- **Documentation**: [emblemvault.dev](https://emblemvault.dev)
+- **NPM**: [@emblemvault/agentwallet](https://www.npmjs.com/package/@emblemvault/agentwallet)
 
 ## License
 
