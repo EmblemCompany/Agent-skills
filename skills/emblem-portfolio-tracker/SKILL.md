@@ -1,9 +1,9 @@
 ---
 name: emblem-portfolio-tracker
 description: >
-  Track crypto portfolio across 7 blockchains via Agent Hustle. Aggregated balances, P&L,
-  performance analytics, and tax-ready transaction history. Use when the user wants to check
-  their portfolio, see balances across chains, track profit/loss, or generate portfolio reports.
+  Track crypto portfolio across 7 blockchains via EmblemAI. Aggregated balances with USD values,
+  conditional trade P&L, and DeFi position tracking via Nansen. Use when the user wants to check
+  their portfolio, see balances across chains, or review trade positions.
 license: MIT
 user-invocable: true
 compatibility: >
@@ -11,119 +11,149 @@ compatibility: >
   Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills spec.
 metadata:
   author: EmblemAI
-  version: "1.0.0"
+  version: "1.1.0"
   homepage: https://emblemvault.dev
 ---
 
 # Emblem Portfolio Tracker
 
-Cross-chain crypto portfolio monitoring powered by **Agent Hustle**. Aggregated balances, profit/loss tracking, performance analytics, and transaction history across Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin.
+Cross-chain crypto portfolio monitoring powered by **EmblemAI**. Aggregated balances with USD values across Solana, Ethereum, Base, BSC, Polygon, Hedera, and Bitcoin. Conditional trade P&L tracking and DeFi position viewing via Nansen.
 
 **Requires**: `npm install -g @emblemvault/agentwallet`
+
+---
+
+## What This Skill Can Do
+
+| Capability | Tools Used |
+|-----------|------------|
+| Wallet addresses (all chains) | `wallet` |
+| Solana balances + USD values | `solanaBalances` |
+| Ethereum balances + USD values | `ethGetBalances` |
+| Base balances + USD values | `baseGetBalances` |
+| BSC balances + USD values | `bscGetBalances` |
+| Polygon balances + USD values | `polygonGetBalances` |
+| Hedera balances | `hederaGetBalances` |
+| Bitcoin balances | `getBTCBalances` |
+| Crypto price lookup | `getCryptoPrice` |
+| Conditional trade positions & P&L | `getAllPositions`, `listPositions` |
+| DeFi positions (LP, staking, farming) | `nansen_defi_portfolio` |
+
+### Not Supported
+
+These features have no backing tools:
+
+- Transaction history — no tool returns past wallet transactions on any chain
+- Tax reporting / transaction exports — no historical transaction data available
+- Unrealized P&L on held tokens — only realized P&L from conditional trade positions
+- 24h portfolio change — no historical balance snapshots; only current balances
+- Portfolio allocation percentages — agent must compute from individual chain balance calls
 
 ---
 
 ## Quick Start
 
 ```bash
-# Install the CLI (if not already installed)
 npm install -g @emblemvault/agentwallet
 
 # Check balances across all chains
-emblemai --agent --profile default -m "Show my balances across all chains in a table"
+emblemai --agent --profile default -m "Use wallet to show my addresses, then use solanaBalances, ethGetBalances, baseGetBalances, bscGetBalances, polygonGetBalances, hederaGetBalances, and getBTCBalances to show all my balances"
 
-# Portfolio summary with P&L
-emblemai --agent --profile default -m "Show my portfolio performance with profit and loss for each position"
+# Check trade positions
+emblemai --agent --profile default -m "Use getAllPositions to show my open and closed trade positions with P&L"
 ```
 
-**Trigger phrases** (say these to activate this skill):
+**Trigger phrases:**
 - "Check my portfolio"
 - "Show balances across all chains"
 - "What's my P&L?"
-- "Generate a portfolio report"
-- "How is my crypto performing?"
+- "Show my trade positions"
 
 ---
 
 ## Workflow: Full Portfolio Review
 
-Follow these steps for a comprehensive portfolio review:
-
 ### Step 1: Wallet Addresses
 ```bash
-emblemai --agent --profile default -m "List all my wallet addresses across every chain"
+emblemai --agent --profile default -m "Use wallet to list all my wallet addresses across every chain"
 ```
-Confirms which chains have active wallets.
 
 ### Step 2: Balance Snapshot
+Check each chain. Name the tools explicitly for reliable execution.
 ```bash
-emblemai --agent --profile default -m "Show my current balances across all chains with USD values in a clear table"
+emblemai --agent --profile default -m "Use solanaBalances to show my Solana tokens with USD values"
+emblemai --agent --profile default -m "Use ethGetBalances to show my Ethereum tokens with USD values"
+emblemai --agent --profile default -m "Use baseGetBalances to show my Base tokens"
+emblemai --agent --profile default -m "Use bscGetBalances to show my BSC tokens"
+emblemai --agent --profile default -m "Use polygonGetBalances to show my Polygon tokens"
+emblemai --agent --profile default -m "Use hederaGetBalances to show my Hedera tokens"
+emblemai --agent --profile default -m "Use getBTCBalances to show my Bitcoin balance"
 ```
-Gets the aggregate view — token amounts and USD equivalents.
 
-### Step 3: Performance Check
+Or ask for all at once:
 ```bash
-emblemai --agent --profile default -m "Show my portfolio performance — include total value, 24h change, and profit/loss per position"
+emblemai --agent --profile default -m "Show my balances across all chains with USD values. Use the balance tools for each chain: solanaBalances, ethGetBalances, baseGetBalances, bscGetBalances, polygonGetBalances, hederaGetBalances, getBTCBalances"
 ```
-P&L breakdown per token and overall.
 
-### Step 4: Transaction History
+### Step 3: Trade Positions & P&L
 ```bash
-emblemai --agent --profile default -m "Show my recent transactions across all chains — last 10 transactions"
+emblemai --agent --profile default -m "Use getAllPositions to show my conditional trade positions with realized P&L"
 ```
-Recent activity for audit or tax purposes.
+
+Note: P&L data only covers conditional trade positions (limit orders, stop-losses, take-profits) created through EmblemAI. General wallet holdings do not have cost basis tracking.
+
+### Step 4: DeFi Positions (Optional)
+For wallets indexed by Nansen (typically high-value wallets):
+```bash
+emblemai --agent --profile default -m "Use nansen_defi_portfolio to check DeFi positions for wallet [ADDRESS] on [CHAIN]"
+```
 
 ---
 
 ## Use Cases
 
 ### Daily Check-In
-Quick morning review of holdings and overnight changes.
 ```bash
-emblemai --agent --profile default -m "Give me a quick portfolio summary — total value, biggest movers in last 24h"
+emblemai --agent --profile default -m "Quick portfolio check — use solanaBalances, ethGetBalances, and getBTCBalances to show my main holdings"
 ```
 
 ### Chain-Specific Deep Dive
-Focus on a single chain when investigating positions.
 ```bash
-emblemai --agent --profile default -m "Show all my Solana token balances with current prices"
-emblemai --agent --profile default -m "What are my Ethereum positions worth right now?"
+emblemai --agent --profile default -m "Use solanaBalances to show all my Solana token balances with current prices"
+emblemai --agent --profile default -m "Use ethGetBalances to show my Ethereum positions"
 ```
 
-### Tax / Reporting
-Transaction history formatted for record-keeping.
+### Trade Performance
 ```bash
-emblemai --agent --profile default -m "List all my swap transactions in the last 30 days with dates, amounts, and USD values"
+emblemai --agent --profile default -m "Use getAllPositions to show my closed positions with realized P&L and win/loss rate"
 ```
 
-### Portfolio Comparison
-Compare allocation across chains.
+### Price Check
 ```bash
-emblemai --agent --profile default -m "Show my portfolio allocation by chain as percentages"
+emblemai --agent --profile default -m "Use getCryptoPrice to show current prices for BTC, ETH, SOL, and BNB"
 ```
 
 ---
 
 ## Communication Tips
 
-Use verbose, natural language for best results:
+Name the exact tools for reliable execution:
 
 | Bad | Good |
 |-----|------|
-| `"balances"` | `"Show my balances across all chains with USD values"` |
-| `"PnL"` | `"What is my profit and loss for each position I hold?"` |
-| `"history"` | `"Show my last 10 transactions across all chains with dates"` |
+| `"balances"` | `"Use solanaBalances and ethGetBalances to show my balances"` |
+| `"PnL"` | `"Use getAllPositions to show my trade positions with realized P&L"` |
+| `"portfolio"` | `"Use wallet to show addresses, then check balances on each chain"` |
 
 ---
 
 ## Helper Script
 
 ```bash
-# Run the portfolio report script
 bash scripts/portfolio-report.sh
 ```
 
-See [scripts/portfolio-report.sh](scripts/portfolio-report.sh) for a ready-to-use daily report generator.
+See [scripts/portfolio-report.sh](scripts/portfolio-report.sh) for a ready-to-use portfolio report.
 
 ---
 
@@ -131,4 +161,3 @@ See [scripts/portfolio-report.sh](scripts/portfolio-report.sh) for a ready-to-us
 
 - [Agent Wallet CLI](https://www.npmjs.com/package/@emblemvault/agentwallet)
 - [EmblemVault Docs](https://emblemvault.dev)
-- [Agent Hustle](https://agenthustle.ai)

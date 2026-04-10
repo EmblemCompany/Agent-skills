@@ -1,5 +1,5 @@
 #!/bin/bash
-# swap-helper.sh - Interactive token swap walkthrough via Agent Hustle
+# swap-helper.sh - Token swap walkthrough via EmblemAI
 # Usage: bash scripts/swap-helper.sh
 
 set -e
@@ -16,19 +16,23 @@ fi
 echo ""
 echo "Step 1: Current Balances"
 echo "------------------------"
-emblemai --agent --profile default -m "Show my balances across all chains with USD values"
+emblemai --agent --profile default -m "Show my balances with USD values. Use solanaBalances, ethGetBalances, baseGetBalances, bscGetBalances, polygonGetBalances, hederaGetBalances, getBTCBalances"
 
 echo ""
-echo "Step 2: Example Swap Commands"
-echo "-----------------------------"
-echo "  Solana:    emblemai -a --profile default -m 'Swap \$20 of SOL to USDC on Solana with 1% slippage'"
-echo "  Ethereum:  emblemai -a --profile default -m 'Swap 0.05 ETH to USDC on Ethereum with 0.5% slippage'"
-echo "  Base:      emblemai -a --profile default -m 'Swap \$10 of ETH to USDC on Base with 1% slippage'"
-echo "  BSC:       emblemai -a --profile default -m 'Swap \$25 of BNB to USDT on PancakeSwap with 1% slippage'"
+echo "Step 2: Swap Commands by Chain"
+echo "------------------------------"
+echo ""
+echo "  Solana:     emblemai --agent --profile default -m 'Use splBuyIntent to swap 5 SOL for USDC'"
+echo "  Ethereum:   emblemai --agent --profile default -m 'Use ethSwap to swap 0.01 ETH for USDC'"
+echo "  Base:       emblemai --agent --profile default -m 'Use baseSwap to swap 0.005 ETH for USDC'"
+echo "  BSC:        emblemai --agent --profile default -m 'Use bscSwap to swap 0.1 BNB for USDT'"
+echo "  Polygon:    emblemai --agent --profile default -m 'Use polygonSwap to swap 10 POL for USDC'"
+echo "  Hedera:     emblemai --agent --profile default -m 'Use hederaTokensSwap to swap 100 HBAR for USDC'"
+echo "  Bridge:     emblemai --agent --profile default -m 'Use getChangeNowSwapQuote to bridge 0.05 ETH to SOL'"
 echo ""
 echo "Tips:"
-echo "  - Always specify chain and slippage"
+echo "  - Name the exact tool for reliable routing"
 echo "  - Safe mode will ask for confirmation before executing"
-echo "  - Use dollar amounts (\$20) or token amounts (0.1 ETH)"
+echo "  - Solana splBuyIntent supports \$USD, SOL, or token amounts"
 echo ""
 echo "=================================================="

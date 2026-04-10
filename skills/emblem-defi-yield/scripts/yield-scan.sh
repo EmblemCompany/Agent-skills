@@ -1,5 +1,5 @@
 #!/bin/bash
-# yield-scan.sh - Scan DeFi yield landscape via Agent Hustle
+# yield-scan.sh - Scan DeFi yield landscape via EmblemAI
 # Usage: bash scripts/yield-scan.sh [chain]
 
 set -e

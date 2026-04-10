@@ -1,13 +1,14 @@
 #!/bin/bash
-# memecoin-scan.sh - Scan trending memecoins via Agent Hustle
-# Usage: bash scripts/memecoin-scan.sh [chain]
+# memecoin-scan.sh - Scan trending memecoins via EmblemAI
+# Usage: bash scripts/memecoin-scan.sh [platform]
+# Platforms: pumpfun (default), launchlab, clanker, hedera
 
 set -e
 
-CHAIN="${1:-Solana}"
+PLATFORM="${1:-pumpfun}"
 
 echo "Memecoin Scout — $(date '+%Y-%m-%d %H:%M')"
-echo "Chain: $CHAIN"
+echo "Platform: $PLATFORM"
 echo "=================================================="
 
 if ! command -v emblemai &> /dev/null; then
@@ -17,20 +18,32 @@ if ! command -v emblemai &> /dev/null; then
 fi
 
 echo ""
-echo "1. Trending Memecoins"
-echo "---------------------"
-emblemai --agent --profile default -m "Show the top 10 trending memecoins on $CHAIN by volume with market cap and holder count"
+echo "1. New Launches"
+echo "----------------"
+if [ "$PLATFORM" = "pumpfun" ]; then
+    emblemai --agent --profile default -m "Use getPumpFunTokens with type about_to_graduate to show tokens about to graduate with holder data, dev hold %, and volume"
+elif [ "$PLATFORM" = "launchlab" ]; then
+    emblemai --agent --profile default -m "Use discoverLaunchLabTokens to show newest LaunchLab token launches with curve data"
+elif [ "$PLATFORM" = "clanker" ]; then
+    emblemai --agent --profile default -m "Use baseFindClankerTokens to show new Clanker tokens on Base with market cap and creator info"
+elif [ "$PLATFORM" = "hedera" ]; then
+    emblemai --agent --profile default -m "Use hederaFindMemeCoins to show trending memecoins on Hedera with market cap and socials"
+else
+    echo "Unknown platform: $PLATFORM"
+    echo "Available: pumpfun, launchlab, clanker, hedera"
+    exit 1
+fi
 
 echo ""
-echo "2. New Launches"
-echo "---------------"
-emblemai --agent --profile default -m "What are the newest token launches on $CHAIN in the last 6 hours with significant volume?"
+echo "2. Trending Gems (Solana)"
+echo "--------------------------"
+emblemai --agent --profile default -m "Use findSolanaGems with sortBy trending to show top trending tokens with organic score and holder count"
 
 echo ""
-echo "3. Social Buzz"
-echo "--------------"
-emblemai --agent --profile default -m "Which memecoins on $CHAIN have the most social media activity right now?"
+echo "3. Smart Money Memecoin Activity"
+echo "---------------------------------"
+emblemai --agent --profile default -m "Use nansen_smart_money_trades to show what smart money is trading on solana right now"
 
 echo ""
 echo "=================================================="
-echo "Scan complete. Run with a chain: bash scripts/memecoin-scan.sh Base"
+echo "Scan complete. Platforms: pumpfun, launchlab, clanker, hedera"
