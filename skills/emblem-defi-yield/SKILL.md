@@ -5,7 +5,6 @@ description: >
   compare protocols, check DeFi positions with Nansen, and enter liquid staking via token swaps.
   Use when the user wants to research yields, find staking options, or review DeFi positions.
 license: MIT
-user-invocable: true
 compatibility: >
   Requires Node.js >= 18.0.0, @emblemvault/agentwallet CLI, and internet access.
   Works on Claude Code, Cursor, Codex, OpenClaw, and other agents following the Agent Skills spec.
