@@ -30,6 +30,27 @@ This repository contains skills for AI agents building with EmblemAI. Emblem is 
   - Use when the user wants prompt examples, phrasing guidance, or sample requests for end-user EmblemAI tasks.
   - **Compatible with:** OpenClaw, Claude Code, Cursor, Codex, and other agents following the Agent Skills spec.
 
+### Use-Case Skills
+- **emblem-portfolio-tracker** (`skills/emblem-portfolio-tracker/`)
+  - Cross-chain portfolio monitoring, P&L tracking, and performance analytics.
+  - Use when the user wants to check their portfolio, see balances across chains, or generate reports.
+
+- **emblem-token-swap** (`skills/emblem-token-swap/`)
+  - Guided token swapping with route optimization, slippage control, and multi-DEX support.
+  - Use when the user wants to swap tokens, exchange crypto, or trade on a DEX.
+
+- **emblem-market-research** (`skills/emblem-market-research/`)
+  - Trending tokens, sentiment analysis, technical analysis, and on-chain analytics.
+  - Use when the user wants market data, trending tokens, or sentiment analysis.
+
+- **emblem-defi-yield** (`skills/emblem-defi-yield/`)
+  - DeFi yield farming, LP management, staking, and position tracking.
+  - Use when the user wants to farm yield, provide liquidity, or manage DeFi positions.
+
+- **emblem-memecoin-scout** (`skills/emblem-memecoin-scout/`)
+  - Memecoin discovery, rug-pull detection, trending new tokens, and exit strategies.
+  - Use when the user wants to find new memecoins, check token safety, or scout trending launches.
+
 ## Usage
 
 Skills are automatically loaded by agents that support the Agent Skills format. Cross-platform skills at the root level are discoverable by all compatible agents.
@@ -57,9 +78,6 @@ When creating new skills:
 - Use platform-specific metadata and tooling
 
 ### Current Support
-- **Cross-platform:** emblem-ai ✅
-- **Cross-platform:** emblem-ai-react ✅
-- **Cross-platform:** emblem-ai-agent-wallet ✅
-- **Cross-platform:** emblem-ai-prompt-examples ✅
+- **Cross-platform:** emblem-ai, emblem-ai-react, emblem-ai-agent-wallet, emblem-ai-prompt-examples, emblem-portfolio-tracker, emblem-token-swap, emblem-market-research, emblem-defi-yield, emblem-memecoin-scout ✅
 - **OpenClaw-specific:** (future variants)
 - **Claude Code-specific:** (future variants)
