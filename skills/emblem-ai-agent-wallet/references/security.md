@@ -115,20 +115,52 @@ The npm package and GitHub repository are maintained by the same organization. Y
 
 If more than one profile exists, every `--agent` invocation must include `--profile <name>`. The CLI fails closed rather than guessing which wallet identity to use.
 
-## Verifying the Package
+## Supply Chain Verification
 
-Before or after installation, you can inspect exactly what the package contains:
+This skill installs a third-party npm package (`@emblemvault/agentwallet`) and optionally clones from GitHub (`EmblemCompany/EmblemAi-AgentWallet`). Both are supply-chain trust boundaries. Reduce the risk by:
+
+**1. Pin to a known-good version.** Do not install from a floating `latest` tag when scripting or automating:
 
 ```bash
-# View package contents without installing
-npm pack @emblemvault/agentwallet --dry-run
+npm install -g @emblemvault/agentwallet@3.1.3
+```
 
-# After installing, inspect the source
-ls $(npm root -g)/@emblemvault/agentwallet/
+**2. Verify npm provenance attestations.** npm signs published artifacts — check them after install:
 
-# Compare against GitHub source
+```bash
+npm audit signatures
+```
+
+**3. Inspect before installing.** View the tarball contents and integrity hash without executing any install scripts:
+
+```bash
+npm view @emblemvault/agentwallet@3.1.3 dist.tarball dist.integrity
+npm pack @emblemvault/agentwallet@3.1.3 --dry-run
+```
+
+The `dist.integrity` SHA-512 should match the resolved entry in your `package-lock.json` or the value published on the project homepage.
+
+**4. Disable install scripts in untrusted environments.** npm's `--ignore-scripts` flag prevents `postinstall` hooks from executing arbitrary code at install time:
+
+```bash
+npm install -g --ignore-scripts @emblemvault/agentwallet@3.1.3
+```
+
+**5. Prefer the npm package over `git clone` for production use.** The npm publish pipeline is signed and versioned. If you do clone from GitHub, check out a tagged release commit — never an arbitrary branch tip — and inspect the diff before running `npm install`:
+
+```bash
 git clone https://github.com/EmblemCompany/EmblemAi-AgentWallet.git
-diff -r node_modules/@emblemvault/agentwallet EmblemAi-AgentWallet
+cd EmblemAi-AgentWallet
+git checkout v3.1.3      # replace with the release you intend to use
+git verify-tag v3.1.3    # if the maintainers sign their tags
+npm install --ignore-scripts
+```
+
+**6. Compare installed contents against the published source.** Any divergence between the npm tarball and the GitHub source should be investigated:
+
+```bash
+ls $(npm root -g)/@emblemvault/agentwallet/
+diff -r $(npm root -g)/@emblemvault/agentwallet EmblemAi-AgentWallet
 ```
 
 ## Reporting Security Issues

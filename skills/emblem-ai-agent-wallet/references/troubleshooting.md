@@ -7,7 +7,7 @@
 | Issue | Solution |
 |-------|----------|
 | `emblemai: command not found` | Run: `npm install -g @emblemvault/agentwallet` |
-| npm permission errors | Use `sudo npm install -g @emblemvault/agentwallet` or configure npm permissions |
+| npm permission errors | Do **not** use `sudo` for global installs — `sudo npm install -g` runs untrusted package install scripts as root, which is a privilege-escalation footgun. Configure a user-owned npm prefix instead: `mkdir -p ~/.npm-global && npm config set prefix ~/.npm-global && export PATH=~/.npm-global/bin:$PATH`. Or use a version manager such as [nvm](https://github.com/nvm-sh/nvm), [fnm](https://github.com/Schniz/fnm), or [volta](https://volta.sh/). See the [npm docs on resolving EACCES errors](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally). |
 | Node.js version too old | Update Node.js to version 18.0.0 or higher |
 | Package download fails | Check network connectivity: `npm config get registry` |
 
