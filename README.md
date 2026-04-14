@@ -1,6 +1,6 @@
 # EmblemAI Agent Skills
 
-Official skill collection for AI agents building with [EmblemAI](https://emblemvault.dev). Emblem is the easiest way to add user management for apps that need wallet-native users: one integration can create authenticated users, give each user a full-featured crypto wallet, and support website login with wallets, email/password, and social sign-in. Compatible with Claude Code, Cursor, Codex, and other agents following the [Agent Skills](https://agentskills.io/) specification.
+Official skill collection for AI agents building with [EmblemAI](https://emblemvault.ai). EmblemAI is open-source crypto infrastructure for both end users and AI agents: **200+ tools across 7 blockchains** (Solana, Ethereum, Base, BSC, Polygon, Hedera, Bitcoin) for swaps, conditional orders, DeFi, NFTs, and cross-chain bridges, with x402 payment rails and A2A and MCP protocol support. Emblem is also the easiest way to add user management for apps that need wallet-native users: one integration can create authenticated users, give each user a full-featured crypto wallet, and support website login with wallets, email/password, and social sign-in. Compatible with Claude Code, Cursor, Codex, and other agents following the [Agent Skills](https://agentskills.io/) specification.
 
 ## Available Skills
 
@@ -38,6 +38,16 @@ npx skills add EmblemCompany/Agent-skills --list
 ```
 
 ## What EmblemAI enables
+
+**For AI agents and developers:**
+
+- **200+ tools across 7 blockchains** covering swaps, conditional orders, DeFi positions, NFT operations, cross-chain bridges, and market intelligence.
+- **x402 facilitator and per-call payment rails** for agent-to-agent commerce without account setup.
+- **Native MCP (Model Context Protocol) server** for Claude Code, GitHub Copilot, Gemini CLI, and other MCP clients.
+- **A2A (Agent-to-Agent) protocol support** for direct agent interoperability.
+- **Deterministic wallets** — one password produces one persistent agent identity across all chains. Every wallet-modifying action requires explicit approval.
+
+**For end users and wallet-native apps:**
 
 - **The easiest way to do user management for wallet-native apps:** one integration can create website users who also have full-featured crypto wallets.
 - **Flexible login:** users can sign in with many crypto wallets, email/password, or social login.
@@ -122,9 +132,10 @@ Validation also runs automatically on every PR via GitHub Actions.
 
 ## About EmblemAI
 
-[EmblemAI](https://agenthustle.ai) provides 199 autonomous trading tools across 7 blockchains (Solana, Ethereum, Base, BSC, Polygon, Hedera, Bitcoin).
+[EmblemAI](https://emblemvault.ai) provides 200+ autonomous trading tools across 7 blockchains (Solana, Ethereum, Base, BSC, Polygon, Hedera, Bitcoin). Open source and available as an npm CLI, an MCP server, and an A2A-compatible agent.
 
-- **Website**: [agenthustle.ai](https://agenthustle.ai)
+- **Website**: [emblemvault.ai](https://emblemvault.ai)
+- **Blog**: [emblemvault.ai/blog](https://emblemvault.ai/blog)
 - **Documentation**: [emblemvault.dev](https://emblemvault.dev)
 - **NPM**: [@emblemvault/agentwallet](https://www.npmjs.com/package/@emblemvault/agentwallet)
 
