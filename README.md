@@ -37,6 +37,41 @@ npx skills add EmblemCompany/Agent-skills
 npx skills add EmblemCompany/Agent-skills --list
 ```
 
+## Install EmblemAI as an MCP server
+
+The skills above are authoring guidance. If you want your agent to actually call EmblemAI tools at runtime, install the hosted MCP server in your MCP-compatible client.
+
+### Claude Code (OAuth, no API key)
+
+```bash
+claude mcp add --transport http EmblemAI https://emblemvault.ai/api/mcp
+```
+
+Claude Code walks you through the hosted OAuth flow in your browser. No secret to paste.
+
+### Claude Code (API key, for headless / CI)
+
+```bash
+claude mcp add --transport http EmblemAI https://emblemvault.ai/api/mcp \
+  --header "x-api-key: YOUR_API_KEY"
+```
+
+### GitHub Copilot CLI / `.mcp.json`
+
+```json
+{
+  "mcpServers": {
+    "emblemai": {
+      "type": "http",
+      "url": "https://emblemvault.ai/api/mcp",
+      "headers": { "x-api-key": "YOUR_API_KEY" }
+    }
+  }
+}
+```
+
+Full install matrix (Claude Desktop bridge, Cursor, Windsurf, Gemini CLI): https://emblemvault.ai/docs/mcp
+
 ## What EmblemAI enables
 
 **For AI agents and developers:**
