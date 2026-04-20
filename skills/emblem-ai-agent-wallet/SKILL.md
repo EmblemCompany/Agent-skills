@@ -8,6 +8,8 @@ metadata:
   author: EmblemAI
   version: "3.1.3"
   homepage: https://emblemvault.ai
+  docs: https://emblemvault.ai/docs
+  docs-interactive: https://emblemvault.dev
   openclaw: '{"emoji":"🛡️","requires":{"bins":["node","npm","emblemai"]},"config_paths":["~/.emblemai/active-profile","~/.emblemai/profiles/"],"install":[{"id":"npm","kind":"npm","package":"@emblemvault/agentwallet","bins":["emblemai"],"label":"Install Agent Wallet CLI"}]}'
 ---
 

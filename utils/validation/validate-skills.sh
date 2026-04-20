@@ -194,7 +194,7 @@ validate_unique_urls() {
         fi
 
         case "$url" in
-            https://api.*|https://auth.*|https://mainnet.base.org*|https://api.mainnet-beta.solana.com*|https://emblemvault.ai*|https://*.rpc.*|https://emblemvault.ai*)
+            https://api.*|https://auth.*|https://mainnet.base.org*|https://api.mainnet-beta.solana.com*|https://emblemvault.ai*|https://emblemvault.dev*|https://*.rpc.*)
                 if [ "$code" -ge 500 ]; then
                     printf "%s\n" "$url"
                 fi

@@ -8,6 +8,8 @@ metadata:
   author: EmblemAI
   version: "1.0.1"
   homepage: https://emblemvault.ai
+  docs: https://emblemvault.ai/docs
+  docs-interactive: https://emblemvault.dev
 ---
 
 # EmblemAI React
