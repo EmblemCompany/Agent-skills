@@ -6,6 +6,8 @@ allowed-tools: Bash Read Write WebFetch
 metadata:
   source-repo: EmblemCompany/EmblemAi-SKILLS
   source-homepage: https://emblemvault.ai
+  source-docs: https://emblemvault.ai/docs
+  source-docs-interactive: https://emblemvault.dev
   clawdbot-emoji: 🔐
 compatibility: Cross-platform skill compatible with Claude Code, Cursor, Codex, OpenClaw, and other Agent Skills implementations.
 ---

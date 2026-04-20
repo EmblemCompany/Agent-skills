@@ -34,6 +34,7 @@ If you want to integrate EmblemAI into your own React app, see [../emblem-ai-rea
 
 ## Links
 
-- [emblemvault.ai](https://emblemvault.ai)
+- [emblemvault.ai/docs](https://emblemvault.ai/docs) — canonical docs
+- [emblemvault.dev](https://emblemvault.dev) — interactive docs
 - [npm: @emblemvault/agentwallet](https://www.npmjs.com/package/@emblemvault/agentwallet)
 - [GitHub: EmblemCompany](https://github.com/EmblemCompany)
