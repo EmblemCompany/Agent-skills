@@ -11,7 +11,7 @@ compatibility: >
 metadata:
   author: EmblemAI
   version: "1.1.0"
-  homepage: https://emblemvault.dev
+  homepage: https://emblemvault.ai
 ---
 
 # Emblem Token Swap
@@ -173,4 +173,4 @@ See [scripts/swap-helper.sh](scripts/swap-helper.sh) for an interactive swap wal
 ## Links
 
 - [Agent Wallet CLI](https://www.npmjs.com/package/@emblemvault/agentwallet)
-- [EmblemVault Docs](https://emblemvault.dev)
+- [EmblemVault Docs](https://emblemvault.ai)

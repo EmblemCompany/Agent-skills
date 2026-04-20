@@ -11,7 +11,7 @@ compatibility: >
 metadata:
   author: EmblemAI
   version: "1.1.0"
-  homepage: https://emblemvault.dev
+  homepage: https://emblemvault.ai
 ---
 
 # Emblem DeFi Yield
@@ -201,4 +201,4 @@ Scans yield landscape for a chain. See [scripts/yield-scan.sh](scripts/yield-sca
 ## Links
 
 - [Agent Wallet CLI](https://www.npmjs.com/package/@emblemvault/agentwallet)
-- [EmblemVault Docs](https://emblemvault.dev)
+- [EmblemVault Docs](https://emblemvault.ai)

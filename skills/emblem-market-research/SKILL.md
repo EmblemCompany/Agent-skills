@@ -11,7 +11,7 @@ compatibility: >
 metadata:
   author: EmblemAI
   version: "1.1.0"
-  homepage: https://emblemvault.dev
+  homepage: https://emblemvault.ai
 ---
 
 # Emblem Market Research
@@ -183,4 +183,4 @@ See [scripts/market-scan.sh](scripts/market-scan.sh) for a daily market scan rep
 ## Links
 
 - [Agent Wallet CLI](https://www.npmjs.com/package/@emblemvault/agentwallet)
-- [EmblemVault Docs](https://emblemvault.dev)
+- [EmblemVault Docs](https://emblemvault.ai)

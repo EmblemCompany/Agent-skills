@@ -101,7 +101,7 @@ Emblem Agent Wallet is an open-source CLI published by [EmblemCompany](https://g
 
 - **npm registry**: [@emblemvault/agentwallet](https://www.npmjs.com/package/@emblemvault/agentwallet) — check the publisher, version history, and download stats
 - **Source code**: [github.com/EmblemCompany/EmblemAi-AgentWallet](https://github.com/EmblemCompany/EmblemAi-AgentWallet) — full source is public and auditable
-- **Homepage**: [emblemvault.dev](https://emblemvault.dev) — the project homepage with documentation
+- **Homepage**: [emblemvault.ai](https://emblemvault.ai) — the project homepage with documentation
 
 The npm package and GitHub repository are maintained by the same organization. You can compare the published package contents against the source repository at any time using `npm pack --dry-run` or by inspecting `node_modules/@emblemvault/agentwallet` after install.
 

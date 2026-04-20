@@ -7,7 +7,7 @@ allowed-tools: Bash Read Write WebFetch
 metadata:
   author: EmblemAI
   version: "3.1.3"
-  homepage: https://emblemvault.dev
+  homepage: https://emblemvault.ai
   openclaw: '{"emoji":"🛡️","requires":{"bins":["node","npm","emblemai"]},"config_paths":["~/.emblemai/active-profile","~/.emblemai/profiles/"],"install":[{"id":"npm","kind":"npm","package":"@emblemvault/agentwallet","bins":["emblemai"],"label":"Install Agent Wallet CLI"}]}'
 ---
 

@@ -136,7 +136,7 @@ Validation also runs automatically on every PR via GitHub Actions.
 
 - **Website**: [emblemvault.ai](https://emblemvault.ai)
 - **Blog**: [emblemvault.ai/blog](https://emblemvault.ai/blog)
-- **Documentation**: [emblemvault.dev](https://emblemvault.dev)
+- **Documentation**: [emblemvault.ai](https://emblemvault.ai)
 - **NPM**: [@emblemvault/agentwallet](https://www.npmjs.com/package/@emblemvault/agentwallet)
 
 ## License

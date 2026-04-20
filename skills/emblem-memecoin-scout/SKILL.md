@@ -12,7 +12,7 @@ compatibility: >
 metadata:
   author: EmblemAI
   version: "1.1.0"
-  homepage: https://emblemvault.dev
+  homepage: https://emblemvault.ai
 ---
 
 # Emblem Memecoin Scout
@@ -198,4 +198,4 @@ See [scripts/memecoin-scan.sh](scripts/memecoin-scan.sh) for trending memecoin s
 ## Links
 
 - [Agent Wallet CLI](https://www.npmjs.com/package/@emblemvault/agentwallet)
-- [EmblemVault Docs](https://emblemvault.dev)
+- [EmblemVault Docs](https://emblemvault.ai)

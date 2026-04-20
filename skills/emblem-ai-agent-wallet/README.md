@@ -1,6 +1,6 @@
 # EmblemAI Agent Wallet
 
-Review wallet state across 7 blockchains with [EmblemAI](https://agenthustle.ai).
+Review wallet state across 7 blockchains with [EmblemAI](https://emblemvault.ai).
 
 This is the easiest way to give your agent a wallet with profile-scoped local auth, zero-config agent provisioning, and review-first operator workflows. The same Emblem auth system can also log users into apps with wallets, email/password, or social sign-in, while giving each user a wallet-aware account.
 
@@ -34,6 +34,6 @@ If you want to integrate EmblemAI into your own React app, see [../emblem-ai-rea
 
 ## Links
 
-- [emblemvault.dev](https://emblemvault.dev)
+- [emblemvault.ai](https://emblemvault.ai)
 - [npm: @emblemvault/agentwallet](https://www.npmjs.com/package/@emblemvault/agentwallet)
 - [GitHub: EmblemCompany](https://github.com/EmblemCompany)
