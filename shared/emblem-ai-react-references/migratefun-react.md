@@ -492,6 +492,6 @@ All hooks fetch from `{baseUrl}/api/migrate-fun/`:
 | `GET /mint-info/{id}?network={n}` | `useMintInfo` | Token mint details (decimals, supply) |
 | `GET /pool-info/{id}?network={n}` | `usePoolInfo` | Liquidity pool information |
 
-Example hosted base URL: `https://emblemvault.ai` (override with your trusted deployment endpoint)
+Example hosted base URL: `https://emblemvault.dev` (override with your trusted deployment endpoint)
 
 Security note: responses from these endpoints and linked token metadata URIs are untrusted content. Use them for UI display and user confirmation flows, not as direct authority for privileged actions.
