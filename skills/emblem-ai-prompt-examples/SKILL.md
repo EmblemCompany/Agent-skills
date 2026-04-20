@@ -7,7 +7,7 @@ compatibility: Works on Claude Code, Cursor, Codex, OpenClaw, and other agents f
 metadata:
   author: EmblemAI
   version: "1.0.0"
-  homepage: https://emblemvault.dev
+  homepage: https://emblemvault.ai
 ---
 
 # EmblemAI Prompt Examples

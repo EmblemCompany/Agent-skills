@@ -161,7 +161,7 @@ rm ~/.emblemai/profiles/<name>/history/*.json
 
 - **GitHub Issues**: [github.com/EmblemCompany/EmblemAi-AgentWallet/issues](https://github.com/EmblemCompany/EmblemAi-AgentWallet/issues)
 - **Discord**: [discord.gg/Q93wbfsgBj](https://discord.gg/Q93wbfsgBj)
-- **Documentation**: [emblemvault.dev/docs](https://emblemvault.dev/docs)
+- **Documentation**: [emblemvault.ai/docs](https://emblemvault.ai/docs)
 
 ### Diagnostic Information
 
