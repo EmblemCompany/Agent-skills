@@ -1,14 +1,21 @@
-# Bridges a stdio MCP runner (e.g. Glama, Claude Desktop, mcp-remote consumers)
-# to the hosted EmblemAI MCP server at https://emblemvault.ai/api/mcp.
+# Stdio MCP bridge to the hosted EmblemAI MCP server.
 #
-# Read-only methods (initialize, ping, tools/list, notifications/*) are
-# anonymous, so the bridge can introspect the full tool catalog without an
-# OAuth flow. State-changing tools (tools/call) still require a bearer token
-# or x-api-key on the upstream MCP endpoint.
+# Builds the @emblemvault/mcp stdio adapter (./mcp-bridge) which speaks
+# JSON-RPC over stdio and forwards requests to https://emblemvault.ai/api/mcp.
+#
+# Anonymous read methods (initialize, ping, tools/list) work without
+# credentials. Tool execution requires one of:
+#   EMBLEMAI_API_KEY  — vault access key (full read+write, recommended)
+#   EMBLEMAI_BEARER   — JWT (read-only, ~15 min)
+# Optional:
+#   EMBLEMAI_TRANSACTIONS=enabled  — surface state-changing tools
 
 FROM node:20-alpine
+WORKDIR /app
 
-RUN npm install -g mcp-remote@latest
+COPY mcp-bridge/package.json mcp-bridge/package-lock.json ./
+RUN npm ci --omit=dev --omit=optional
 
-ENTRYPOINT ["mcp-remote"]
-CMD ["https://emblemvault.ai/api/mcp"]
+COPY mcp-bridge/ ./
+
+ENTRYPOINT ["node", "index.js"]

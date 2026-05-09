@@ -1,0 +1,26 @@
+{
+  "name": "@emblemvault/mcp",
+  "version": "1.0.0",
+  "description": "Stdio MCP server that bridges to the hosted EmblemAI MCP at https://emblemvault.ai/api/mcp",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "emblemai-mcp": "index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "license": "MIT",
+  "homepage": "https://emblemvault.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmblemCompany/Agent-skills.git",
+    "directory": "mcp-bridge"
+  }
+}
