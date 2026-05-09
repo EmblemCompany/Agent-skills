@@ -19,3 +19,4 @@ RUN npm ci --omit=dev --omit=optional
 COPY mcp-bridge/ ./
 
 ENTRYPOINT ["node", "index.js"]
+CMD ["--stdio"]

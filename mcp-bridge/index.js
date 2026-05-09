@@ -27,6 +27,23 @@ const PROTOCOL_VERSION = "2025-06-18";
 const SERVER_NAME = "emblemai";
 const SERVER_VERSION = "1.0.0";
 
+// CLI args accepted for compatibility with sandbox runners that mandate a
+// non-empty CMD (e.g. Glama's release form). Recognised: --stdio (default,
+// no-op), --version (print + exit), --help. Unknown args are ignored.
+const argv = process.argv.slice(2);
+if (argv.includes("--version")) {
+  process.stdout.write(`${SERVER_NAME} ${SERVER_VERSION}\n`);
+  process.exit(0);
+}
+if (argv.includes("--help")) {
+  process.stdout.write(
+    `${SERVER_NAME} ${SERVER_VERSION} — stdio MCP bridge to ${UPSTREAM_URL}\n` +
+      "Flags: --stdio (default), --version, --help\n" +
+      "Env: EMBLEMAI_API_KEY, EMBLEMAI_BEARER, EMBLEMAI_TRANSACTIONS\n",
+  );
+  process.exit(0);
+}
+
 function buildUpstreamHeaders() {
   const headers = {
     "Content-Type": "application/json",
