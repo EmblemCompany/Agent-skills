@@ -8,7 +8,15 @@
     "emblemai-mcp": "index.js"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "esbuild index.js --bundle --platform=node --format=esm --target=node20 --outfile=dist/index.js"
+  },
+  "files": [
+    "index.js",
+    "dist/"
+  ],
+  "devDependencies": {
+    "esbuild": "^0.27.0"
   },
   "engines": {
     "node": ">=20"
