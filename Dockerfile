@@ -10,4 +10,5 @@ FROM node:20-alpine
 
 RUN npm install -g mcp-remote@latest
 
-ENTRYPOINT ["mcp-remote", "https://emblemvault.ai/api/mcp"]
+ENTRYPOINT ["mcp-remote"]
+CMD ["https://emblemvault.ai/api/mcp"]
