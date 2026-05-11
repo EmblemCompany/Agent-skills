@@ -15449,7 +15449,7 @@ var StdioServerTransport = class {
 var UPSTREAM_URL = "https://emblemvault.ai/api/mcp";
 var PROTOCOL_VERSION = "2025-06-18";
 var SERVER_NAME = "emblemai";
-var SERVER_VERSION = "1.0.0";
+var SERVER_VERSION = "1.1.0";
 var argv = process.argv.slice(2);
 if (argv.includes("--version")) {
   process.stdout.write(`${SERVER_NAME} ${SERVER_VERSION}
@@ -15460,10 +15460,27 @@ if (argv.includes("--help")) {
   process.stdout.write(
     `${SERVER_NAME} ${SERVER_VERSION} \u2014 stdio MCP bridge to ${UPSTREAM_URL}
 Flags: --stdio (default), --version, --help
-Env: EMBLEMAI_API_KEY, EMBLEMAI_BEARER, EMBLEMAI_TRANSACTIONS
+Env: EMBLEMAI_API_KEY, EMBLEMAI_BEARER, EMBLEMAI_TRANSACTIONS,
+     EMBLEMAI_TOOLS_FILTER (comma-separated globs, e.g. 'bitcoin*,*Balances')
 `
   );
   process.exit(0);
+}
+function globToRegExp(glob) {
+  const escaped = glob.replace(/[.+^${}()|[\]\\]/g, "\\$&");
+  const pattern = escaped.replace(/\*/g, ".*").replace(/\?/g, ".");
+  return new RegExp(`^${pattern}$`);
+}
+var TOOLS_FILTER_PATTERNS = (() => {
+  const raw = process.env.EMBLEMAI_TOOLS_FILTER;
+  if (!raw) return null;
+  const patterns = raw.split(",").map((p) => p.trim()).filter(Boolean);
+  if (patterns.length === 0) return null;
+  return patterns.map(globToRegExp);
+})();
+function isToolAllowed(name) {
+  if (!TOOLS_FILTER_PATTERNS) return true;
+  return TOOLS_FILTER_PATTERNS.some((re) => re.test(name));
 }
 function buildUpstreamHeaders() {
   const headers = {
@@ -15515,9 +15532,24 @@ var server = new Server(
   { capabilities: { tools: {} } }
 );
 server.setRequestHandler(ListToolsRequestSchema, async () => {
-  return await forward("tools/list", {});
+  const result = await forward("tools/list", {});
+  if (!TOOLS_FILTER_PATTERNS) return result;
+  const tools = Array.isArray(result?.tools) ? result.tools : [];
+  return { ...result, tools: tools.filter((t) => isToolAllowed(t?.name)) };
 });
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  const requestedName = request?.params?.name ?? "";
+  if (!isToolAllowed(requestedName)) {
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Tool '${requestedName}' is not exposed by this listing (filtered out by EMBLEMAI_TOOLS_FILTER). Run tools/list to see the currently exposed surface.`
+        }
+      ],
+      isError: true
+    };
+  }
   const hasCreds = Boolean(process.env.EMBLEMAI_API_KEY) || Boolean(process.env.EMBLEMAI_BEARER);
   if (!hasCreds) {
     return {

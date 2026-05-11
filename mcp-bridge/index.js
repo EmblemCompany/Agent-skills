@@ -9,6 +9,14 @@
  *   EMBLEMAI_API_KEY        — vault API key (full read+write, no expiry)
  *   EMBLEMAI_BEARER         — JWT (read-only, ~15 min lifetime)
  *   EMBLEMAI_TRANSACTIONS   — set to "enabled" to expose state-changing tools
+ *   EMBLEMAI_TOOLS_FILTER   — comma-separated glob patterns to restrict the
+ *                             exposed tool surface, e.g.
+ *                                 "bitcoin*,*Balances"
+ *                                 "solana*,base*"
+ *                             Tools whose name matches ANY pattern survive
+ *                             tools/list; tools/call is also gated against
+ *                             the same patterns. Omit / empty → full surface.
+ *                             Patterns use shell-style globs (* and ?).
  *
  * Without credentials, tools/call returns a clear instruction to set one of
  * the env vars. tools/list still works fully and registries can score the
@@ -25,7 +33,7 @@ import {
 const UPSTREAM_URL = "https://emblemvault.ai/api/mcp";
 const PROTOCOL_VERSION = "2025-06-18";
 const SERVER_NAME = "emblemai";
-const SERVER_VERSION = "1.0.0";
+const SERVER_VERSION = "1.1.0";
 
 // CLI args accepted for compatibility with sandbox runners that mandate a
 // non-empty CMD (e.g. Glama's release form). Recognised: --stdio (default,
@@ -39,9 +47,32 @@ if (argv.includes("--help")) {
   process.stdout.write(
     `${SERVER_NAME} ${SERVER_VERSION} — stdio MCP bridge to ${UPSTREAM_URL}\n` +
       "Flags: --stdio (default), --version, --help\n" +
-      "Env: EMBLEMAI_API_KEY, EMBLEMAI_BEARER, EMBLEMAI_TRANSACTIONS\n",
+      "Env: EMBLEMAI_API_KEY, EMBLEMAI_BEARER, EMBLEMAI_TRANSACTIONS,\n" +
+      "     EMBLEMAI_TOOLS_FILTER (comma-separated globs, e.g. 'bitcoin*,*Balances')\n",
   );
   process.exit(0);
+}
+
+function globToRegExp(glob) {
+  const escaped = glob.replace(/[.+^${}()|[\]\\]/g, "\\$&");
+  const pattern = escaped.replace(/\*/g, ".*").replace(/\?/g, ".");
+  return new RegExp(`^${pattern}$`);
+}
+
+const TOOLS_FILTER_PATTERNS = (() => {
+  const raw = process.env.EMBLEMAI_TOOLS_FILTER;
+  if (!raw) return null;
+  const patterns = raw
+    .split(",")
+    .map((p) => p.trim())
+    .filter(Boolean);
+  if (patterns.length === 0) return null;
+  return patterns.map(globToRegExp);
+})();
+
+function isToolAllowed(name) {
+  if (!TOOLS_FILTER_PATTERNS) return true;
+  return TOOLS_FILTER_PATTERNS.some((re) => re.test(name));
 }
 
 function buildUpstreamHeaders() {
@@ -99,10 +130,28 @@ const server = new Server(
 );
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
-  return await forward("tools/list", {});
+  const result = await forward("tools/list", {});
+  if (!TOOLS_FILTER_PATTERNS) return result;
+  const tools = Array.isArray(result?.tools) ? result.tools : [];
+  return { ...result, tools: tools.filter((t) => isToolAllowed(t?.name)) };
 });
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  const requestedName = request?.params?.name ?? "";
+  if (!isToolAllowed(requestedName)) {
+    return {
+      content: [
+        {
+          type: "text",
+          text:
+            `Tool '${requestedName}' is not exposed by this listing ` +
+            "(filtered out by EMBLEMAI_TOOLS_FILTER). Run tools/list to see " +
+            "the currently exposed surface.",
+        },
+      ],
+      isError: true,
+    };
+  }
   const hasCreds =
     Boolean(process.env.EMBLEMAI_API_KEY) ||
     Boolean(process.env.EMBLEMAI_BEARER);
