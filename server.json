@@ -1,0 +1,16 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.EmblemCompany/Agent-skills",
+  "description": "200+ crypto tools for AI agents across 7 blockchains (Solana, Ethereum, Base, BSC, Polygon, Hedera, Bitcoin). Swaps, DeFi yield, conditional orders, NFTs, cross-chain bridges, and market intelligence.",
+  "repository": {
+    "url": "https://github.com/EmblemCompany/Agent-skills",
+    "source": "github"
+  },
+  "version": "1.1.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://emblemvault.ai/api/mcp"
+    }
+  ]
+}
