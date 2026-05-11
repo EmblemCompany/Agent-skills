@@ -1,0 +1,60 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+#
+# Stdio MCP bridge to the hosted EmblemAI MCP server at https://emblemvault.ai/api/mcp.
+# tools/list works anonymously; tools/call requires apiKey OR bearer.
+
+startCommand:
+  type: stdio
+
+configSchema:
+  type: object
+  required: []
+  properties:
+    apiKey:
+      type: string
+      title: EmblemAI API Key
+      description: |
+        Long-lived vault API key (read + write, no expiry). Generate from emblemvault.ai
+        under Settings → Vault Access Key. Required for write/transactional tools.
+    bearer:
+      type: string
+      title: EmblemAI OAuth Bearer
+      description: |
+        Short-lived JWT bearer (read-only, ~15 min lifetime). Issued via the OAuth flow
+        on api.emblemvault.ai. Useful when an MCP host already manages OAuth.
+    transactions:
+      type: boolean
+      title: Enable transactional tools
+      default: false
+      description: |
+        When true, sets EMBLEMAI_TRANSACTIONS=enabled and exposes state-changing tools
+        (sends, swaps, conditional orders, mints). Leave false for read-only sessions.
+    toolsFilter:
+      type: string
+      title: Tools filter (glob)
+      description: |
+        Comma-separated shell-style glob patterns that restrict which tools the bridge
+        exposes via tools/list and tools/call. Examples — 'bitcoin*', 'solana*,base*',
+        '*Balances,*SwapQuote'. Leave blank to expose the full 200+ tool surface.
+
+commandFunction: |
+  (config) => {
+    const env = {};
+    if (config && typeof config === 'object') {
+      if (config.apiKey) env.EMBLEMAI_API_KEY = config.apiKey;
+      if (config.bearer) env.EMBLEMAI_BEARER = config.bearer;
+      if (config.transactions === true) env.EMBLEMAI_TRANSACTIONS = 'enabled';
+      if (config.toolsFilter) env.EMBLEMAI_TOOLS_FILTER = config.toolsFilter;
+    }
+    return {
+      command: 'node',
+      args: ['mcp-bridge/dist/index.js'],
+      env,
+    };
+  }
+
+exampleConfig:
+  apiKey: ""
+  bearer: ""
+  transactions: false
+  toolsFilter: ""
