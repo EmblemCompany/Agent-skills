@@ -1,5 +1,11 @@
 # EmblemAI Agent Skills
 
+[![Smithery quality 84](https://img.shields.io/badge/Smithery-quality%2084-3b82f6)](https://smithery.ai/server/emblem-mcp--emblemai)
+[![Glama MCP server](https://glama.ai/mcp/servers/EmblemCompany/Agent-skills/badges/score.svg)](https://glama.ai/mcp/servers/EmblemCompany/Agent-skills)
+[![LobeHub](https://img.shields.io/badge/LobeHub-listed-19c2d7)](https://lobehub.com/mcp/emblemcompany-agent-skills)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/EmblemCompany/Agent-skills?style=social)](https://github.com/EmblemCompany/Agent-skills/stargazers)
+
 Official skill collection for AI agents building with [EmblemAI](https://emblemvault.ai). EmblemAI is open-source crypto infrastructure for both end users and AI agents: **200+ tools across 7 blockchains** (Solana, Ethereum, Base, BSC, Polygon, Hedera, Bitcoin) for swaps, conditional orders, DeFi, NFTs, and cross-chain bridges, with x402 payment rails and A2A and MCP protocol support. Emblem is also the easiest way to add user management for apps that need wallet-native users: one integration can create authenticated users, give each user a full-featured crypto wallet, and support website login with wallets, email/password, and social sign-in. Compatible with Claude Code, Cursor, Codex, and other agents following the [Agent Skills](https://agentskills.io/) specification.
 
 ## Available Skills
