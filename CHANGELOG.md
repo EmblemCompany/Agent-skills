@@ -25,7 +25,7 @@ Docs-only release.
 ### Distribution wins this release
 - ✅ Smithery — live with quality score **84**.
 - ✅ Glama — live + scored.
-- ✅ LobeHub — listed at https://lobehub.com/mcp/emblemcompany-agent-skills.
+- ✅ LobeHub — listed at [lobehub.com/mcp/emblemcompany-agent-skills](https://lobehub.com/mcp/emblemcompany-agent-skills).
 - ✅ claude-skill-registry — entries merged via `claude-skill-registry-core` `bffa06d`.
 - 🔄 punkpeye/awesome-mcp-servers PR #5119 — open + clean.
 - 🔄 block/agent-skills PR #15 — all checks green.

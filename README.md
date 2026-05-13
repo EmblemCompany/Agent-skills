@@ -1,6 +1,6 @@
 # EmblemAI Agent Skills
 
-[![Smithery quality 84](https://img.shields.io/badge/Smithery-quality%2084-3b82f6)](https://smithery.ai/server/emblem-mcp--emblemai)
+[![Smithery quality 84](https://img.shields.io/badge/Smithery-quality%2084-3b82f6)](https://smithery.ai/server/@emblemai/emblem-mcp)
 [![Glama MCP server](https://glama.ai/mcp/servers/EmblemCompany/Agent-skills/badges/score.svg)](https://glama.ai/mcp/servers/EmblemCompany/Agent-skills)
 [![LobeHub](https://img.shields.io/badge/LobeHub-listed-19c2d7)](https://lobehub.com/mcp/emblemcompany-agent-skills)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)

@@ -132,7 +132,7 @@ Full setup guide per client (Claude Desktop bridge, Cursor, Windsurf, Gemini CLI
 
 - **Endpoint:** `https://emblemvault.ai/api/mcp`
 - **Repo:** https://github.com/EmblemCompany/Agent-skills (MIT)
-- **Smithery (quality 84):** https://smithery.ai/server/emblem-mcp--emblemai
+- **Smithery (quality 84):** https://smithery.ai/server/@emblemai/emblem-mcp
 - **Glama:** https://glama.ai/mcp/servers/EmblemCompany/Agent-skills
 - **LobeHub:** https://lobehub.com/mcp/emblemcompany-agent-skills
 - **Docs:** https://emblemvault.ai/docs/mcp
