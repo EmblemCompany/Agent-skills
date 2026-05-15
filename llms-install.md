@@ -75,7 +75,7 @@ Clients that want to opt OUT of transaction tools can wildcard-filter `*-transac
 
 ## Tool surface
 
-200+ tools across 7 blockchains:
+**133 tools** discovered anonymously (read-only). **200+ tools** with API key auth + `x-mcp-transactions: enabled` (read + write + transactions). Across 7 blockchains:
 
 | Chain | Coverage |
 |-------|----------|
@@ -107,7 +107,7 @@ EMBLEMAI_TOOLS_FILTER="*Balances,*SwapQuote"
 
 After config + client restart:
 
-1. The client should report **200+ EmblemAI tools** discovered.
+1. The client should report **133+ EmblemAI tools** discovered (anon read-only), or **200+** if you set up an API key with `x-mcp-transactions: enabled`.
 2. Try a read-only call:
    - "What's the current price of SOL?"
    - "Get trending Solana tokens"
